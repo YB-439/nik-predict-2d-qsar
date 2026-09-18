@@ -165,6 +165,7 @@ function loadSample(index) {
     if (input) {
       input.value = item.smiles;
       renderStructure(item.smiles);
+      runSinglePrediction();
     }
   }
 }
@@ -271,11 +272,10 @@ async function runSinglePrediction() {
 
   const btn = document.getElementById("btnPredict");
   const spinner = document.getElementById("predictSpinner");
-  const resultsSection = document.getElementById("resultsSection");
   const batchTableWrap = document.getElementById("batchTableWrap");
 
-  btn.disabled = true;
-  spinner.style.display = "inline-block";
+  if (btn) btn.disabled = true;
+  if (spinner) spinner.style.display = "inline-block";
 
   setTimeout(() => {
     let pred = EXACT_PREDICTIONS[cleanSmiles] || estimatePrediction(cleanSmiles);
@@ -294,12 +294,10 @@ async function runSinglePrediction() {
       }],
       total_elapsed_seconds: pred.elapsed
     });
-    resultsSection.style.display = "flex";
     if (batchTableWrap) batchTableWrap.style.display = "none";
-    resultsSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    btn.disabled = false;
-    spinner.style.display = "none";
-  }, 400);
+    if (btn) btn.disabled = false;
+    if (spinner) spinner.style.display = "none";
+  }, 200);
 }
 
 function displaySingleResult(data) {
@@ -307,8 +305,6 @@ function displaySingleResult(data) {
   const res = data.results[0];
   const consensusEl = document.getElementById("consensusVal");
   if (consensusEl) consensusEl.textContent = res.consensus_prediction.toFixed(4);
-  const timingEl = document.getElementById("timingBadge");
-  if (timingEl) timingEl.textContent = `Computed in ${data.total_elapsed_seconds}s`;
 
   if (res.physicochemical_properties) {
     const p = res.physicochemical_properties;
@@ -341,8 +337,8 @@ async function runBatchPrediction() {
   const tbody = document.getElementById("batchTableBody");
   const batchCountLabel = document.getElementById("batchCountLabel");
 
-  btn.disabled = true;
-  spinner.style.display = "inline-block";
+  if (btn) btn.disabled = true;
+  if (spinner) spinner.style.display = "inline-block";
 
   setTimeout(() => {
     currentBatchResults = smilesList.map((s, idx) => {
@@ -374,9 +370,9 @@ async function runBatchPrediction() {
     batchTableWrap.style.display = "block";
     resultsSection.style.display = "flex";
     resultsSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    btn.disabled = false;
-    spinner.style.display = "none";
-  }, 500);
+    if (btn) btn.disabled = false;
+    if (spinner) spinner.style.display = "none";
+  }, 400);
 }
 
 function exportBatchCSV() {

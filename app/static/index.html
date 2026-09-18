@@ -167,46 +167,61 @@
                   </div>
                 </div>
 
-              <!-- Physicochemical Properties Table (UPDATE 01.docx Requirement) -->
-              <div class="properties-card" id="propertiesCard" style="margin-top: 1.25rem;">
-                <div class="properties-header">
-                  <span class="properties-title">Physicochemical Properties</span>
+                <!-- Side-by-Side Grid for Physicochemical Properties Table & Black Consensus Prediction Box -->
+                <div class="prop-consensus-grid" style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1rem; margin-top: 1.25rem; align-items: stretch;">
+                  <!-- Physicochemical Properties Table (UPDATE 01.docx Requirement) -->
+                  <div class="properties-card" id="propertiesCard" style="margin-top: 0; height: 100%;">
+                    <div class="properties-header">
+                      <span class="properties-title">Physicochemical Properties</span>
+                    </div>
+                    <table class="properties-table">
+                      <thead>
+                        <tr>
+                          <th>Property</th>
+                          <th>Value</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Formula</td>
+                          <td id="propFormula" class="prop-val">--</td>
+                        </tr>
+                        <tr>
+                          <td>Molecular Weight</td>
+                          <td id="propMW" class="prop-val">--</td>
+                        </tr>
+                        <tr>
+                          <td>LogP (Lipophilicity)</td>
+                          <td id="propLogP" class="prop-val">--</td>
+                        </tr>
+                        <tr>
+                          <td>TPSA</td>
+                          <td id="propTPSA" class="prop-val">--</td>
+                        </tr>
+                        <tr>
+                          <td>H-Bond Donors / Acceptors</td>
+                          <td id="propHDonors" class="prop-val">--</td>
+                        </tr>
+                        <tr>
+                          <td>Rotatable Bonds</td>
+                          <td id="propRotBonds" class="prop-val">--</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- Black Consensus Prediction Box (Side-by-Side with Physicochemical Properties Table) -->
+                  <div class="consensus-banner consensus-banner-simple" id="singleConsensusBanner" style="margin-top: 0; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; height: 100%; border-radius: 12px;">
+                    <div class="consensus-primary">
+                      <span class="consensus-label">CONSENSUS PREDICTED pIC<sub>50</sub></span>
+                      <div class="consensus-number-wrap">
+                        <span class="consensus-value" id="consensusVal">--</span>
+                        <span class="consensus-unit">pIC<sub>50</sub></span>
+                      </div>
+                      <p class="consensus-subtext">Calculated consensus biological inhibitory potency against NIK kinase</p>
+                    </div>
+                  </div>
                 </div>
-                <table class="properties-table">
-                  <thead>
-                    <tr>
-                      <th>Property</th>
-                      <th>Value</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Formula</td>
-                      <td id="propFormula" class="prop-val">--</td>
-                    </tr>
-                    <tr>
-                      <td>Molecular Weight</td>
-                      <td id="propMW" class="prop-val">--</td>
-                    </tr>
-                    <tr>
-                      <td>LogP (Lipophilicity)</td>
-                      <td id="propLogP" class="prop-val">--</td>
-                    </tr>
-                    <tr>
-                      <td>TPSA</td>
-                      <td id="propTPSA" class="prop-val">--</td>
-                    </tr>
-                    <tr>
-                      <td>H-Bond Donors / Acceptors</td>
-                      <td id="propHDonors" class="prop-val">--</td>
-                    </tr>
-                    <tr>
-                      <td>Rotatable Bonds</td>
-                      <td id="propRotBonds" class="prop-val">--</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
 
               </div>
             </div>
@@ -244,7 +259,7 @@
         </div>
       </section>
 
-      <!-- Results Display Section (Consensus Only) -->
+      <!-- Results Display Section (Batch Only) -->
       <section class="results-section" id="resultsSection" style="display: none;">
         <div class="results-header">
           <div class="results-title-wrap">
