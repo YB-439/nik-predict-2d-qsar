@@ -63,7 +63,7 @@ css_code = """
   --white: #ffffff;
 }
 
-/* Hide Streamlit elements */
+/* Hide Streamlit default elements */
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 header {visibility: hidden;}
@@ -81,12 +81,12 @@ body {
   color: var(--slate-800) !important;
 }
 
-/* Header */
+/* Site Header */
 .site-header {
   background: var(--white);
   border-bottom: 1px solid var(--slate-200);
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .header-container {
@@ -162,11 +162,27 @@ body {
   border: 1px solid rgba(158, 27, 30, 0.2);
 }
 
+/* Top Navigation Bar Styling */
+.top-nav-bar {
+  background: #f8fafc;
+  border-top: 1px solid var(--slate-200);
+  border-bottom: 1px solid var(--slate-200);
+  padding: 0.4rem 0;
+  margin-bottom: 1.5rem;
+}
+
+/* Nav Button Styling */
+div[data-testid="stHorizontalBlock"] > div button {
+    border-radius: 6px !important;
+    font-size: 0.88rem !important;
+    font-weight: 600 !important;
+}
+
 /* Hero Section */
 .hero-section {
   text-align: center;
   max-width: 900px;
-  margin: 1.5rem auto;
+  margin: 1rem auto 1.5rem auto;
 }
 
 .hero-tag {
@@ -304,19 +320,20 @@ body {
   font-family: 'JetBrains Mono', monospace;
 }
 
-/* Consensus Banner */
+/* Consensus Banner (Black Box) */
 .consensus-banner {
   background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
   border-radius: 16px;
-  padding: 2rem;
+  padding: 1.75rem 1.5rem;
   color: var(--white);
   text-align: center;
   box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-  margin-top: 1.5rem;
+  margin-top: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .consensus-label {
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   color: var(--pu-gold);
@@ -324,15 +341,16 @@ body {
 }
 
 .consensus-value {
-  font-size: 3.5rem;
+  font-size: 3.2rem;
   font-weight: 800;
   color: var(--white);
   font-family: 'JetBrains Mono', monospace;
-  margin: 0.5rem 0;
+  margin: 0.4rem 0;
+  line-height: 1;
 }
 
 .consensus-subtext {
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   color: var(--slate-400);
 }
 
@@ -408,7 +426,7 @@ header_html = f"""
 """
 st.markdown(header_html, unsafe_allow_html=True)
 
-# Top Navigation Bar Tabs
+# Top Navigation Bar Tabs (Always Visible)
 if "active_nav" not in st.session_state:
     st.session_state["active_nav"] = "Main"
 
@@ -420,7 +438,7 @@ for idx, opt in enumerate(nav_options):
         st.session_state["active_nav"] = opt
         st.rerun()
 
-st.markdown("---")
+st.markdown('<div style="margin-bottom: 1.5rem;"></div>', unsafe_allow_html=True)
 
 # Navigation Routing
 nav = st.session_state["active_nav"]
@@ -461,7 +479,6 @@ if nav in ["Main", "What is NIK?"]:
 
 # Main Predictor Workspace
 if nav == "Main":
-    # Workspace Container
     tab_single, tab_batch = st.tabs(["Single Compound", "Batch Prediction"])
 
     with tab_single:
@@ -480,7 +497,10 @@ if nav == "Main":
         st.markdown('<div class="model-select-wrap"><span class="model-select-label">CHOOSE A PREDICTION MODEL</span></div>', unsafe_allow_html=True)
         st.selectbox("Model", ["NIK 2D QSAR MODEL"], index=0, label_visibility="collapsed")
 
+        # Two Column Layout: Left Column = Input & Black Consensus Box; Right Column = Structure & Physio Table
         col_left, col_right = st.columns([1, 1])
+
+        clean_s = st.session_state["input_smiles"].strip()
 
         with col_left:
             user_smiles = st.text_input(
@@ -500,11 +520,27 @@ if nav == "Main":
                     st.session_state["input_smiles"] = NIK_SAMPLES[0]["smiles"]
                     st.rerun()
 
+            # Render Black Consensus Prediction Box inside Left Column (Side-by-side with Physio Properties)
+            if user_smiles.strip():
+                try:
+                    res_dict = nik_predictor_instance.predict_single(user_smiles.strip())
+                    consensus_val = res_dict["consensus_prediction"]
+                    elapsed = res_dict["elapsed_seconds"]
+
+                    st.markdown(f"""
+                    <div class="consensus-banner">
+                      <div class="consensus-label">CONSENSUS PREDICTED pIC<sub>50</sub></div>
+                      <div class="consensus-value">{consensus_val:.4f}</div>
+                      <div class="consensus-subtext">Calculated consensus biological inhibitory potency against NIK kinase (Computed in {elapsed}s)</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+                except Exception as e:
+                    st.error(f"Prediction Error: {str(e)}")
+
         with col_right:
             st.markdown("##### 2D MOLECULAR STRUCTURE")
-            clean_s = user_smiles.strip()
-            if clean_s:
-                props = calculate_physicochemical_properties(clean_s)
+            if user_smiles.strip():
+                props = calculate_physicochemical_properties(user_smiles.strip())
                 if props and props.get("svg_structure"):
                     st.markdown('<span style="color: #059669; font-weight: 700; font-size: 0.8rem;">✔ 2D Chemical Structure Valid</span>', unsafe_allow_html=True)
                     st.components.v1.html(props["svg_structure"], height=250, scrolling=False)
@@ -514,7 +550,7 @@ if nav == "Main":
                 st.info("Structure will render upon SMILES entry")
 
             # Physicochemical Properties Table
-            if clean_s and 'props' in locals() and props:
+            if user_smiles.strip() and 'props' in locals() and props:
                 st.markdown("""
                 <div class="properties-card">
                   <div class="properties-title">Physicochemical Properties</div>
@@ -540,26 +576,6 @@ if nav == "Main":
                     props["h_donors_acceptors"],
                     props["rotatable_bonds"]
                 ), unsafe_allow_html=True)
-
-        if btn_predict:
-            if not clean_s:
-                st.error("Please enter a valid SMILES string.")
-            else:
-                with st.spinner("Calculating consensus 2D-QSAR prediction across Monte Carlo runs..."):
-                    try:
-                        res_dict = nik_predictor_instance.predict_single(clean_s)
-                        consensus_val = res_dict["consensus_prediction"]
-                        elapsed = res_dict["elapsed_seconds"]
-
-                        st.markdown(f"""
-                        <div class="consensus-banner">
-                          <div class="consensus-label">CONSENSUS PREDICTED pIC<sub>50</sub></div>
-                          <div class="consensus-value">{consensus_val:.4f}</div>
-                          <div class="consensus-subtext">Calculated consensus biological inhibitory potency against NIK kinase (Computed in {elapsed}s)</div>
-                        </div>
-                        """, unsafe_allow_html=True)
-                    except Exception as e:
-                        st.error(f"Prediction Error: {str(e)}")
 
     with tab_batch:
         st.markdown("#### Batch SMILES Library Evaluation")

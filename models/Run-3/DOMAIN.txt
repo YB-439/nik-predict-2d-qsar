@@ -1,2 +1,0 @@
-*TEST0001 Clc1ccc2c(c1)ncn2c1ccnc(n1)NC(=O)c1ncc(s1)C1CC1    0.000
-*TEST0003 N#Cc1ccc2c(c1)ncn2c1ccnc(n1)NC(=O)c1ncc(s1)C1CC1  
