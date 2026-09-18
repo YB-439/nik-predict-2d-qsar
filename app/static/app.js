@@ -43,16 +43,24 @@ function sanitizeSmiles(raw) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Initialize SVG Drawer
   initSvgDrawer();
-
-  // Setup input listeners
   const smilesInput = document.getElementById("smilesInput");
   if (smilesInput) {
     smilesInput.addEventListener("input", (e) => {
-      const clean = sanitizeSmiles(e.target.value);
-      renderStructure(clean);
+      runSinglePrediction();
     });
+    smilesInput.addEventListener("change", (e) => {
+      runSinglePrediction();
+    });
+    smilesInput.addEventListener("paste", (e) => {
+      setTimeout(() => runSinglePrediction(), 50);
+    });
+    smilesInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") runSinglePrediction();
+    });
+  }
+  loadSample(0);
+});
     smilesInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         runSinglePrediction();
