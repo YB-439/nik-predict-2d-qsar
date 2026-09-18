@@ -1,2 +1,4 @@
-1
-*TEST0001 COc1cnc(nc1N1CCc2c1cc(Br)cc2)N 0.000
+3
+*TEST0001 Clc1ccc2c(c1)ncn2c1ccnc(n1)NC(=O)c1ncc(s1)C1CC1 0.000
+*TEST0002 O=C(c1ncc(s1)C1CC1)Nc1nccc(n1)n1cnc2c1ccc(c2)C(F)(F)F 0.000
+*TEST0003 N#Cc1ccc2c(c1)ncn2c1ccnc(n1)NC(=O)c1ncc(s1)C1CC1 0.000
