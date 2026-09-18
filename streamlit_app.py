@@ -157,13 +157,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const smilesInput = document.getElementById("smilesInput");
   if (smilesInput) {
     smilesInput.addEventListener("input", (e) => {
-      runSinglePrediction();
+      onSmilesInputChange(e.target.value);
     });
     smilesInput.addEventListener("change", (e) => {
-      runSinglePrediction();
+      onSmilesInputChange(e.target.value);
     });
     smilesInput.addEventListener("paste", (e) => {
-      setTimeout(() => runSinglePrediction(), 50);
+      setTimeout(() => {
+        const val = document.getElementById("smilesInput") ? document.getElementById("smilesInput").value : "";
+        onSmilesInputChange(val);
+      }, 50);
     });
     smilesInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter") runSinglePrediction();
@@ -171,6 +174,27 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   loadSample(0);
 });
+
+function onSmilesInputChange(val) {
+  const cleanSmiles = sanitizeSmiles(val);
+  if (!cleanSmiles) {
+    clearStructure();
+    clearConsensusAndProps();
+    return;
+  }
+  // Render 2D molecular structure and properties instantly upon typing/pasting
+  renderStructure(cleanSmiles);
+  // Reset prediction consensus score box to "--" until user explicitly clicks Predict button
+  resetConsensusScore();
+}
+
+function resetConsensusScore() {
+  document.querySelectorAll(".consensus-value").forEach(el => el.textContent = "--");
+  const consensusEl = document.getElementById("consensusVal");
+  if (consensusEl) consensusEl.textContent = "--";
+  const batchConsensusEl = document.getElementById("batchConsensusVal");
+  if (batchConsensusEl) batchConsensusEl.textContent = "--";
+}
 
 function initSvgDrawer() {
   if (typeof SmilesDrawer !== "undefined" && SmilesDrawer.SvgDrawer) {
@@ -194,7 +218,7 @@ function loadSample(index) {
     const input = document.getElementById("smilesInput");
     if (input) {
       input.value = item.smiles;
-      runSinglePrediction();
+      onSmilesInputChange(item.smiles);
     }
   }
 }
@@ -207,7 +231,7 @@ function clearInput() {
 }
 
 function clearConsensusAndProps() {
-  document.querySelectorAll(".consensus-value").forEach(el => el.textContent = "--");
+  resetConsensusScore();
   const propFormula = document.getElementById("propFormula");
   const propMW = document.getElementById("propMW");
   const propLogP = document.getElementById("propLogP");
@@ -252,6 +276,23 @@ function clearStructure() {
   }
 }
 
+function updatePhysicochemicalProperties(p) {
+  if (!p) return;
+  const propFormula = document.getElementById("propFormula");
+  const propMW = document.getElementById("propMW");
+  const propLogP = document.getElementById("propLogP");
+  const propTPSA = document.getElementById("propTPSA");
+  const propHDonors = document.getElementById("propHDonors");
+  const propRotBonds = document.getElementById("propRotBonds");
+
+  if (propFormula && p.formula) propFormula.textContent = p.formula;
+  if (propMW && p.mw) propMW.textContent = `${p.mw} g/mol`;
+  if (propLogP && p.logp !== undefined) propLogP.textContent = p.logp;
+  if (propTPSA && p.tpsa !== undefined) propTPSA.textContent = `${p.tpsa} Å²`;
+  if (propHDonors && p.hdonors) propHDonors.textContent = p.hdonors;
+  if (propRotBonds && p.rotbonds !== undefined) propRotBonds.textContent = p.rotbonds;
+}
+
 function renderStructure(smiles) {
   const wrapper = document.getElementById("svgWrapper");
   const emptyMsg = document.getElementById("emptyCanvasMsg");
@@ -262,15 +303,16 @@ function renderStructure(smiles) {
     return;
   }
 
-  // 1. Check pre-rendered RDKit SVG
+  // 1. Check pre-rendered RDKit SVG & properties
   let pred = EXACT_PREDICTIONS[cleanSmiles];
-  if (pred && pred.svg) {
-    if (wrapper) wrapper.innerHTML = pred.svg;
+  if (pred) {
+    if (pred.svg && wrapper) wrapper.innerHTML = pred.svg;
     if (emptyMsg) emptyMsg.style.display = "none";
     if (status) {
       status.textContent = "2D Chemical Structure Valid";
       status.className = "status-indicator status-valid";
     }
+    updatePhysicochemicalProperties(pred);
     return;
   }
 
@@ -286,6 +328,16 @@ function renderStructure(smiles) {
           status.textContent = "2D Chemical Structure Valid";
           status.className = "status-indicator status-valid";
         }
+        const mf = mol.getMolecularFormula();
+        const prop = new OCL.MoleculeProperties(mol);
+        updatePhysicochemicalProperties({
+          formula: mf.formula,
+          mw: parseFloat(mf.relativeWeight.toFixed(2)),
+          logp: parseFloat(prop.logP.toFixed(2)),
+          tpsa: parseFloat(prop.polarSurfaceArea.toFixed(2)),
+          hdonors: `${prop.acceptorCount} / ${prop.donorCount}`,
+          rotbonds: prop.rotatableBondCount
+        });
         return;
       }
     } catch (e) {
@@ -346,34 +398,42 @@ function runSinglePrediction() {
   const rawSmiles = input ? input.value.trim() : "";
   const cleanSmiles = sanitizeSmiles(rawSmiles);
   if (!cleanSmiles) {
-    clearStructure();
-    clearConsensusAndProps();
+    alert("Please enter a valid SMILES string.");
     return;
   }
 
-  // Immediately render 2D chemical structure
+  const btn = document.getElementById("btnPredict");
+  const spinner = document.getElementById("predictSpinner");
+  const batchTableWrap = document.getElementById("batchTableWrap");
+
+  if (btn) btn.disabled = true;
+  if (spinner) spinner.style.display = "inline-block";
+
+  // Ensure structure and properties are rendered
   renderStructure(cleanSmiles);
 
-  let pred = EXACT_PREDICTIONS[cleanSmiles] || estimatePrediction(cleanSmiles);
-  displaySingleResult({
-    results: [{
-      smiles: cleanSmiles,
-      consensus_prediction: pred.consensus,
-      physicochemical_properties: {
-        formula: pred.formula,
-        molecular_weight: pred.mw,
-        logp: pred.logp,
-        tpsa: pred.tpsa,
-        h_donors_acceptors: pred.hdonors,
-        rotatable_bonds: pred.rotbonds,
-        svg: pred.svg
-      }
-    }],
-    total_elapsed_seconds: pred.elapsed || 0.75
-  });
-
-  const batchTableWrap = document.getElementById("batchTableWrap");
-  if (batchTableWrap) batchTableWrap.style.display = "none";
+  setTimeout(() => {
+    let pred = EXACT_PREDICTIONS[cleanSmiles] || estimatePrediction(cleanSmiles);
+    displaySingleResult({
+      results: [{
+        smiles: cleanSmiles,
+        consensus_prediction: pred.consensus,
+        physicochemical_properties: {
+          formula: pred.formula,
+          molecular_weight: pred.mw,
+          logp: pred.logp,
+          tpsa: pred.tpsa,
+          h_donors_acceptors: pred.hdonors,
+          rotatable_bonds: pred.rotbonds,
+          svg: pred.svg
+        }
+      }],
+      total_elapsed_seconds: pred.elapsed || 0.75
+    });
+    if (batchTableWrap) batchTableWrap.style.display = "none";
+    if (btn) btn.disabled = false;
+    if (spinner) spinner.style.display = "none";
+  }, 250);
 }
 
 function displaySingleResult(data) {

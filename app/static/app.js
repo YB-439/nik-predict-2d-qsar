@@ -47,8 +47,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const smilesInput = document.getElementById("smilesInput");
   if (smilesInput) {
     smilesInput.addEventListener("input", (e) => {
-      runSinglePrediction();
+      onSmilesInputChange(e.target.value);
     });
+    smilesInput.addEventListener("change", (e) => {
+      onSmilesInputChange(e.target.value);
+    });
+    smilesInput.addEventListener("paste", (e) => {
+      setTimeout(() => {
+        const val = document.getElementById("smilesInput") ? document.getElementById("smilesInput").value : "";
+        onSmilesInputChange(val);
+      }, 50);
+    });
+    smilesInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") runSinglePrediction();
+    });
+  }
+  loadSample(0);
+});
     smilesInput.addEventListener("change", (e) => {
       runSinglePrediction();
     });
