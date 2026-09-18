@@ -1,0 +1,252 @@
+This file contains experimental and calculated values of the endpoint for visible sets
+
+
+Hydrogen filled graph (HFG) is used in the model
+
+SMILES is used in the model
+
+Data from SMILES-file (#TrainingSet.txt)
+Threshold=5
+The number of active SMILES attributes (ASA) =205
+
+Index of ideality of correlation (IIC) has been involved
+for the Monte Carlo optimization, IIC-weight = 0.3000)
+IIC style is 0
+
+Correlation Intensity Index (CII) has been involved
+for the Monte Carlo optimization, CII-weight = 0.3000)
+CII style is 0
+
+CORRELATION BALANCE is used
+
+Sk are used
+SSk are used
+SSSk are used
+BOND is used
+NOSP is used
+HALO is used
+HARD is used
+
+e0 (vertex degree) are used
+
+
+
+IMPORTANT: In the case of classic scheme W%=N101/Nall, otherwise W%=N111/Nall
+Percent of ASA with presence in all sets (W%) =76
+
+Defect of Split = 135.75
+
+Intercept (c0) and slope (c1) calculated for each set individually:
+Training set   : c0=   4.64371 c1=   0.06009
+InvTraining set: c0=   3.75491 c1=   0.09221
+Calibration set: c0=   4.75748 c1=   0.05827
+
+Slope and intesept calculated with training set give the model:
+
+Endpoint =   4.6437133 (± 0.0850204) +    0.0600893 (± 0.0027046) * DCW(5,30)
+%%%
+
+Statistical characteristics of the model:
+
+N is the number of compounds in the set;
+R is correlation coefficient;
+Q is cross-validated correlation coefficient;
+CCC is concordance correlation coefficient;
+IIC is index of ideality of correlation;
+CII is correlation intensity index;
+s is standard error of estimation;
+MAE is mean absolute error;
+F is Fischer F-ratio
+
+Blk is the number of SMILES attributes in given SMILES, which are blocked
+All is the number of all SMILES attributes in given SMILES string
+
+Y-randomization TEST: 10000 permutations for each average
+Y-randomization TEST can be useful for regression models,
+but for classification models the test is probably unuseful.
+
+                                 :  A     :  P     :  C 
+                                 :      36:      35:      36
+                                 :  0.2280:  0.2500:  0.7160
+                                1:  0.0036:  0.0481:  0.0089
+                                2:  0.0018:  0.0382:  0.0395
+                                3:  0.0061:  0.0864:  0.0028
+                                4:  0.0605:  0.0287:  0.0736
+                                5:  0.0179:  0.0041:  0.0002
+                                6:  0.0361:  0.0518:  0.0016
+                                7:  0.0833:  0.0045:  0.0001
+                                8:  0.0990:  0.0177:  0.0255
+                                9:  0.1184:  0.0237:  0.0274
+                               10:  0.0000:  0.0074:  0.0001
+Rr2, i.e. average randomized R   :  0.0427:  0.0311:  0.0180
+   CRp2=R*sqrt(R2-Rr2) [1]       :  0.2055:  0.2340:  0.7069:
+
+ CRp2 should be greater 0.5 [1]
+
+REFERENCE for Y-scrambling
+[1] P.K. Ojha, K. Roy, Comparative QSARs for antimalarial endochins:
+    Importance of descriptor-thinning and noise reduction prior to
+    feature selection, Chemometr. Intell. Lab. 109 (2011) 146-161
+
+External validation characteristics for the model taken from
+REFERNCES
+[1] Golbraikh A., Tropsha A. J.Mol.Graph.Model. 20(2002)269; // R02, k,kk
+[2] Roy P.P., Roy K. Chem. Biol. Drug Des. 73(2009) 442; // Rm2
+[3] PK Ojha,I Mitra, RN Das,K Roy,Chemometr Intell Lab 107(2011)194-205
+    // Average of Rm2 and absolute difference Rm2(x,y)-Rm2(y,x)
+    // x,y are experimental and predicted values of endpoint
+[4] I-Kuei Lin, L. A concordance correlation coefficient to
+    evaluate reproducibility (1989) Biometrics, 45 (1), 255-268.
+[5] Toropova, A.P.,Toropov, A.A. The index of ideality of correlation:
+    A criterion of predictability of QSAR models for skin permeability?
+    (2017) Science of the Total Environment, 586, 466-472.
+
+The range of endpoint:
+Min=  4.5 Max= 10.1 Middle=  7.3
+
+n           =      36
+r2          =    0.7160
+r02         =    0.6324
+rr02        =    0.7148
+(r2-r02)/r2 =    0.1168 should be < 0.1 [1]
+(r2-rr02)/r2=    0.0016 should be < 0.1 [1]
+k           =    0.9895 should be 0.85 <  k < 1.15 [1]
+kk          =    1.0083 should be 0.85 < kk < 1.15 [1]
+Rm2(test)   =    0.5089 should be > 0.5 [2]
+
+n           =      36
+r2          =    0.7160
+r02         =    0.7148
+rr02        =    0.6324
+(r2-r02)/r2 =    0.0016 should be < 0.1 [1]
+(r2-rr02)/r2=    0.1168 should be < 0.1 [1]
+k           =    1.0083 should be 0.85 <  k < 1.15 [1]
+kk          =    0.9895 should be 0.85 < kk < 1.15 [1]
+R*m2(test)  =    0.6918 should be > 0.5 [2]
+
+Average Rm2 = 0.6004 should be larger 0.5 [3]
+Delta Rm2 = 0.1829 should be lower 0.2 [3]
+$$$
+        :  n :  R2   :  CCC  :  IIC  :  CII  :  Q2   : CCCP  :  Q2F1 :  Q2F2 :  Q2F3 : <Rm2> :  RMSE  :    MAE :  F     
+       A:  36: 0.2280: 0.3713: 0.4272: 0.7630: 0.1509:-0.1325:       :       :       :       :   0.932:   0.798:       10
+       P:  35: 0.2500: 0.2921: 0.4955: 0.7279: 0.1808:-0.0650:       :       :       :       :   1.000:   0.777:       11
+       C:  36: 0.7160: 0.8341: 0.8458: 0.8553: 0.6871: 0.6322: 0.7111: 0.7063: 0.9120: 0.6004:   0.325:   0.251:       86
+
+Active Training set (A) indicated by    +;
+Passive training set (P) indicated by -;
+Calibration set (C) indicated by #
+
+B a l a n c e   o f   c o r r e l a t i o n s :
+    Active training set - Passive training set - Calibration set
+
+DefectSMILES should be less than value of [ 2 x Average Defect SMILES ] =       7.9753
+ AD = Applicability domain
+
+ :SMILES                                                                :   DCW(5,30):        Expr:        Calc:   Expr-Calc:DefectSMILES:     AD      : ID 
++:Nc1nc(N2CCc3c2cc(Br)cc3)ccn1                                          :     22.9402:      6.3700:      6.0222:      0.3478:      9.1422:     NO      : NIK002
++:Nc1nc(N2CCc3c2cc(OC)cc3)c(Cl)cn1                                      :     32.0026:      7.0500:      6.5667:      0.4833:      0.2928:     YES     : NIK009
++:Nc1nc(N2CCc3c2cc(CO)cc3)c(Cl)cn1                                      :     32.0026:      7.3900:      6.5667:      0.8233:      0.2928:     YES     : NIK010
++:Nc1nc(N2CCc3c2cc(C#CC)cc3)c(Cl)cn1                                    :     38.6339:      8.0000:      6.9652:      1.0348:      1.2517:     YES     : NIK015
++:Nc1nc(N2CCc3c2cc(c2n[nH]cc2)cc3)c(Cl)cn1                              :     39.3898:      8.1900:      7.0106:      1.1794:      1.2630:     YES     : NIK017
++:Nc1nc(N2CCc3c2cc(C#N)cc3CNCC)c(Cl)cn1                                 :     30.7906:      5.6800:      6.4939:     -0.8139:      0.3300:     YES     : NIK021
++:Nc1nc(N2CCc3c2cc(C#N)cc3CNc2cn(C)nc2)c(Cl)cn1                         :     34.5755:      5.5800:      6.7213:     -1.1413:      3.3568:     YES     : NIK022
++:Nc1nc(N2CCc3c2cc(C#N)cc3CNCc2cccnc2)c(Cl)cn1                          :     30.7568:      5.4000:      6.4919:     -1.0919:      1.3913:     YES     : NIK024
++:Nc1nc(N2CCc3c2cc(C#N)cc3C(=O)O)c(Cl)cn1                               :     24.9365:      4.4700:      6.1421:     -1.6721:      2.4124:     YES     : NIK026
++:Cc1cc(C(=O)NC2CCOCC2)ccc1Nc1ncc(Cl)c(N2CCc3c2cc(C#N)cc3CO)n1          :     30.4097:      5.2800:      6.4710:     -1.1910:      7.5531:     YES     : NIK030
++:CC(O)(c1nccs1)C#Cc1ccc2nc(NC)cc(c3c[nH]nc3)c2c1                       :     33.1224:      7.5900:      6.6340:      0.9560:      1.3048:     YES     : NIK039
++:CC(O)(c1nccs1)C#Cc1ccc2nc(N3CCN(C)CC3)cc(c3c[nH]nc3)c2c1              :     39.8303:      6.7600:      7.0371:     -0.2771:      0.4184:     YES     : NIK042
++:CC(O)(c1nccs1)C#Cc1ccc2nccc(c3c[nH]nc3)c2c1                           :     30.4530:      7.6600:      6.4736:      1.1864:      0.2867:     YES     : NIK045
++:OC1(C#Cc2ccc3nccc(c4c[nH]nc4)c3c2)CCCCC1                              :     18.8459:      5.2200:      5.7762:     -0.5562:      0.6575:     YES     : NIK047
++:OC1(C#Cc2ccc3nccc(c4c[nH]nc4)c3c2)CCCC1                               :     18.5966:      6.2500:      5.7612:      0.4888:      0.6427:     YES     : NIK048
++:CC(O)(c1nccs1)C#Cc1cccc(n2ccc3cnc(N)nc23)c1                           :     25.1923:      6.5200:      6.1575:      0.3625:      0.2889:     YES     : NIK050
++:CC(O)(c1nccs1)C#Cc1cc(n2ccc3cnc(N)nc23)ccc1OC                         :     24.9671:      5.7600:      6.1440:     -0.3840:      3.2929:     YES     : NIK054
++:CC(O)(c1nccs1)C#Cc1cc(n2ccc3cnc(N)nc23)ccc1OCCOC                      :     26.2030:      4.5900:      6.2182:     -1.6282:      3.3828:     YES     : NIK060
++:CC(O)(c1nccs1)C#Cc1cccc(n2ccc3c(OC)nc(N)nc23)c1                       :     28.9938:      5.6000:      6.3859:     -0.7859:      1.3375:     YES     : NIK062
++:CC(O)(c1nccnc1)C#Cc1nccc(n2ccc3cnc(N)nc23)c1                          :     27.5625:      7.5900:      6.2999:      1.2901:      1.2991:     YES     : NIK066
++:OC1(C#Cc2nccc(n3ccc4cnc(N)nc34)c2)CCNCC1                              :     16.9802:      5.6400:      5.6640:     -0.0240:      0.7150:     YES     : NIK069
++:OC1(C#Cc2nccc(n3ccc4cnc(N)nc34)c2)CCCC1                               :     18.7534:      6.6300:      5.7706:      0.8594:      0.6819:     YES     : NIK071
++:O=C1N(C)CCC1(C#Cc1nccc(n2ccc3ccc(N)nc23)c1)O                          :     20.7290:      5.6100:      5.8893:     -0.2793:      1.4220:     YES     : NIK075
++:CC(O)(c1nccs1)C#Cc1cc(OC)cc(c2c[nH]c3cnc(N)nc23)c1                    :     30.7287:      7.0700:      6.4902:      0.5798:      0.3173:     YES     : NIK081
++:OC(c1nccs1)C#Cc1cccc(c2c[nH]c3cnc(N)nc23)c1                           :     26.6392:      5.2000:      6.2444:     -1.0444:      0.2623:     YES     : NIK087
++:CC(O)(C1CCCCC1)C#Cc1cccc(c2c[nH]c3cnc(N)nc23)c1                       :     25.3054:      5.6900:      6.1643:     -0.4743:      1.3923:     YES     : NIK088
++:CC(O)(C)C#Cc1cccc(c2c[nH]c3cnc(N)nc23)c1                              :     23.0632:      6.1400:      6.0296:      0.1104:      0.2673:     YES     : NIK089
++:OC1(C#Cc2cccc(c3c[nH]c4cnc(N)nc34)c2)CCCC1                            :     16.8394:      6.3200:      5.6556:      0.6644:      0.6138:     YES     : NIK091
++:O=C1N(C)CCC1(C#Cc1ccc(F)c(c2c[nH]c3cnc(N)nc23)c1)O                    :     26.3437:      8.2300:      6.2267:      2.0033:      9.4234:     NO      : NIK092
++:CC(O)(c1nccs1)C#Cc1ccc(N(C)C)c(Nc2c3c([nH]cc3)ncn2)c1                 :     41.5735:      7.6500:      7.1418:      0.5082:      1.3219:     YES     : NIK094
++:CC(O)(c1nccs1)C#Cc1ccc(N2C[C@@H](C)NCC2)c(Nc2c3c([nH]cc3)ncn2)c1      :     43.5101:      6.6800:      7.2582:     -0.5782:      4.3798:     YES     : NIK099
++:CC(O)(c1nccs1)C#Cc1ccc(N2CCC(N3CCOCC3)CC2)c(Nc2c3c([nH]cc3)ncn2)c1    :     47.6516:      7.8200:      7.5071:      0.3129:      1.4903:     YES     : NIK103
++:CC(O)(c1nccs1)C#Cc1ccc(OC2CCN(C)CC2)c(Nc2c3c([nH]cc3)ncn2)c1          :     44.9297:      6.1500:      7.3435:     -1.1935:      1.4413:     YES     : NIK106
++:CC(O)(C1CCCC1)C#Cc1ccc(N2CCOCC2)c(Nc2c3c([nH]cc3)ncn2)c1              :     37.2260:      5.6500:      6.8806:     -1.2306:      1.4733:     YES     : NIK109
++:CC(O)(c1cccs1)C#Cc1ccc(N2CCOCC2)c(Nc2c3c([nH]cc3)ncn2)c1              :     38.8184:      7.3000:      6.9763:      0.3237:      0.3807:     YES     : NIK110
++:CC(O)(c1nccs1)C#Cc1ccc(N2CCOCC2)c(Nc2c3ccsc3ncn2)c1                   :     42.6830:      8.0600:      7.2085:      0.8515:      2.4268:     YES     : NIK116
+-:Nc1nc(N2CCc3c2cc(Br)cc3)c(C)cn1                                       :     28.6330:      5.3600:      6.3643:     -1.0043:      9.1714:     NO      : NIK004
+-:Nc1nc(N2CCc3c2cc(Br)cc3)c(SC)cn1                                      :     27.9938:      4.6800:      6.3258:     -1.6458:     16.1577:     NO      : NIK007
+-:Nc1nc(N2CCc3c2cc(C#N)cc3)c(Cl)cn1                                     :     30.9382:     10.0500:      6.5028:      3.5472:      0.2723:     YES     : NIK013
+-:Nc1nc(N2CCc3c2cc(C#N)cc3CN)c(Cl)cn1                                   :     27.1651:      6.7100:      6.2760:      0.4340:      0.3056:     YES     : NIK019
+-:Nc1nc(N2CCc3c2cc(C#N)cc3CNc2cccnc2)c(Cl)cn1                           :     32.5293:      6.0900:      6.5984:     -0.5084:      1.3346:     YES     : NIK023
+-:Nc1nc(N2CCc3c2cc(C#N)cc3CO)c(Cl)cn1                                   :     24.9365:      7.0300:      6.1421:      0.8879:      2.2693:     YES     : NIK025
+-:Clc1c(C2CCc3c2cc(C#N)cc3CO)nc(Nc2ccc(C(=O)NC3CCOCC3)cc2)nc1           :     25.1913:      6.8100:      6.1574:      0.6526:     10.5433:     NO      : NIK031
+-:Clc1c(C2CCc3c2cc(C#N)cc3CO)nc(Nc2ccc(C(=O)NC3CC[C@H](O)CC3)cc2)nc1    :     30.8513:      6.7800:      6.4975:      0.2825:     13.5243:     NO      : NIK033
+-:Clc1c(C2CCc3c2cc(C#N)cc3CO)nc(Nc2ccc(C(=O)NC3CCNCC3)cc2)nc1           :     24.4374:      6.5300:      6.1121:      0.4179:     10.5625:     NO      : NIK034
+-:Oc1nc2ccc(C#CC(c3nccs3)(O)C)cc2c(c2c[nH]nc2)c1                        :     39.2633:      7.4100:      7.0030:      0.4070:      8.3176:     NO      : NIK038
+-:CC(O)(c1nccs1)C#Cc1ccc2nc(N(CCOC)C)cc(c3c[nH]nc3)c2c1                 :     42.2074:      8.2800:      7.1799:      1.1001:      1.3278:     YES     : NIK040
+-:CC(O)(c1nccs1)/C=C/c1ccc2nccc(c3c[nH]nc3)c2c1                         :     30.1569:      5.6800:      6.4558:     -0.7758:     16.2752:     NO      : NIK049
+-:CC(O)(c1nccs1)C#Cc1cc(n2ccc3cnc(N)nc23)ccc1F                          :     26.1875:      6.6900:      6.2173:      0.4727:      6.2683:     YES     : NIK051
+-:CC(O)(c1nccs1)C#Cc1cc(n2ccc3cnc(N)nc23)c(F)cc1F                       :     27.6971:      6.1900:      6.3080:     -0.1180:     13.2734:     NO      : NIK053
+-:CC(O)(c1nccs1)C#Cc1ccc(OC)c(n2ccc3cnc(N)nc23)c1                       :     28.5877:      6.6700:      6.3615:      0.3085:      0.3417:     YES     : NIK055
+-:CC(O)(c1nccs1)C#Cc1cc(n2ccc3cnc(N)nc23)ccc1C                          :     24.7193:      4.9300:      6.1291:     -1.1991:      1.2897:     YES     : NIK056
+-:N#Cc1cc(C#CC(c2nccs2)(O)C)cc(n2ccc3cnc(N)nc23)c1                      :     22.3991:      5.6900:      5.9897:     -0.2997:      5.3394:     YES     : NIK059
+-:CC(O)(c1nccs1)C#Cc1cccc(n2cc(Cl)c3cnc(N)nc23)c1                       :     35.0966:      5.6900:      6.7526:     -1.0626:      1.3418:     YES     : NIK061
+-:CC(O)(c1nccs1)C#Cc1ccc(n2ccc3cnc(N)nc23)cc1                           :     24.0549:      6.9200:      6.0892:      0.8308:      0.2829:     YES     : NIK063
+-:CC(O)(c1nccs1)C#Cc1nccc(n2ccc3cnc(N)nc23)c1                           :     30.7810:      5.7900:      6.4933:     -0.7033:      0.2881:     YES     : NIK064
+-:CC(O)(c1noc(C)c1)C#Cc1nccc(n2ccc3cnc(N)nc23)c1                        :     30.8955:      7.5800:      6.5002:      1.0798:      6.2835:     YES     : NIK065
+-:O=C1N(C)CCCC1(C#Cc1nccc(n2ccc3cnc(N)nc23)c1)O                         :     23.1018:      5.2100:      6.0319:     -0.8219:      1.4421:     YES     : NIK068
+-:O=C1N(C)CCC1(C#Cc1nccc(n2ccc3c(C)nc(N)nc23)c1)O                       :     28.1904:      7.0700:      6.3377:      0.7323:      2.4505:     YES     : NIK076
+-:O=C1N(C)CCC1(C#Cc1nccc(n2ccc3c(CC)nc(N)nc23)c1)O                      :     29.9441:      6.7200:      6.4430:      0.2770:      2.4497:     YES     : NIK077
+-:CC(O)(c1nccs1)C#Cc1cccc(c2c[nH]c3cnc(N)nc23)c1F                       :     30.7586:      6.6600:      6.4920:      0.1680:      6.2589:     YES     : NIK078
+-:CC(O)(c1nccs1)C#Cc1cc(F)cc(c2c[nH]c3cnc(N)nc23)c1                     :     29.8659:      4.9600:      6.4383:     -1.4783:      9.2551:     NO      : NIK079
+-:CC(O)(c1noc(C)c1)C#Cc1cccc(c2c[nH]c3cnc(N)nc23)c1                     :     28.7405:      5.6600:      6.3707:     -0.7107:      6.2689:     YES     : NIK084
+-:CC(O)(c1nccs1)C#Cc1cccc(Nc2c3c([nH]cc3)ncn2)c1                        :     31.9722:      5.7900:      6.5649:     -0.7749:      0.2960:     YES     : NIK093
+-:CC(O)(c1nccs1)C#Cc1ccc(N2CCNCC2)c(Nc2c3c([nH]cc3)ncn2)c1              :     40.0421:      8.0100:      7.0498:      0.9602:      0.3885:     YES     : NIK098
+-:CC(O)(c1nccs1)C#Cc1ccc(N2C3CC(NC3)C2)c(Nc2c3c([nH]cc3)ncn2)c1         :     42.0761:      6.7000:      7.1720:     -0.4720:      4.4206:     YES     : NIK101
+-:CC(O)(c1nccs1)C#Cc1ccc(OC2CCOCC2)c(Nc2c3c([nH]cc3)ncn2)c1             :     40.6219:      6.9500:      7.0847:     -0.1347:      1.4091:     YES     : NIK105
+-:OC1(C#Cc2ccc(N3CCOCC3)c(Nc3c4c([nH]cc4)ncn3)c2)CCCCC1                 :     23.7309:      6.1900:      6.0697:      0.1203:      4.6641:     YES     : NIK108
+-:CC(O)(c1nccs1)C#Cc1ccc(N2CCOCC2)c(Nc2nc(N)ncc2)c1                     :     40.0078:      7.9400:      7.0478:      0.8922:      0.3458:     YES     : NIK114
+-:CC(O)(c1nccs1)C#Cc1ccccc1N1C(Nc2c3c([nH]cc3)ncc2)COCC1                :     39.7444:      8.1800:      7.0319:      1.1481:      3.3773:     YES     : NIK115
+-:C[C@](O)(c1nccs1)C#Cc1ccc(N2CCOCC2)c(Nc2c3c([nH]cc3)ncn2)c1           :     42.0130:      7.9200:      7.1682:      0.7518:      3.3652:     YES     : NIK117
+#:Nc1nc(N2CCc3c2cc(Br)cc3)c(Cl)cn1                                      :     31.3404:      6.5200:      6.5269:     -0.0069:      9.2102:     NO      : NIK001
+#:Nc1nc(N2CCc3c2cc(Br)cc3)c(F)cn1                                       :     24.6970:      6.6000:      6.1277:      0.4723:     16.1492:     NO      : NIK003
+#:Nc1nc(N2CCc3c2cc(Br)cc3)c(OC)cn1                                      :     25.4899:      5.7600:      6.1754:     -0.4154:      9.1910:     NO      : NIK005
+#:O=C(N1CCCC1)C(C)(O)C#Cc1nccc(n2ccc3cnc(N)nc23)c1                      :     26.4506:      5.9400:      6.2331:     -0.2931:      3.4615:     YES     : NIK006
+#:Nc1nc(N2CCc3c2cc(O)cc3)c(Cl)cn1                                       :     28.0870:      7.1100:      6.3314:      0.7786:      0.2816:     YES     : NIK008
+#:Nc1nc(N2CCc3c2cc(CNC)cc3)c(Cl)cn1                                     :     36.5694:      7.2400:      6.8411:      0.3989:      3.2575:     YES     : NIK012
+#:Nc1nc(N2CCc3c2cc(C2CC2)cc3)c(Cl)cn1                                   :     40.0509:      7.6200:      7.0503:      0.5697:      2.2915:     YES     : NIK016
+#:Nc1nc(N2CCc3c2cc(C#N)cc3CNC)c(Cl)cn1                                  :     30.2618:      6.2200:      6.4621:     -0.2421:      1.3137:     YES     : NIK020
+#:Nc1nc(N2CCc3c2cc(C#N)cc3C(=O)ONC)c(Cl)cn1                             :     30.8367:      5.9600:      6.4967:     -0.5367:      6.4095:     YES     : NIK027
+#:O=C(NC1CCOCC1)c1ccc(Nc2ncc(Cl)c(N3CCc4c3cc(C#N)cc4CO)n2)c(OC)c1       :     22.6186:      6.1600:      6.0028:      0.1572:      9.7912:     NO      : NIK028
+#:Fc1cc(C(=O)NC2CCOCC2)ccc1Nc1ncc(Cl)c(N2CCc3c2cc(C#N)cc3CO)n1          :     30.0366:      6.0500:      6.4486:     -0.3986:     13.5438:     NO      : NIK029
+#:Clc1c(C2CCc3c2cc(C#N)cc3CO)nc(Nc2ccc(C(=O)NC3CC[C@@H](O)CC3)cc2)nc1   :     30.9926:      6.6700:      6.5060:      0.1640:     13.5243:     NO      : NIK032
+#:Clc1c(C2CCc3c2cc(C#N)cc3CO)nc(Nc2ccc(C(=O)NC3CC[C@@H](N)CC3)cc2)nc1   :     30.9207:      6.7400:      6.5017:      0.2383:     13.5200:     NO      : NIK035
+#:Clc1c(C2CCc3c2cc(C#N)cc3CO)nc(Nc2ccc(C(=O)NC3CC[C@H](N)CC3)cc2)nc1    :     30.7795:      6.6100:      6.4932:      0.1168:     13.5200:     NO      : NIK036
+#:CC(O)(c1nccs1)C#Cc1ccc2nc(N(CCN(C)C)C)cc(c3c[nH]nc3)c2c1              :     43.5869:      6.8000:      7.2628:     -0.4628:      2.3610:     YES     : NIK041
+#:CC(O)(C)C#Cc1ccc2nccc(c3c[nH]nc3)c2c1                                 :     22.7451:      5.7600:      6.0104:     -0.2504:      0.2470:     YES     : NIK043
+#:CC(O)(c1cccs1)C#Cc1ccc2nccc(c3c[nH]nc3)c2c1                           :     26.3303:      6.2800:      6.2259:      0.0541:      0.2647:     YES     : NIK044
+#:CC(O)(c1nccs1)C#Cc1ccc(F)c(n2ccc3cnc(N)nc23)c1                        :     27.7248:      6.6700:      6.3097:      0.3603:      9.2795:     NO      : NIK052
+#:CC(O)(c1nccs1)C#Cc1ccc(C)c(n2ccc3cnc(N)nc23)c1                        :     30.1242:      6.4700:      6.4539:      0.0161:      0.3162:     YES     : NIK057
+#:N#Cc1ccc(n2ccc3cnc(N)nc23)cc1C#CC(c1nccs1)(O)C                        :     24.7911:      6.6600:      6.1334:      0.5266:      4.3151:     YES     : NIK058
+#:O=C1N(C)CCC1(C#Cc1nccc(n2ccc3cnc(N)nc23)c1)O                          :     22.8524:      6.1300:      6.0169:      0.1131:      1.4273:     YES     : NIK067
+#:OC1(C#Cc2nccc(n3ccc4cnc(N)nc34)c2)CCCCC1                              :     19.0028:      5.8000:      5.7856:      0.0144:      0.6967:     YES     : NIK072
+#:OC1(C#Cc2nccc(n3ccc4cnc(N)nc34)c2)CCCCCC1                             :     19.2522:      6.1300:      5.8006:      0.3294:      0.7115:     YES     : NIK073
+#:CC(O)(c1nccs1)C#Cc1ncc(F)c(n2ccc3cnc(N)nc23)c1                        :     33.3135:      7.0600:      6.6455:      0.4145:      9.2787:     NO      : NIK074
+#:CC(O)(c1nccs1)C#Cc1ccc(F)c(c2c[nH]c3cnc(N)nc23)c1                     :     31.1585:      6.5000:      6.5160:     -0.0160:      9.2640:     NO      : NIK080
+#:CC(O)(c1nccs1)C#Cc1ccc(OC)c(c2c[nH]c3cnc(N)nc23)c1                    :     32.0214:      6.5400:      6.5679:     -0.0279:      0.3262:     YES     : NIK082
+#:CC(O)(c1nccs1)C#Cc1cc(Cl)cc(c2c[nH]c3cnc(N)nc23)c1                    :     36.2697:      6.9200:      6.8231:      0.0969:      1.3198:     YES     : NIK083
+#:CC(O)(c1nccnc1)C#Cc1cccc(c2c[nH]c3cnc(N)nc23)c1                       :     29.0186:      6.5400:      6.3874:      0.1526:      1.2951:     YES     : NIK085
+#:CC(O)(c1nc(OC)ccc1)C#Cc1cccc(c2c[nH]c3cnc(N)nc23)c1                   :     26.2130:      6.3300:      6.2188:      0.1112:      0.2962:     YES     : NIK086
+#:CC(O)(c1nccs1)C#Cc1ccc(N(CCOC)C)c(Nc2c3c([nH]cc3)ncn2)c1              :     44.3042:      7.1400:      7.3059:     -0.1659:      1.3596:     YES     : NIK095
+#:CC(O)(c1nccs1)C#Cc1ccc(N2CCN(CC)CC2)c(Nc2c3c([nH]cc3)ncn2)c1          :     46.8574:      7.4600:      7.4593:      0.0007:      0.4007:     YES     : NIK102
+#:CC(O)(c1nccs1)C#Cc1ccc(N2CCN(C)CCC2)c(Nc2c3c([nH]cc3)ncn2)c1          :     45.3531:      7.2200:      7.3690:     -0.1490:      0.4162:     YES     : NIK104
+#:OC1(C#Cc2ccc(N3CCOCC3)c(Nc3c4c([nH]cc4)ncn3)c2)CCCC1                  :     23.4816:      5.5700:      6.0547:     -0.4847:      4.6493:     YES     : NIK107
+#:CC(=O)N1CCN(c2ccc(C#CC(c3nccs3)(O)C)cc2Nc2c3c([nH]cc3)ncn2)CC1        :     44.6218:      7.7500:      7.3250:      0.4250:      9.5632:     NO      : NIK111
+#:CC(O)(c1nccs1)C#Cc1ccc(N2CCN(S(=O)(=O)CC)CC2)c(Nc2c3c([nH]cc3)ncn2)c1~:     57.0974:      8.0900:      8.0747:      0.0153:     10.6934:     NO      : NIK112
+#:C[C@@](O)(c1nccs1)C#Cc1ccc(N2CCOCC2)c(Nc2c3c([nH]cc3)ncn2)c1          :     42.4666:      7.1300:      7.1955:     -0.0655:      3.3652:     YES     : NIK118

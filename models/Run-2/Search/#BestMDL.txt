@@ -1,0 +1,47 @@
+Data from #TrainingSet.txt
+Representation of molecular structure by 
+* Hydrogen filled graph
+* SMILES
+
+Correlation coefficients for the Active TRAINING SET
+ Threshold:Probe  1: Average  :Dispersion
+         1:  0.5152:    0.5152:    0.0000
+
+The preferable number of epochs of the Monte Carlo optimization for the active TRAINING SET
+ Threshold:Probe  1: Average  :Dispersion
+         1:      11:     11.00:      0.00
+
+Correlation coefficients for the passive Training SET
+ Threshold:Probe  1: Average  :Dispersion
+         1:  0.9301:    0.9301:    0.0000
+
+The preferable number of epochs of the Monte Carlo optimization for the passive training SET
+ Threshold:Probe  1: Average  :Dispersion
+         1:       4:      4.00:      0.00
+
+
+Preferable threshold T*=1  Preferable average number of epochs   N*=  4.0   Average R2 for calibration set =   0.9301
+
+Root-mean-square error for the active TRAINING SET
+ Threshold:Probe  1: Average  :Dispersion
+         1:  0.7387:    0.7387:    0.0000
+
+The preferable number of epochs of the Monte Carlo optimization for the active TRAINING SET
+ Threshold:Probe  1: Average  :Dispersion
+         1:      11:     11.00:      0.00
+
+Root-mean-square error for the passive training SET
+ Threshold:Probe  1: Average  :Dispersion
+         1:  0.1593:    0.1593:    0.0000
+
+The preferable number of epochs of the Monte Carlo optimization for the passive training SET
+ Threshold:Probe  1: Average  :Dispersion
+         1:       4:      4.00:      0.00
+
+Preferable threshold T*=1  Preferable average number of epochs   N*=  4.0   Average RMSE for calibration set =   0.1593
+
+IMPORTANT:
+Ideal result if the preferable threshold is the same for correlation
+coefficient of the calibration set and for root-mean-square error of the calibration set.
+If they are different, the threshold that gives the best correlation coefficient
+should be choice.

@@ -1,0 +1,2 @@
+1
+*TEST0001 COc1cnc(nc1N1CCc2c1cc(Br)cc2)N 0.000

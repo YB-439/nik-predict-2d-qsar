@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NIK-Predict: NF-κB Inducing Kinase Bioactivity Prediction Platform | Drug Design & Synthesis Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+  <!-- Local SmilesDrawer Engine -->
+  <script src="/static/vendor/smiles-drawer.min.js"></script>
+</head>
+<body>
+  <div class="site-wrapper">
+    <!-- Top Branding Header with Dual Logos -->
+    <header class="site-header">
+      <div class="header-container">
+        <div class="brand-identity">
+          <img src="/static/pup_logo.png" alt="Punjabi University Patiala Crest" class="university-logo" title="Punjabi University Patiala" />
+          <img src="/static/lab_logo_round.jpeg" alt="Drug Design & Synthesis Lab Logo" class="lab-logo-img" title="Drug Design & Synthesis Lab - In-Silico to In-Vivo" />
+          <div class="brand-text">
+            <h2 class="lab-title">Drug Design &amp; Synthesis Lab</h2>
+            <h3 class="dept-title">Department of Pharmaceutical Sciences and Drug Research</h3>
+            <h4 class="university-title">Punjabi University, Patiala, Punjab, India</h4>
+          </div>
+        </div>
+        <div class="header-metadata">
+          <div class="contact-group">
+            <a href="mailto:drugdesignsynthesislab@gmail.com" class="contact-pill" title="Lab Contact Email">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              drugdesignsynthesislab@gmail.com
+            </a>
+            <a href="mailto:Yogita_pharma@pbi.ac.in" class="contact-pill" title="Faculty Contact Email">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              Yogita_pharma@pbi.ac.in
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- Top Navigation Tabs Bar -->
+      <nav class="top-nav-bar">
+        <div class="nav-container">
+          <a href="#predictorWorkspace" class="nav-tab active">Main</a>
+          <a href="#aboutSection" class="nav-tab">About</a>
+          <a href="#whatIsNikSection" class="nav-tab">What is NIK?</a>
+          <a href="#datasetSection" class="nav-tab">Dataset</a>
+          <a href="#modelPerformanceSection" class="nav-tab">Model performance</a>
+          <a href="#contactSection" class="nav-tab">Collaboration &amp; Contact</a>
+          <a href="#limitationsSection" class="nav-tab">Limitations</a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Portal Hero Title -->
+      <section class="hero-section" id="aboutSection">
+        <div class="hero-tag">2D-QSAR MONTE CARLO PREDICTION PLATFORM</div>
+        <h1 class="hero-title">NIK-Predict: NF-&kappa;B Inducing Kinase Bioactivity Prediction Platform</h1>
+        <p class="hero-desc">
+          Predict the biological inhibitory activity (pIC<sub>50</sub>) of small molecules against 
+          <strong>NF-&kappa;B Inducing Kinase (NIK / MAP3K14)</strong> using machine learning and 2D-QSAR modeling.
+        </p>
+      </section>
+
+      <!-- Biological Context Card: What is NIK -->
+      <section class="nik-info-card" id="whatIsNikSection">
+        <div class="nik-info-grid">
+          <div class="nik-info-text">
+            <h3 class="nik-info-heading">What is NIK (NF-&kappa;B Inducing Kinase)?</h3>
+            <p class="nik-info-para">
+              <strong>NIK</strong> is a serine/threonine kinase belonging to the MAP3K family and serves as a central regulator of the noncanonical NF-&kappa;B pathway. Its activity is normally kept low through continuous ubiquitination and proteasomal degradation mediated by the TRAF&ndash;cIAP E3 ligase complex.
+            </p>
+            <p class="nik-info-para">
+              When this regulatory control is disrupted by mutations or altered expression, NIK accumulates and becomes pathologically active. Elevated NIK drives excessive processing of <strong>p100 to p52</strong>, leading to overactivation of downstream transcriptional programs. This aberrant signalling promotes the production of pro-inflammatory cytokines and survival factors, contributing to <em>autoimmune diseases, chronic inflammatory conditions, B-cell malignancies, immune dysfunction, and tissue injury</em>.
+            </p>
+          </div>
+          <div class="nik-workflow-wrap">
+            <img src="/static/nik_workflow.jpeg" alt="NIK-Predict Workflow Diagram" class="nik-workflow-img" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Prediction Workspace Card -->
+      <section class="predictor-card" id="predictorWorkspace">
+        <div class="card-header">
+          <div class="mode-tabs">
+            <button class="tab-btn active" id="tabSingle" onclick="switchTab('single')">Single Compound</button>
+            <button class="tab-btn" id="tabBatch" onclick="switchTab('batch')">Batch Prediction</button>
+          </div>
+          <div class="samples-group" id="samplesGroup">
+            <span class="samples-label">Test Compounds:</span>
+            <div id="sampleChipsContainer" class="sample-chips-wrap">
+              <button class="sample-chip" onclick="loadSample(0)">Compound 1</button>
+              <button class="sample-chip" onclick="loadSample(1)">Lead NIK015</button>
+              <button class="sample-chip" onclick="loadSample(2)">Benchmark NIK009</button>
+              <button class="sample-chip" onclick="loadSample(3)">Heteroaryl NIK017</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <!-- Model Selection Dropdown -->
+          <div class="model-select-wrap">
+            <label for="modelSelect" class="model-select-label">Choose a prediction model</label>
+            <select id="modelSelect" class="model-select-dropdown">
+              <option value="nik_2d_qsar" selected>NIK 2D QSAR MODEL</option>
+            </select>
+          </div>
+
+          <!-- Single SMILES Form -->
+          <div id="singleModeContainer">
+            <div class="input-layout">
+              <div class="input-col">
+                <div class="field-header">
+                  <label for="smilesInput" class="field-label">Enter SMILES String</label>
+                  <label class="file-upload-link" title="Upload a SMILES file (.smi, .txt, .csv)">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                      <polyline points="17 8 12 3 7 8"></polyline>
+                      <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    Upload SMILES File
+                    <input type="file" id="singleFileInput" accept=".smi,.txt,.csv" style="display: none;" onchange="handleSingleFileUpload(event)" />
+                  </label>
+                </div>
+                <div class="input-wrapper">
+                  <input
+                    type="text"
+                    id="smilesInput"
+                    placeholder="e.g. COc1cnc(nc1N1CCc2c1cc(Br)cc2)N"
+                    autocomplete="off"
+                    spellcheck="false"
+                  />
+                  <button class="clear-btn" id="clearBtn" onclick="clearInput()" title="Clear input">&times;</button>
+                </div>
+                <p class="field-hint">Paste canonical SMILES or click a test compound. 2D structure renders instantly on the right.</p>
+
+                <div class="action-row">
+                  <button class="btn btn-primary" id="btnPredict" onclick="runSinglePrediction()">
+                    <span class="btn-text">Predict Bioactivity</span>
+                    <span class="spinner" id="predictSpinner"></span>
+                  </button>
+                  <button class="btn btn-secondary" onclick="clearInput()">Reset</button>
+                </div>
+              </div>
+
+              <!-- 2D Molecule Preview -->
+              <div class="preview-col">
+                <div class="preview-header">
+                  <span class="preview-title">2D Molecular Structure</span>
+                  <span class="status-indicator" id="structureStatus">Awaiting input</span>
+                </div>
+                <div class="canvas-container" id="canvasDropZone">
+                  <div id="svgWrapper" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                    <svg id="moleculeSvg" width="360" height="240" viewBox="0 0 360 240"></svg>
+                  </div>
+                  <div class="empty-canvas-msg" id="emptyCanvasMsg" style="display: none;">
+                    <span>Structure will render upon SMILES entry or test compound click</span>
+                  </div>
+                </div>
+
+              <!-- Physicochemical Properties Table (UPDATE 01.docx Requirement) -->
+              <div class="properties-card" id="propertiesCard" style="margin-top: 1.25rem;">
+                <div class="properties-header">
+                  <span class="properties-title">Physicochemical Properties</span>
+                </div>
+                <table class="properties-table">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Formula</td>
+                      <td id="propFormula" class="prop-val">--</td>
+                    </tr>
+                    <tr>
+                      <td>Molecular Weight</td>
+                      <td id="propMW" class="prop-val">--</td>
+                    </tr>
+                    <tr>
+                      <td>LogP (Lipophilicity)</td>
+                      <td id="propLogP" class="prop-val">--</td>
+                    </tr>
+                    <tr>
+                      <td>TPSA</td>
+                      <td id="propTPSA" class="prop-val">--</td>
+                    </tr>
+                    <tr>
+                      <td>H-Bond Donors / Acceptors</td>
+                      <td id="propHDonors" class="prop-val">--</td>
+                    </tr>
+                    <tr>
+                      <td>Rotatable Bonds</td>
+                      <td id="propRotBonds" class="prop-val">--</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Batch SMILES Form -->
+          <div id="batchModeContainer" style="display: none;">
+            <div class="field-header">
+              <label for="batchInput" class="field-label">SMILES List (One compound per line)</label>
+              <label class="file-upload-link" title="Upload batch file (.smi, .txt, .csv)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                Upload Batch (.smi, .txt, .csv)
+                <input type="file" id="batchFileInput" accept=".smi,.txt,.csv" style="display: none;" onchange="handleBatchFileUpload(event)" />
+              </label>
+            </div>
+            <textarea
+              id="batchInput"
+              rows="6"
+              placeholder="COc1cnc(nc1N1CCc2c1cc(Br)cc2)N&#10;N#Cc1ccc(cc1)c1cnc(s1)C(=O)Nc1nccc(n1)n1cnc2c1ccc(c2)Cl&#10;Nc1nc(N2CCc3c2cc(OC)cc3)c(Cl)cn1"
+              spellcheck="false"
+            ></textarea>
+            <p class="field-hint">Evaluate screening libraries in parallel across the QSAR model.</p>
+            <div class="action-row">
+              <button class="btn btn-primary" id="btnBatchPredict" onclick="runBatchPrediction()">
+                <span class="btn-text">Run Batch Prediction</span>
+                <span class="spinner" id="batchSpinner"></span>
+              </button>
+              <button class="btn btn-secondary" onclick="clearBatchInput()">Clear List</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Results Display Section (Consensus Only) -->
+      <section class="results-section" id="resultsSection" style="display: none;">
+        <div class="results-header">
+          <div class="results-title-wrap">
+            <h2 class="results-title">Consensus Prediction Results</h2>
+            <span class="kinase-pill-tag">NIK Target</span>
+          </div>
+          <span class="timing-badge" id="timingBadge">Computed in 0.0s</span>
+        </div>
+
+        <!-- Single Clean Consensus Banner (NO DCW, NO DEFECT BOXES) -->
+        <div class="consensus-banner consensus-banner-simple">
+          <div class="consensus-primary">
+            <span class="consensus-label">CONSENSUS PREDICTED pIC<sub>50</sub></span>
+            <div class="consensus-number-wrap">
+              <span class="consensus-value" id="consensusVal">--</span>
+              <span class="consensus-unit">pIC<sub>50</sub></span>
+            </div>
+            <p class="consensus-subtext">Calculated consensus biological inhibitory potency against NIK kinase</p>
+          </div>
+        </div>
+
+        <!-- Batch Results Table -->
+        <div class="batch-results-table-wrap" id="batchTableWrap" style="display: none;">
+          <div class="batch-table-header-row">
+            <span class="batch-count-label" id="batchCountLabel">Batch Results</span>
+            <button class="btn btn-secondary btn-sm" id="btnExportCSV" onclick="exportBatchCSV()" title="Download predictions as CSV">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              Export CSV
+            </button>
+          </div>
+          <div class="table-scroll">
+            <table class="batch-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>SMILES</th>
+                  <th>Consensus pIC<sub>50</sub></th>
+                </tr>
+              </thead>
+              <tbody id="batchTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Dataset & Model Overview -->
+      <section class="methodology-card" id="datasetSection">
+        <div class="methodology-content">
+          <h3 class="m-title">Dataset Overview</h3>
+          <p class="m-para">
+            Calculated on a curated dataset of <strong>118 NIK inhibitors</strong> collected from published literature, standardized to experimental pIC<sub>50</sub> values.
+          </p>
+        </div>
+      </section>
+
+      <!-- Model Performance Section -->
+      <section class="methodology-card" id="modelPerformanceSection">
+        <div class="methodology-content">
+          <h3 class="m-title">Model Performance Overview</h3>
+          <p class="m-para">
+            Four Monte Carlo 2D-QSAR models (M1&ndash;M4) were developed using the CORALSEA correlation balance approach. 
+            <strong>Model M3</strong> was selected as the final model based on its overall statistical performance and lower prediction error.
+            <em>Model developed at Drug Design &amp; Synthesis Lab, Punjabi University, Patiala.</em>
+          </p>
+
+          <div class="specs-grid">
+            <div class="spec-item">
+              <span class="spec-k">Target Kinase</span>
+              <span class="spec-v">NF-&kappa;B Inducing Kinase (NIK / MAP3K14)</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-k">Selected Model</span>
+              <span class="spec-v">Model M3 (CORALSEA Correlation Balance)</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-k">Validation Metrics</span>
+              <span class="spec-v">R&sup2; = 0.765 &bull; Q&sup2; = 0.660 &bull; MAE = 0.291</span>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Collaboration & Contact Section -->
+      <section class="methodology-card" id="contactSection">
+        <div class="methodology-content">
+          <h3 class="m-title">Collaboration &amp; Contact</h3>
+          <p class="m-para">
+            We are open to scientific collaboration, co-development of tools, and data exchange projects in computational drug discovery, molecular docking, dynamic and QSAR modeling.
+          </p>
+          <div class="specs-grid">
+            <div class="spec-item">
+              <span class="spec-k">Lab Email</span>
+              <span class="spec-v"><a href="mailto:drugdesignsynthesislab@gmail.com">drugdesignsynthesislab@gmail.com</a></span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-k">Faculty Email</span>
+              <span class="spec-v"><a href="mailto:Yogita_pharma@pbi.ac.in">Yogita_pharma@pbi.ac.in</a></span>
+            </div>
+          </div>
+
+          <div class="citation-card">
+            <h4 class="citation-title">&#128214; How to Cite</h4>
+            <p class="citation-text">
+              If you use <strong>NIK-Predict</strong> in your research, please cite us:
+              <br />
+              <code class="citation-code">[Citation link will be provided after publication]</code>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Limitations Section -->
+      <section class="methodology-card" id="limitationsSection">
+        <div class="methodology-content">
+          <div class="minimal-limits-box">
+            <h4 class="limits-header">&#9888; Model Limitations</h4>
+            <ul class="limits-bullets">
+              <li><strong>Small Molecules:</strong> Applicable strictly to small-molecule inhibitors. Not tested for macrocycles, peptides, or prodrugs.</li>
+              <li><strong>Chemical Space:</strong> Predictions may be less reliable outside the model's chemical space domain.</li>
+              <li><strong>Experimental Validation:</strong> In-silico predictions provide preliminary bioactivity estimates; experimental validation is required.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Portal Footer -->
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-left">
+          <p class="footer-lab">Drug Design &amp; Synthesis Lab (In-Silico to In-Vivo)</p>
+          <p class="footer-dept">Department of Pharmaceutical Sciences and Drug Research</p>
+          <p class="footer-inst">Punjabi University, Patiala, Punjab, India</p>
+        </div>
+        <div class="footer-right">
+          <p class="footer-contact">
+            Inquiries: 
+            <a href="mailto:drugdesignsynthesislab@gmail.com">drugdesignsynthesislab@gmail.com</a> | 
+            <a href="mailto:Yogita_pharma@pbi.ac.in">Yogita_pharma@pbi.ac.in</a>
+          </p>
+          <p class="footer-copy">&copy; 2026 Drug Design &amp; Synthesis Lab, Punjabi University Patiala. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

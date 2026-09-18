@@ -1,0 +1,4 @@
+=AS0010 OCCN1CCN(CC1)c1cc(nc(n1)C)Nc1ncc(s1)C(=O)Nc1c(C)cccc1Cl    6.800
+=AS0513 C=CC(=O)Nc1cc(Nc2nccc(n2)c2cn(c3c2cccc3)C)c(cc1N(CCN(C)C)C)OC    7.900
+=AS0595 COCCOc1cc2c(ncnc2cc1OCCOC)Nc1cccc(c1)C#C    7.400
+=AS1109 Nc1ncnc2c1c(nn2C(C)(C)C)c1cccc2c1cccc2    7.900

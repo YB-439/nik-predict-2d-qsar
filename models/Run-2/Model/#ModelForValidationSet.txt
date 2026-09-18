@@ -1,0 +1,9 @@
+This file contains prediction for the invisible validation set
+
+Data taken from file #ValidationSet.txt
+
+The average of DefectSMILES =     3.98767
+Substance falls into domain of applicability if DefectSMILES <      7.97533
+***
+Set:        CAS  :SMILES                                         :  DCW       :  Expr      :  Calc      : Expr-Calc  :DefectSMILES: Applicability 
+*:       TEST0001:COc1cnc(nc1N1CCc2c1cc(Br)cc2)N                 :     11.2654:      0.0000:      4.8817:     -4.8817:     15.1994

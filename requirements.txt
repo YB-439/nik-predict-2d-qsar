@@ -1,0 +1,8 @@
+streamlit>=1.32.0
+rdkit>=2023.9.5
+pandas>=2.0.0
+Pillow>=10.0.0
+fastapi>=0.110.0
+uvicorn>=0.28.0
+pydantic>=2.6.0
+pywinauto>=0.6.8; sys_platform == 'win32'

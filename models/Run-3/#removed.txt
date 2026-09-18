@@ -1,0 +1,1 @@
+=NIK074 O=C(N1CCCC1)C(C)(O)C#Cc1nccc(n2ccc3cnc(N)nc23)c1    5.210

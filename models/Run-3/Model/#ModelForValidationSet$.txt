@@ -1,0 +1,58 @@
+This file contains prediction for the invisible validation set
+
+Data taken from file #ValidationSet.txt
+
+The average of DefectSMILES =     3.98767
+Substance falls into domain of applicability if DefectSMILES <      7.97533
+
+Rm2(x,y) calculation for validation set from input file
+n           =      11
+r2          =    0.7374
+r02         =    0.6844
+rr02        =    0.7340
+(r2-r02)/r2 =    0.0719 should be < 0.1
+(r2-rr02)/r2=    0.0046 should be < 0.1
+k           =    1.0208 should be 0.85 <  k < 1.15
+kk          =    0.9774 should be 0.85 < kk < 1.15
+Rm2(test)   =    0.5676 should be > 0.5
+
+
+Rm2(y,x) calculation for validation set from input file
+n           =      11
+r2          =    0.7374
+r02         =    0.7340
+rr02        =    0.6844
+(r2-r02)/r2 =    0.0046 should be < 0.1
+(r2-rr02)/r2=    0.0719 should be < 0.1
+k           =    0.9774 should be 0.85 <  k < 1.15
+kk          =    1.0208 should be 0.85 < kk < 1.15
+R*m2(test)  =    0.6942 should be > 0.5
+
+Average Rm2 = 0.6309 should be larger 0.5
+Delta Rm2 = 0.1267 should be lower 0.2
+
+IIC(validation)             =   0.3144
+CII(validation)             =   0.8394
+RMSE(validation)            =   0.3887
+MAE(validation)             =   0.2929
+CCC(validation)             =   0.8314
+Y-randomization(validation) =   0.0478
+q2(validation)              =   0.6289
+CCCP                        =   0.6614
+
+The number of active (not blocked) attributes      =0
+
+Set:        CAS  :SMILES                                                                                     :  DCW       :  Expr      :  Calc      : Expr-Calc  :DefectSMILES: Applicability 
+*:         NIK011:Nc1nc(N2CCc3c2cc(CN)cc3)c(Cl)cn1                                                           :     27.6647:      6.9800:      7.6547:     -0.6747:      2.2494:    YES   
+*:         NIK014:Nc1nc(N2CCc3c2cc(CC#N)cc3)c(Cl)cn1                                                         :     28.8509:      7.3800:      7.8357:     -0.4557:      1.2726:    YES   
+*:         NIK018:Nc1nc(N2CCc3c2cc(c2ccncc2)cc3)c(Cl)cn1                                                     :     30.1572:      8.0500:      8.0350:      0.0150:      1.2729:    YES   
+*:         NIK037:OCc1cc(C#N)cc2c1CCC2c1ccnc(Nc2cccc(C(NC3CCOCC3)C)c2)n1                                     :     17.7523:      5.9400:      6.1421:     -0.2021:      6.4024:    YES   
+*:         NIK046:CC(O)(c1ncccc1)C#Cc1ccc2nccc(c3c[nH]nc3)c2c1                                               :     21.9459:      6.2300:      6.7820:     -0.5520:      0.2638:    YES   
+*:         NIK070:OC1(C#Cc2nccc(n3ccc4cnc(N)nc34)c2)CCC1                                                     :     19.2043:      6.4100:      6.3637:      0.0463:      0.6671:    YES   
+*:         NIK090:O=C1N(C)CCC1(C#Cc1cccc(c2c[nH]c3cnc(N)nc23)c1)O                                            :     18.5401:      6.3900:      6.2623:      0.1277:      1.4233:    YES   
+*:         NIK096:CC(O)(c1nccs1)C#Cc1ccc(N(CCN(C)C)C)c(Nc2c3c([nH]cc3)ncn2)c1                                :     22.3211:      6.3200:      6.8393:     -0.5193:      2.3928:    YES   
+*:         NIK097:CC(O)(c1nccs1)C#Cc1ccc(N2CCCC2)c(Nc2c3c([nH]cc3)ncn2)c1                                    :     23.6041:      6.9700:      7.0350:     -0.0650:      0.3783:    YES   
+*:         NIK100:CC(O)(c1nccs1)C#Cc1ccc(N2C[C@H](C)NCC2)c(Nc2c3c([nH]cc3)ncn2)c1                            :     23.6190:      7.1600:      7.0373:      0.1227:      4.3798:    YES   
+*:         NIK113:CC(O)(c1nccs1)C#Cc1ccc(N2CCN(S(=O)(=O)C3CC3)CC2)c(Nc2c3c([nH]cc3)ncn2)c1                   :     25.6570:      7.7900:      7.3483:      0.4417:     13.7355:          No
+
+The number of outliers is 1
