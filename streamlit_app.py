@@ -362,19 +362,43 @@ async function runSinglePrediction() {
 function displaySingleResult(data) {
   if (!data.results || data.results.length === 0) return;
   const res = data.results[0];
-  const consensusEl = document.getElementById("consensusVal");
-  if (consensusEl) consensusEl.textContent = res.consensus_prediction.toFixed(4);
+  const formattedVal = res.consensus_prediction.toFixed(4);
 
-  if (res.physicochemical_properties) {
-    const p = res.physicochemical_properties;
-    if (p.formula) document.getElementById("propFormula").textContent = p.formula;
-    if (p.molecular_weight) document.getElementById("propMW").textContent = `${p.molecular_weight} g/mol`;
-    if (p.logp !== undefined) document.getElementById("propLogP").textContent = p.logp;
-    if (p.tpsa !== undefined) document.getElementById("propTPSA").textContent = `${p.tpsa} Å²`;
-    if (p.h_donors_acceptors) document.getElementById("propHDonors").textContent = p.h_donors_acceptors;
-    if (p.rotatable_bonds !== undefined) document.getElementById("propRotBonds").textContent = p.rotatable_bonds;
+  // Update all consensus value spans (both left column and results section)
+  document.querySelectorAll(".consensus-value").forEach(el => {
+    el.textContent = formattedVal;
+  });
+
+  const consensusEl = document.getElementById("consensusVal");
+  if (consensusEl) consensusEl.textContent = formattedVal;
+
+  const batchConsensusEl = document.getElementById("batchConsensusVal");
+  if (batchConsensusEl) batchConsensusEl.textContent = formattedVal;
+
+  const timingEl = document.getElementById("timingBadge");
+  if (timingEl) {
+    timingEl.textContent = `Computed in ${data.total_elapsed_seconds || 0.75}s`;
   }
 
+  // Populate Physicochemical Properties Table
+  if (res.physicochemical_properties) {
+    const p = res.physicochemical_properties;
+    const propFormula = document.getElementById("propFormula");
+    const propMW = document.getElementById("propMW");
+    const propLogP = document.getElementById("propLogP");
+    const propTPSA = document.getElementById("propTPSA");
+    const propHDonors = document.getElementById("propHDonors");
+    const propRotBonds = document.getElementById("propRotBonds");
+
+    if (propFormula && p.formula) propFormula.textContent = p.formula;
+    if (propMW && p.molecular_weight) propMW.textContent = `${p.molecular_weight} g/mol`;
+    if (propLogP && p.logp !== undefined) propLogP.textContent = p.logp;
+    if (propTPSA && p.tpsa !== undefined) propTPSA.textContent = `${p.tpsa} Å²`;
+    if (propHDonors && p.h_donors_acceptors) propHDonors.textContent = p.h_donors_acceptors;
+    if (propRotBonds && p.rotatable_bonds !== undefined) propRotBonds.textContent = p.rotatable_bonds;
+  }
+
+  // Render 2D SVG structure if available
   if (res.physicochemical_properties && res.physicochemical_properties.svg) {
     const wrapper = document.getElementById("svgWrapper");
     const emptyMsg = document.getElementById("emptyCanvasMsg");

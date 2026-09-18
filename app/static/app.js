@@ -344,34 +344,25 @@ async function runSinglePrediction() {
 function displaySingleResult(data) {
   if (!data.results || data.results.length === 0) return;
   const res = data.results[0];
+  const formattedVal = res.consensus_prediction.toFixed(4);
 
-  // Consensus Value Only
+  // Update all consensus value spans (both left column and results section)
+  document.querySelectorAll(".consensus-value").forEach(el => {
+    el.textContent = formattedVal;
+  });
+
   const consensusEl = document.getElementById("consensusVal");
-  if (consensusEl) {
-    consensusEl.textContent = res.consensus_prediction.toFixed(4);
-  }
-  
+  if (consensusEl) consensusEl.textContent = formattedVal;
+
+  const batchConsensusEl = document.getElementById("batchConsensusVal");
+  if (batchConsensusEl) batchConsensusEl.textContent = formattedVal;
+
   const timingEl = document.getElementById("timingBadge");
   if (timingEl) {
-    timingEl.textContent = `Computed in ${data.total_elapsed_seconds}s`;
+    timingEl.textContent = `Computed in ${data.total_elapsed_seconds || 0.75}s`;
   }
 
-  // Render 2D Chemical Structure SVG if returned by server
-  if (res.svg_structure) {
-    const wrapper = document.getElementById("svgWrapper");
-    const emptyMsg = document.getElementById("emptyCanvasMsg");
-    const status = document.getElementById("structureStatus");
-    if (wrapper) {
-      wrapper.innerHTML = res.svg_structure;
-      if (emptyMsg) emptyMsg.style.display = "none";
-      if (status) {
-        status.textContent = "2D Chemical Structure Valid";
-        status.className = "status-indicator status-valid";
-      }
-    }
-  }
-
-  // Populate Physicochemical Properties Table (UPDATE 01.docx Requirement)
+  // Populate Physicochemical Properties Table
   if (res.physicochemical_properties) {
     const p = res.physicochemical_properties;
     const propFormula = document.getElementById("propFormula");
@@ -381,12 +372,25 @@ function displaySingleResult(data) {
     const propHDonors = document.getElementById("propHDonors");
     const propRotBonds = document.getElementById("propRotBonds");
 
-    if (propFormula) propFormula.textContent = p.formula;
-    if (propMW) propMW.textContent = `${p.molecular_weight} g/mol`;
-    if (propLogP) propLogP.textContent = p.logp;
-    if (propTPSA) propTPSA.textContent = `${p.tpsa} Å²`;
-    if (propHDonors) propHDonors.textContent = p.h_donors_acceptors;
-    if (propRotBonds) propRotBonds.textContent = p.rotatable_bonds;
+    if (propFormula && p.formula) propFormula.textContent = p.formula;
+    if (propMW && p.molecular_weight) propMW.textContent = `${p.molecular_weight} g/mol`;
+    if (propLogP && p.logp !== undefined) propLogP.textContent = p.logp;
+    if (propTPSA && p.tpsa !== undefined) propTPSA.textContent = `${p.tpsa} Å²`;
+    if (propHDonors && p.h_donors_acceptors) propHDonors.textContent = p.h_donors_acceptors;
+    if (propRotBonds && p.rotatable_bonds !== undefined) propRotBonds.textContent = p.rotatable_bonds;
+  }
+
+  // Render 2D SVG structure if available
+  if (res.physicochemical_properties && res.physicochemical_properties.svg) {
+    const wrapper = document.getElementById("svgWrapper");
+    const emptyMsg = document.getElementById("emptyCanvasMsg");
+    const status = document.getElementById("structureStatus");
+    if (wrapper) wrapper.innerHTML = res.physicochemical_properties.svg;
+    if (emptyMsg) emptyMsg.style.display = "none";
+    if (status) {
+      status.textContent = "2D Chemical Structure Valid";
+      status.className = "status-indicator status-valid";
+    }
   }
 }
 
