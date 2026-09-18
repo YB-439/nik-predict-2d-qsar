@@ -39,6 +39,10 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+# Parse query params for active navigation tab
+query_nav = st.query_params.get("nav", "Main")
+active_nav = query_nav if query_nav in ["Main", "About", "What is NIK?", "Dataset", "Model performance", "Collaboration & Contact", "Limitations"] else "Main"
+
 # Custom CSS matching exact style.css from localhost:8000
 css_code = """
 <style>
@@ -86,7 +90,7 @@ body {
   background: var(--white);
   border-bottom: 1px solid var(--slate-200);
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .header-container {
@@ -162,20 +166,42 @@ body {
   border: 1px solid rgba(158, 27, 30, 0.2);
 }
 
-/* Top Navigation Bar Styling */
+/* Top Navigation Bar embedded in Header */
 .top-nav-bar {
   background: #f8fafc;
   border-top: 1px solid var(--slate-200);
   border-bottom: 1px solid var(--slate-200);
-  padding: 0.4rem 0;
-  margin-bottom: 1.5rem;
+  padding: 0.4rem 1rem;
 }
 
-/* Nav Button Styling */
-div[data-testid="stHorizontalBlock"] > div button {
-    border-radius: 6px !important;
-    font-size: 0.88rem !important;
-    font-weight: 600 !important;
+.nav-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.nav-tab {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--slate-600);
+  text-decoration: none;
+  padding: 0.35rem 0.6rem;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.nav-tab:hover {
+  color: var(--pu-red);
+}
+
+.nav-tab.active {
+  color: var(--pu-red);
+  border-bottom-color: var(--pu-red);
+  font-weight: 700;
 }
 
 /* Hero Section */
@@ -404,7 +430,21 @@ NIK_SAMPLES = [
     }
 ]
 
-# Render Header HTML with dual logos and contact pills
+def make_nav_link(name, label, current):
+    cls = "nav-tab active" if name == current else "nav-tab"
+    return f'<a href="?nav={name.replace(" ", "+")}" target="_self" class="{cls}">{label}</a>'
+
+nav_links_html = f"""
+{make_nav_link("Main", "Main", active_nav)}
+{make_nav_link("About", "About", active_nav)}
+{make_nav_link("What is NIK?", "What is NIK?", active_nav)}
+{make_nav_link("Dataset", "Dataset", active_nav)}
+{make_nav_link("Model performance", "Model performance", active_nav)}
+{make_nav_link("Collaboration & Contact", "Collaboration &amp; Contact", active_nav)}
+{make_nav_link("Limitations", "Limitations", active_nav)}
+"""
+
+# Render Header HTML with dual logos, contact pills, and embedded top-nav-bar
 header_html = f"""
 <header class="site-header">
   <div class="header-container">
@@ -422,26 +462,17 @@ header_html = f"""
       <a href="mailto:Yogita_pharma@pbi.ac.in" class="contact-pill">✉ Yogita_pharma@pbi.ac.in</a>
     </div>
   </div>
+  <nav class="top-nav-bar">
+    <div class="nav-container">
+      {nav_links_html}
+    </div>
+  </nav>
 </header>
 """
 st.markdown(header_html, unsafe_allow_html=True)
 
-# Top Navigation Bar Tabs (Always Visible)
-if "active_nav" not in st.session_state:
-    st.session_state["active_nav"] = "Main"
-
-nav_options = ["Main", "About", "What is NIK?", "Dataset", "Model performance", "Collaboration & Contact", "Limitations"]
-cols_nav = st.columns(len(nav_options))
-for idx, opt in enumerate(nav_options):
-    btn_style = "primary" if st.session_state["active_nav"] == opt else "secondary"
-    if cols_nav[idx].button(opt, key=f"nav_btn_{idx}", type=btn_style, use_container_width=True):
-        st.session_state["active_nav"] = opt
-        st.rerun()
-
-st.markdown('<div style="margin-bottom: 1.5rem;"></div>', unsafe_allow_html=True)
-
 # Navigation Routing
-nav = st.session_state["active_nav"]
+nav = active_nav
 
 # Render Hero Banner if on Main or About
 if nav in ["Main", "About"]:
