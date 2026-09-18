@@ -8,7 +8,13 @@ from PIL import Image
 # RDKit imports for molecular processing & structure rendering
 from rdkit import Chem
 from rdkit.Chem import Descriptors, Crippen, rdMolDescriptors, Lipinski
-from rdkit.Chem.Draw import rdMolDraw2D
+
+try:
+    from rdkit.Chem.Draw import rdMolDraw2D
+    HAS_RDKIT_DRAW = True
+except Exception:
+    rdMolDraw2D = None
+    HAS_RDKIT_DRAW = False
 
 # Import predictor engine
 from app.predictor import nik_predictor_instance, calculate_physicochemical_properties
@@ -47,15 +53,20 @@ NIK_SAMPLES = [
 
 # Helper: Render RDKit SVG Drawing in Streamlit
 def render_rdkit_svg(smiles_str):
-    mol = Chem.MolFromSmiles(smiles_str)
-    if mol is None:
+    if not HAS_RDKIT_DRAW or rdMolDraw2D is None:
         return None
-    drawer = rdMolDraw2D.MolDraw2DSVG(400, 260)
-    opts = drawer.drawOptions()
-    opts.clearBackground = False
-    drawer.DrawMolecule(mol)
-    drawer.FinishDrawing()
-    return drawer.GetDrawingText()
+    try:
+        mol = Chem.MolFromSmiles(smiles_str)
+        if mol is None:
+            return None
+        drawer = rdMolDraw2D.MolDraw2DSVG(400, 260)
+        opts = drawer.drawOptions()
+        opts.clearBackground = False
+        drawer.DrawMolecule(mol)
+        drawer.FinishDrawing()
+        return drawer.GetDrawingText()
+    except Exception:
+        return None
 
 # Sidebar Navigation & Lab Branding
 st.sidebar.markdown("### 🔬 Drug Design & Synthesis Lab")

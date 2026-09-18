@@ -34,7 +34,13 @@ DEFAULT_BASE_DIR = resolve_base_dir()
 
 from rdkit import Chem
 from rdkit.Chem import Descriptors, Crippen, rdMolDescriptors, Lipinski
-from rdkit.Chem.Draw import rdMolDraw2D
+
+try:
+    from rdkit.Chem.Draw import rdMolDraw2D
+    HAS_RDKIT_DRAW = True
+except Exception:
+    rdMolDraw2D = None
+    HAS_RDKIT_DRAW = False
 
 def calculate_physicochemical_properties(smiles: str) -> Optional[Dict[str, Any]]:
     try:
@@ -50,12 +56,17 @@ def calculate_physicochemical_properties(smiles: str) -> Optional[Dict[str, Any]
         rot_bonds = Lipinski.NumRotatableBonds(mol)
 
         # Generate clean 2D SVG vector drawing
-        drawer = rdMolDraw2D.MolDraw2DSVG(360, 240)
-        opts = drawer.drawOptions()
-        opts.clearBackground = False
-        drawer.DrawMolecule(mol)
-        drawer.FinishDrawing()
-        svg_str = drawer.GetDrawingText()
+        svg_str = None
+        if HAS_RDKIT_DRAW and rdMolDraw2D is not None:
+            try:
+                drawer = rdMolDraw2D.MolDraw2DSVG(360, 240)
+                opts = drawer.drawOptions()
+                opts.clearBackground = False
+                drawer.DrawMolecule(mol)
+                drawer.FinishDrawing()
+                svg_str = drawer.GetDrawingText()
+            except Exception:
+                svg_str = None
 
         return {
             "formula": formula,
