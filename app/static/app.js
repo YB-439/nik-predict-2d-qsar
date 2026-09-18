@@ -150,7 +150,7 @@ function clearStructure() {
 }
 
 function renderStructure(smiles) {
-  const svgEl = ensureMoleculeSvg();
+  const wrapper = document.getElementById("svgWrapper");
   const emptyMsg = document.getElementById("emptyCanvasMsg");
   const status = document.getElementById("structureStatus");
 
@@ -159,6 +159,36 @@ function renderStructure(smiles) {
   if (!cleanSmiles) {
     clearStructure();
     return;
+  }
+
+  // Check pre-rendered RDKit SVG
+  if (typeof EXACT_PREDICTIONS !== "undefined" && EXACT_PREDICTIONS[cleanSmiles] && EXACT_PREDICTIONS[cleanSmiles].svg) {
+    if (wrapper) wrapper.innerHTML = EXACT_PREDICTIONS[cleanSmiles].svg;
+    if (emptyMsg) emptyMsg.style.display = "none";
+    if (status) {
+      status.textContent = "2D Chemical Structure Valid";
+      status.className = "status-indicator status-valid";
+    }
+    return;
+  }
+
+  // OpenChemLib fallback if available
+  if (typeof OCL !== "undefined") {
+    try {
+      const mol = OCL.Molecule.fromSmiles(cleanSmiles);
+      if (mol && mol.getAllAtoms() > 0) {
+        const svg = mol.toSVG(360, 240, "");
+        if (wrapper) wrapper.innerHTML = svg;
+        if (emptyMsg) emptyMsg.style.display = "none";
+        if (status) {
+          status.textContent = "2D Chemical Structure Valid";
+          status.className = "status-indicator status-valid";
+        }
+        return;
+      }
+    } catch (e) {
+      console.warn("OCL error:", e);
+    }
   }
 
   if (typeof SmilesDrawer === "undefined") {
