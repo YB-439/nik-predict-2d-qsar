@@ -462,9 +462,11 @@ function getPredictionForSmiles(smiles) {
   if (!cleanSmiles) return null;
 
   if (typeof EXACT_PREDICTIONS !== "undefined") {
+    // 1. Direct raw string key match
     if (EXACT_PREDICTIONS[cleanSmiles]) {
       return EXACT_PREDICTIONS[cleanSmiles];
     }
+    // 2. OpenChemLib Canonical SMILES & InChIKey universal match
     if (typeof OCL !== "undefined") {
       try {
         const mol = OCL.Molecule.fromSmiles(cleanSmiles);
@@ -472,6 +474,12 @@ function getPredictionForSmiles(smiles) {
           const oclSmiles = mol.toSmiles();
           if (EXACT_PREDICTIONS[oclSmiles]) {
             return EXACT_PREDICTIONS[oclSmiles];
+          }
+          if (typeof mol.getInChIKey === "function") {
+            const ik = mol.getInChIKey();
+            if (ik && EXACT_PREDICTIONS[ik]) {
+              return EXACT_PREDICTIONS[ik];
+            }
           }
         }
       } catch(e) {}
