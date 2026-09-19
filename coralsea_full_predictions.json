@@ -2,10 +2,19 @@
   "Nc1nc(N2CCc3c2cc(Br)cc3)c(Cl)cn1": {
     "code": "NIK001",
     "exp_pIC50": 6.52,
-    "consensus": null,
-    "run1": {},
-    "run2": {},
-    "run3": {}
+    "consensus": 6.7444,
+    "run1": {
+      "dcw": 18.1358,
+      "pIC50": 6.8568
+    },
+    "run2": {
+      "dcw": 23.3245,
+      "pIC50": 6.6053
+    },
+    "run3": {
+      "dcw": 21.8737,
+      "pIC50": 6.771
+    }
   },
   "Nc1nc(N2CCc3c2cc(Br)cc3)ccn1": {
     "code": "NIK002",
