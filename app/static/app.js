@@ -426,15 +426,15 @@ function estimatePrediction(cleanSmiles) {
         svg = mol.toSVG(360, 240, "");
 
         // 4. Calculate CORALSEA Monte Carlo Prediction based on model correlation weights
-        let dcw_est = 5.0 + (totalAtoms * 0.45) + (mw * 0.02) + (numAcceptors * 0.8) - (rotbonds * 0.2);
-        let pic50_r1 = 4.1953 + 0.1468 * dcw_est;
-        let pic50_r2 = 3.2715 + 0.1429 * (dcw_est * 1.25);
-        let pic50_r3 = 3.4332 + 0.1526 * (dcw_est * 1.15);
+        let dcw_est = 12.0 + (numAcceptors * 0.5) + (tpsaCalc * 0.05) - (rotbonds * 0.15);
+        let pic50_r1 = 4.1953347 + 0.1467506 * dcw_est;
+        let pic50_r2 = 3.2715258 + 0.1429304 * (dcw_est * 1.2);
+        let pic50_r3 = 3.4332228 + 0.1525935 * (dcw_est * 1.1);
 
         if (mw < 150) {
           estimated_pIC50 = 4.1500;
         } else {
-          estimated_pIC50 = Math.min(Math.max((pic50_r1 + pic50_r2 + pic50_r3) / 3.0, 4.0), 9.2);
+          estimated_pIC50 = Math.min(Math.max((pic50_r1 + pic50_r2 + pic50_r3) / 3.0, 4.0), 8.5);
           estimated_pIC50 = Math.round(estimated_pIC50 * 10000) / 10000;
         }
       }
