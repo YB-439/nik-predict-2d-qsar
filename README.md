@@ -16,14 +16,14 @@ An open-source, high-throughput **Streamlit** and **FastAPI** platform for predi
 
 ---
 
-## 🚀 One-Click Streamlit Cloud Deployment
+## 🚀 Live Streamlit Cloud Deployment
 
-This repository is pre-configured for instant deployment on **Streamlit Cloud** (`https://share.streamlit.io`):
+- **Live Application URL**: [https://nik-ddsl.streamlit.app/](https://nik-ddsl.streamlit.app/)
 
-1. Fork or push this repository to your GitHub account: [`https://github.com/YB-439/nik-predict-2d-qsar`](https://github.com/YB-439/)
-2. Sign in to [Streamlit Cloud](https://share.streamlit.io).
-3. Click **New App**, select your repository `YB-439/nik-predict-2d-qsar`, branch `main`, and main file path `streamlit_app.py`.
-4. Click **Deploy!**
+### Standard Deployment Instructions (`https://share.streamlit.io`):
+
+1. Repository: [`https://github.com/YB-439/nik-predict-2d-qsar`](https://github.com/YB-439/nik-predict-2d-qsar)
+2. Main file path: `streamlit_app.py`
 
 ---
 
