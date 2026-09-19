@@ -1,0 +1,2350 @@
+{
+  "Nc1nc(N2CCc3c2cc(Br)cc3)c(Cl)cn1": {
+    "code": "NIK001",
+    "exp_pIC50": 6.52,
+    "consensus": null,
+    "run1": {},
+    "run2": {},
+    "run3": {}
+  },
+  "Nc1nc(N2CCc3c2cc(Br)cc3)ccn1": {
+    "code": "NIK002",
+    "exp_pIC50": 6.37,
+    "consensus": 5.6306,
+    "run1": {
+      "dcw": 9.5611,
+      "pIC50": 5.5984,
+      "defect": -5.5984
+    },
+    "run2": {
+      "dcw": 16.7976,
+      "pIC50": 5.6724,
+      "defect": -5.6724
+    },
+    "run3": {
+      "dcw": 14.338,
+      "pIC50": 5.6211,
+      "defect": -5.6211
+    }
+  },
+  "Nc1nc(N2CCc3c2cc(Br)cc3)c(F)cn1": {
+    "code": "NIK003",
+    "exp_pIC50": 6.6,
+    "consensus": 6.4995,
+    "run1": {
+      "dcw": 16.2369,
+      "pIC50": 6.5781,
+      "defect": -6.5781
+    },
+    "run2": {
+      "dcw": 22.138,
+      "pIC50": 6.4357,
+      "defect": -6.4357
+    },
+    "run3": {
+      "dcw": 19.9977,
+      "pIC50": 6.4847,
+      "defect": -6.4847
+    }
+  },
+  "Nc1nc(N2CCc3c2cc(Br)cc3)c(C)cn1": {
+    "code": "NIK004",
+    "exp_pIC50": 5.36,
+    "consensus": 5.9557,
+    "run1": {
+      "dcw": 10.8622,
+      "pIC50": 5.7894,
+      "defect": -5.7894
+    },
+    "run2": {
+      "dcw": 20.4409,
+      "pIC50": 6.1932,
+      "defect": -6.1932
+    },
+    "run3": {
+      "dcw": 16.0649,
+      "pIC50": 5.8846,
+      "defect": -5.8846
+    }
+  },
+  "Nc1nc(N2CCc3c2cc(Br)cc3)c(OC)cn1": {
+    "code": "NIK005",
+    "exp_pIC50": 5.76,
+    "consensus": 5.878,
+    "run1": {
+      "dcw": 12.1255,
+      "pIC50": 5.9748,
+      "defect": -5.9748
+    },
+    "run2": {
+      "dcw": 18.5676,
+      "pIC50": 5.9254,
+      "defect": -5.9254
+    },
+    "run3": {
+      "dcw": 15.0765,
+      "pIC50": 5.7338,
+      "defect": -5.7338
+    }
+  },
+  "O=C(N1CCCC1)C(C)(O)C#Cc1nccc(n2ccc3cnc(N)nc23)c1": {
+    "code": "NIK006",
+    "exp_pIC50": 5.94,
+    "consensus": 5.7189,
+    "run1": {
+      "dcw": 11.8958,
+      "pIC50": 5.9411,
+      "defect": -5.9411
+    },
+    "run2": {
+      "dcw": 16.7756,
+      "pIC50": 5.6693,
+      "defect": -5.6693
+    },
+    "run3": {
+      "dcw": 13.8473,
+      "pIC50": 5.5462,
+      "defect": -5.5462
+    }
+  },
+  "Nc1nc(N2CCc3c2cc(Br)cc3)c(SC)cn1": {
+    "code": "NIK007",
+    "exp_pIC50": 4.68,
+    "consensus": 5.9808,
+    "run1": {
+      "dcw": 11.3625,
+      "pIC50": 5.8628,
+      "defect": -5.8628
+    },
+    "run2": {
+      "dcw": 19.287,
+      "pIC50": 6.0282,
+      "defect": -6.0282
+    },
+    "run3": {
+      "dcw": 17.1579,
+      "pIC50": 6.0514,
+      "defect": -6.0514
+    }
+  },
+  "Nc1nc(N2CCc3c2cc(O)cc3)c(Cl)cn1": {
+    "code": "NIK008",
+    "exp_pIC50": 7.11,
+    "consensus": 7.2588,
+    "run1": {
+      "dcw": 20.3095,
+      "pIC50": 7.1758,
+      "defect": -7.1758
+    },
+    "run2": {
+      "dcw": 27.4169,
+      "pIC50": 7.1902,
+      "defect": -7.1902
+    },
+    "run3": {
+      "dcw": 26.0642,
+      "pIC50": 7.4105,
+      "defect": -7.4105
+    }
+  },
+  "Nc1nc(N2CCc3c2cc(OC)cc3)c(Cl)cn1": {
+    "code": "NIK009",
+    "exp_pIC50": 7.05,
+    "consensus": 7.4348,
+    "run1": {
+      "dcw": 22.1383,
+      "pIC50": 7.4441,
+      "defect": -7.4441
+    },
+    "run2": {
+      "dcw": 29.5861,
+      "pIC50": 7.5003,
+      "defect": -7.5003
+    },
+    "run3": {
+      "dcw": 25.7345,
+      "pIC50": 7.3601,
+      "defect": -7.3601
+    }
+  },
+  "Nc1nc(N2CCc3c2cc(CO)cc3)c(Cl)cn1": {
+    "code": "NIK010",
+    "exp_pIC50": 7.39,
+    "consensus": 7.4348,
+    "run1": {
+      "dcw": 22.1383,
+      "pIC50": 7.4441,
+      "defect": -7.4441
+    },
+    "run2": {
+      "dcw": 29.5861,
+      "pIC50": 7.5003,
+      "defect": -7.5003
+    },
+    "run3": {
+      "dcw": 25.7345,
+      "pIC50": 7.3601,
+      "defect": -7.3601
+    }
+  },
+  "Nc1nc(N2CCc3c2cc(CN)cc3)c(Cl)cn1": {
+    "code": "NIK011",
+    "exp_pIC50": 6.98,
+    "consensus": 7.3533,
+    "run1": {
+      "dcw": 20.7992,
+      "pIC50": 7.2476,
+      "defect": -7.2476
+    },
+    "run2": {
+      "dcw": 27.1887,
+      "pIC50": 7.1576,
+      "defect": -7.1576
+    },
+    "run3": {
+      "dcw": 27.6647,
+      "pIC50": 7.6547,
+      "defect": -7.6547
+    }
+  },
+  "Nc1nc(N2CCc3c2cc(CNC)cc3)c(Cl)cn1": {
+    "code": "NIK012",
+    "exp_pIC50": 7.24,
+    "consensus": 7.0908,
+    "run1": {
+      "dcw": 19.3083,
+      "pIC50": 7.0288,
+      "defect": -7.0288
+    },
+    "run2": {
+      "dcw": 25.531,
+      "pIC50": 6.9207,
+      "defect": -6.9207
+    },
+    "run3": {
+      "dcw": 25.4909,
+      "pIC50": 7.323,
+      "defect": -7.323
+    }
+  },
+  "Nc1nc(N2CCc3c2cc(C#N)cc3)c(Cl)cn1": {
+    "code": "NIK013",
+    "exp_pIC50": 10.05,
+    "consensus": 7.6822,
+    "run1": {
+      "dcw": 22.7598,
+      "pIC50": 7.5353,
+      "defect": -7.5353
+    },
+    "run2": {
+      "dcw": 31.8498,
+      "pIC50": 7.8238,
+      "defect": -7.8238
+    },
+    "run3": {
+      "dcw": 27.8802,
+      "pIC50": 7.6876,
+      "defect": -7.6876
+    }
+  },
+  "Nc1nc(N2CCc3c2cc(CC#N)cc3)c(Cl)cn1": {
+    "code": "NIK014",
+    "exp_pIC50": 7.38,
+    "consensus": 7.8061,
+    "run1": {
+      "dcw": 23.448,
+      "pIC50": 7.6363,
+      "defect": -7.6363
+    },
+    "run2": {
+      "dcw": 32.706,
+      "pIC50": 7.9462,
+      "defect": -7.9462
+    },
+    "run3": {
+      "dcw": 28.8509,
+      "pIC50": 7.8357,
+      "defect": -7.8357
+    }
+  },
+  "Nc1nc(N2CCc3c2cc(C#CC)cc3)c(Cl)cn1": {
+    "code": "NIK015",
+    "exp_pIC50": 8.0,
+    "consensus": 7.5816,
+    "run1": {
+      "dcw": 21.4616,
+      "pIC50": 7.3448,
+      "defect": -7.3448
+    },
+    "run2": {
+      "dcw": 29.9332,
+      "pIC50": 7.5499,
+      "defect": -7.5499
+    },
+    "run3": {
+      "dcw": 28.9447,
+      "pIC50": 7.85,
+      "defect": -7.85
+    }
+  },
+  "Nc1nc(N2CCc3c2cc(C2CC2)cc3)c(Cl)cn1": {
+    "code": "NIK016",
+    "exp_pIC50": 7.62,
+    "consensus": 7.9667,
+    "run1": {
+      "dcw": 24.0933,
+      "pIC50": 7.731,
+      "defect": -7.731
+    },
+    "run2": {
+      "dcw": 32.7932,
+      "pIC50": 7.9587,
+      "defect": -7.9587
+    },
+    "run3": {
+      "dcw": 31.3068,
+      "pIC50": 8.2104,
+      "defect": -8.2104
+    }
+  },
+  "Nc1nc(N2CCc3c2cc(c2n[nH]cc2)cc3)c(Cl)cn1": {
+    "code": "NIK017",
+    "exp_pIC50": 8.19,
+    "consensus": 8.0818,
+    "run1": {
+      "dcw": 25.1847,
+      "pIC50": 7.8912,
+      "defect": -7.8912
+    },
+    "run2": {
+      "dcw": 35.602,
+      "pIC50": 8.3601,
+      "defect": -8.3601
+    },
+    "run3": {
+      "dcw": 29.8881,
+      "pIC50": 7.994,
+      "defect": -7.994
+    }
+  },
+  "Nc1nc(N2CCc3c2cc(c2ccncc2)cc3)c(Cl)cn1": {
+    "code": "NIK018",
+    "exp_pIC50": 8.05,
+    "consensus": 7.7683,
+    "run1": {
+      "dcw": 23.339,
+      "pIC50": 7.6203,
+      "defect": -7.6204
+    },
+    "run2": {
+      "dcw": 30.6298,
+      "pIC50": 7.6495,
+      "defect": -7.6495
+    },
+    "run3": {
+      "dcw": 30.1572,
+      "pIC50": 8.035,
+      "defect": -8.035
+    }
+  },
+  "Nc1nc(N2CCc3c2cc(C#N)cc3CN)c(Cl)cn1": {
+    "code": "NIK019",
+    "exp_pIC50": 6.71,
+    "consensus": 6.5304,
+    "run1": {
+      "dcw": 16.1097,
+      "pIC50": 6.5594,
+      "defect": -6.5594
+    },
+    "run2": {
+      "dcw": 21.4975,
+      "pIC50": 6.3442,
+      "defect": -6.3442
+    },
+    "run3": {
+      "dcw": 21.3263,
+      "pIC50": 6.6875,
+      "defect": -6.6875
+    }
+  },
+  "Nc1nc(N2CCc3c2cc(C#N)cc3CNC)c(Cl)cn1": {
+    "code": "NIK020",
+    "exp_pIC50": 6.22,
+    "consensus": 6.2679,
+    "run1": {
+      "dcw": 14.6188,
+      "pIC50": 6.3407,
+      "defect": -6.3407
+    },
+    "run2": {
+      "dcw": 19.8398,
+      "pIC50": 6.1072,
+      "defect": -6.1072
+    },
+    "run3": {
+      "dcw": 19.1525,
+      "pIC50": 6.3558,
+      "defect": -6.3558
+    }
+  },
+  "Nc1nc(N2CCc3c2cc(C#N)cc3CNCC)c(Cl)cn1": {
+    "code": "NIK021",
+    "exp_pIC50": 5.68,
+    "consensus": 6.2382,
+    "run1": {
+      "dcw": 13.8875,
+      "pIC50": 6.2333,
+      "defect": -6.2333
+    },
+    "run2": {
+      "dcw": 20.2253,
+      "pIC50": 6.1623,
+      "defect": -6.1623
+    },
+    "run3": {
+      "dcw": 18.9124,
+      "pIC50": 6.3191,
+      "defect": -6.3191
+    }
+  },
+  "Nc1nc(N2CCc3c2cc(C#N)cc3CNc2cn(C)nc2)c(Cl)cn1": {
+    "code": "NIK022",
+    "exp_pIC50": 5.58,
+    "consensus": 6.3133,
+    "run1": {
+      "dcw": 14.2149,
+      "pIC50": 6.2814,
+      "defect": -6.2814
+    },
+    "run2": {
+      "dcw": 22.0273,
+      "pIC50": 6.4199,
+      "defect": -6.4199
+    },
+    "run3": {
+      "dcw": 18.3851,
+      "pIC50": 6.2387,
+      "defect": -6.2387
+    }
+  },
+  "Nc1nc(N2CCc3c2cc(C#N)cc3CNc2cccnc2)c(Cl)cn1": {
+    "code": "NIK023",
+    "exp_pIC50": 6.09,
+    "consensus": 6.4781,
+    "run1": {
+      "dcw": 15.3264,
+      "pIC50": 6.4445,
+      "defect": -6.4445
+    },
+    "run2": {
+      "dcw": 23.6285,
+      "pIC50": 6.6488,
+      "defect": -6.6487
+    },
+    "run3": {
+      "dcw": 19.0566,
+      "pIC50": 6.3411,
+      "defect": -6.3411
+    }
+  },
+  "Nc1nc(N2CCc3c2cc(C#N)cc3CNCc2cccnc2)c(Cl)cn1": {
+    "code": "NIK024",
+    "exp_pIC50": 5.4,
+    "consensus": 6.1136,
+    "run1": {
+      "dcw": 12.5696,
+      "pIC50": 6.0399,
+      "defect": -6.0399
+    },
+    "run2": {
+      "dcw": 20.2556,
+      "pIC50": 6.1667,
+      "defect": -6.1667
+    },
+    "run3": {
+      "dcw": 17.7013,
+      "pIC50": 6.1343,
+      "defect": -6.1343
+    }
+  },
+  "Nc1nc(N2CCc3c2cc(C#N)cc3CO)c(Cl)cn1": {
+    "code": "NIK025",
+    "exp_pIC50": 7.03,
+    "consensus": 6.4913,
+    "run1": {
+      "dcw": 16.2895,
+      "pIC50": 6.5858,
+      "defect": -6.5858
+    },
+    "run2": {
+      "dcw": 21.4733,
+      "pIC50": 6.3407,
+      "defect": -6.3407
+    },
+    "run3": {
+      "dcw": 20.4078,
+      "pIC50": 6.5473,
+      "defect": -6.5473
+    }
+  },
+  "Nc1nc(N2CCc3c2cc(C#N)cc3C(=O)O)c(Cl)cn1": {
+    "code": "NIK026",
+    "exp_pIC50": 4.47,
+    "consensus": 5.6522,
+    "run1": {
+      "dcw": 10.2581,
+      "pIC50": 5.7007,
+      "defect": -5.7007
+    },
+    "run2": {
+      "dcw": 17.4825,
+      "pIC50": 5.7703,
+      "defect": -5.7703
+    },
+    "run3": {
+      "dcw": 13.4495,
+      "pIC50": 5.4855,
+      "defect": -5.4855
+    }
+  },
+  "Nc1nc(N2CCc3c2cc(C#N)cc3C(=O)ONC)c(Cl)cn1": {
+    "code": "NIK027",
+    "exp_pIC50": 5.96,
+    "consensus": 5.7338,
+    "run1": {
+      "dcw": 12.0428,
+      "pIC50": 5.9626,
+      "defect": -5.9626
+    },
+    "run2": {
+      "dcw": 16.9038,
+      "pIC50": 5.6876,
+      "defect": -5.6876
+    },
+    "run3": {
+      "dcw": 13.8802,
+      "pIC50": 5.5513,
+      "defect": -5.5512
+    }
+  },
+  "O=C(NC1CCOCC1)c1ccc(Nc2ncc(Cl)c(N3CCc4c3cc(C#N)cc4CO)n2)c(OC)c1": {
+    "code": "NIK028",
+    "exp_pIC50": 6.16,
+    "consensus": 5.9286,
+    "run1": {
+      "dcw": 12.1349,
+      "pIC50": 5.9761,
+      "defect": -5.9761
+    },
+    "run2": {
+      "dcw": 18.8592,
+      "pIC50": 5.9671,
+      "defect": -5.9671
+    },
+    "run3": {
+      "dcw": 15.7891,
+      "pIC50": 5.8425,
+      "defect": -5.8425
+    }
+  },
+  "Fc1cc(C(=O)NC2CCOCC2)ccc1Nc1ncc(Cl)c(N2CCc3c2cc(C#N)cc3CO)n1": {
+    "code": "NIK029",
+    "exp_pIC50": 6.05,
+    "consensus": 5.766,
+    "run1": {
+      "dcw": 10.9982,
+      "pIC50": 5.8093,
+      "defect": -5.8093
+    },
+    "run2": {
+      "dcw": 17.789,
+      "pIC50": 5.8141,
+      "defect": -5.8141
+    },
+    "run3": {
+      "dcw": 14.6881,
+      "pIC50": 5.6745,
+      "defect": -5.6745
+    }
+  },
+  "Cc1cc(C(=O)NC2CCOCC2)ccc1Nc1ncc(Cl)c(N2CCc3c2cc(C#N)cc3CO)n1": {
+    "code": "NIK030",
+    "exp_pIC50": 5.28,
+    "consensus": 5.6609,
+    "run1": {
+      "dcw": 8.8773,
+      "pIC50": 5.4981,
+      "defect": -5.4981
+    },
+    "run2": {
+      "dcw": 17.3757,
+      "pIC50": 5.755,
+      "defect": -5.755
+    },
+    "run3": {
+      "dcw": 15.0484,
+      "pIC50": 5.7295,
+      "defect": -5.7295
+    }
+  },
+  "Clc1c(C2CCc3c2cc(C#N)cc3CO)nc(Nc2ccc(C(=O)NC3CCOCC3)cc2)nc1": {
+    "code": "NIK031",
+    "exp_pIC50": 6.81,
+    "consensus": 6.4101,
+    "run1": {
+      "dcw": 15.1229,
+      "pIC50": 6.4146,
+      "defect": -6.4146
+    },
+    "run2": {
+      "dcw": 20.799,
+      "pIC50": 6.2443,
+      "defect": -6.2443
+    },
+    "run3": {
+      "dcw": 20.5651,
+      "pIC50": 6.5713,
+      "defect": -6.5713
+    }
+  },
+  "Clc1c(C2CCc3c2cc(C#N)cc3CO)nc(Nc2ccc(C(=O)NC3CC[C@@H](O)CC3)cc2)nc1": {
+    "code": "NIK032",
+    "exp_pIC50": 6.67,
+    "consensus": 6.6877,
+    "run1": {
+      "dcw": 17.4844,
+      "pIC50": 6.7612,
+      "defect": -6.7612
+    },
+    "run2": {
+      "dcw": 22.9575,
+      "pIC50": 6.5529,
+      "defect": -6.5529
+    },
+    "run3": {
+      "dcw": 21.7289,
+      "pIC50": 6.7489,
+      "defect": -6.7489
+    }
+  },
+  "Clc1c(C2CCc3c2cc(C#N)cc3CO)nc(Nc2ccc(C(=O)NC3CC[C@H](O)CC3)cc2)nc1": {
+    "code": "NIK033",
+    "exp_pIC50": 6.78,
+    "consensus": 6.632,
+    "run1": {
+      "dcw": 17.3626,
+      "pIC50": 6.7433,
+      "defect": -6.7433
+    },
+    "run2": {
+      "dcw": 22.7075,
+      "pIC50": 6.5171,
+      "defect": -6.5171
+    },
+    "run3": {
+      "dcw": 20.9869,
+      "pIC50": 6.6357,
+      "defect": -6.6357
+    }
+  },
+  "Clc1c(C2CCc3c2cc(C#N)cc3CO)nc(Nc2ccc(C(=O)NC3CCNCC3)cc2)nc1": {
+    "code": "NIK034",
+    "exp_pIC50": 6.53,
+    "consensus": 6.16,
+    "run1": {
+      "dcw": 14.0687,
+      "pIC50": 6.2599,
+      "defect": -6.2599
+    },
+    "run2": {
+      "dcw": 19.3197,
+      "pIC50": 6.0329,
+      "defect": -6.0329
+    },
+    "run3": {
+      "dcw": 18.0485,
+      "pIC50": 6.1873,
+      "defect": -6.1873
+    }
+  },
+  "Clc1c(C2CCc3c2cc(C#N)cc3CO)nc(Nc2ccc(C(=O)NC3CC[C@@H](N)CC3)cc2)nc1": {
+    "code": "NIK035",
+    "exp_pIC50": 6.74,
+    "consensus": 6.5784,
+    "run1": {
+      "dcw": 16.6824,
+      "pIC50": 6.6435,
+      "defect": -6.6435
+    },
+    "run2": {
+      "dcw": 23.0772,
+      "pIC50": 6.57,
+      "defect": -6.57
+    },
+    "run3": {
+      "dcw": 20.2392,
+      "pIC50": 6.5216,
+      "defect": -6.5216
+    }
+  },
+  "Clc1c(C2CCc3c2cc(C#N)cc3CO)nc(Nc2ccc(C(=O)NC3CC[C@H](N)CC3)cc2)nc1": {
+    "code": "NIK036",
+    "exp_pIC50": 6.61,
+    "consensus": 6.5227,
+    "run1": {
+      "dcw": 16.5606,
+      "pIC50": 6.6256,
+      "defect": -6.6256
+    },
+    "run2": {
+      "dcw": 22.8272,
+      "pIC50": 6.5342,
+      "defect": -6.5342
+    },
+    "run3": {
+      "dcw": 19.4972,
+      "pIC50": 6.4084,
+      "defect": -6.4084
+    }
+  },
+  "OCc1cc(C#N)cc2c1CCC2c1ccnc(Nc2cccc(C(NC3CCOCC3)C)c2)n1": {
+    "code": "NIK037",
+    "exp_pIC50": 5.94,
+    "consensus": 5.8985,
+    "run1": {
+      "dcw": 9.3602,
+      "pIC50": 5.5689,
+      "defect": -5.569
+    },
+    "run2": {
+      "dcw": 18.9816,
+      "pIC50": 5.9846,
+      "defect": -5.9846
+    },
+    "run3": {
+      "dcw": 17.7523,
+      "pIC50": 6.1421,
+      "defect": -6.1421
+    }
+  },
+  "Oc1nc2ccc(C#CC(c3nccs3)(O)C)cc2c(c2c[nH]nc2)c1": {
+    "code": "NIK038",
+    "exp_pIC50": 7.41,
+    "consensus": 7.2134,
+    "run1": {
+      "dcw": 20.137,
+      "pIC50": 7.1505,
+      "defect": -7.1505
+    },
+    "run2": {
+      "dcw": 27.4997,
+      "pIC50": 7.2021,
+      "defect": -7.2021
+    },
+    "run3": {
+      "dcw": 25.2584,
+      "pIC50": 7.2875,
+      "defect": -7.2875
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc2nc(NC)cc(c3c[nH]nc3)c2c1": {
+    "code": "NIK039",
+    "exp_pIC50": 7.59,
+    "consensus": 6.6224,
+    "run1": {
+      "dcw": 15.0174,
+      "pIC50": 6.3991,
+      "defect": -6.3991
+    },
+    "run2": {
+      "dcw": 23.7925,
+      "pIC50": 6.6722,
+      "defect": -6.6722
+    },
+    "run3": {
+      "dcw": 22.0361,
+      "pIC50": 6.7958,
+      "defect": -6.7958
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc2nc(N(CCOC)C)cc(c3c[nH]nc3)c2c1": {
+    "code": "NIK040",
+    "exp_pIC50": 8.28,
+    "consensus": 7.3316,
+    "run1": {
+      "dcw": 21.0833,
+      "pIC50": 7.2893,
+      "defect": -7.2893
+    },
+    "run2": {
+      "dcw": 28.9007,
+      "pIC50": 7.4023,
+      "defect": -7.4023
+    },
+    "run3": {
+      "dcw": 25.3612,
+      "pIC50": 7.3032,
+      "defect": -7.3032
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc2nc(N(CCN(C)C)C)cc(c3c[nH]nc3)c2c1": {
+    "code": "NIK041",
+    "exp_pIC50": 6.8,
+    "consensus": 7.0185,
+    "run1": {
+      "dcw": 19.5897,
+      "pIC50": 7.0701,
+      "defect": -7.0701
+    },
+    "run2": {
+      "dcw": 25.5071,
+      "pIC50": 6.9173,
+      "defect": -6.9173
+    },
+    "run3": {
+      "dcw": 23.8215,
+      "pIC50": 7.0682,
+      "defect": -7.0682
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc2nc(N3CCN(C)CC3)cc(c3c[nH]nc3)c2c1": {
+    "code": "NIK042",
+    "exp_pIC50": 6.76,
+    "consensus": 7.1627,
+    "run1": {
+      "dcw": 20.2992,
+      "pIC50": 7.1743,
+      "defect": -7.1743
+    },
+    "run2": {
+      "dcw": 29.0498,
+      "pIC50": 7.4236,
+      "defect": -7.4236
+    },
+    "run3": {
+      "dcw": 22.6548,
+      "pIC50": 6.8902,
+      "defect": -6.8902
+    }
+  },
+  "CC(O)(C)C#Cc1ccc2nccc(c3c[nH]nc3)c2c1": {
+    "code": "NIK043",
+    "exp_pIC50": 5.76,
+    "consensus": 5.9807,
+    "run1": {
+      "dcw": 12.5142,
+      "pIC50": 6.0318,
+      "defect": -6.0318
+    },
+    "run2": {
+      "dcw": 18.7953,
+      "pIC50": 5.9579,
+      "defect": -5.9579
+    },
+    "run3": {
+      "dcw": 16.5087,
+      "pIC50": 5.9523,
+      "defect": -5.9523
+    }
+  },
+  "CC(O)(c1cccs1)C#Cc1ccc2nccc(c3c[nH]nc3)c2c1": {
+    "code": "NIK044",
+    "exp_pIC50": 6.28,
+    "consensus": 6.473,
+    "run1": {
+      "dcw": 14.8126,
+      "pIC50": 6.3691,
+      "defect": -6.3691
+    },
+    "run2": {
+      "dcw": 21.9923,
+      "pIC50": 6.4149,
+      "defect": -6.4149
+    },
+    "run3": {
+      "dcw": 20.9825,
+      "pIC50": 6.635,
+      "defect": -6.635
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc2nccc(c3c[nH]nc3)c2c1": {
+    "code": "NIK045",
+    "exp_pIC50": 7.66,
+    "consensus": 6.8172,
+    "run1": {
+      "dcw": 16.1483,
+      "pIC50": 6.5651,
+      "defect": -6.5651
+    },
+    "run2": {
+      "dcw": 25.5927,
+      "pIC50": 6.9295,
+      "defect": -6.9295
+    },
+    "run3": {
+      "dcw": 23.0917,
+      "pIC50": 6.9569,
+      "defect": -6.9569
+    }
+  },
+  "CC(O)(c1ncccc1)C#Cc1ccc2nccc(c3c[nH]nc3)c2c1": {
+    "code": "NIK046",
+    "exp_pIC50": 6.23,
+    "consensus": 6.6425,
+    "run1": {
+      "dcw": 14.3052,
+      "pIC50": 6.2946,
+      "defect": -6.2946
+    },
+    "run2": {
+      "dcw": 25.0426,
+      "pIC50": 6.8509,
+      "defect": -6.8509
+    },
+    "run3": {
+      "dcw": 21.9459,
+      "pIC50": 6.782,
+      "defect": -6.782
+    }
+  },
+  "OC1(C#Cc2ccc3nccc(c4c[nH]nc4)c3c2)CCCCC1": {
+    "code": "NIK047",
+    "exp_pIC50": 5.22,
+    "consensus": 5.3287,
+    "run1": {
+      "dcw": 6.8236,
+      "pIC50": 5.1967,
+      "defect": -5.1967
+    },
+    "run2": {
+      "dcw": 16.101,
+      "pIC50": 5.5728,
+      "defect": -5.5728
+    },
+    "run3": {
+      "dcw": 11.6875,
+      "pIC50": 5.2167,
+      "defect": -5.2167
+    }
+  },
+  "OC1(C#Cc2ccc3nccc(c4c[nH]nc4)c3c2)CCCC1": {
+    "code": "NIK048",
+    "exp_pIC50": 6.25,
+    "consensus": 5.4037,
+    "run1": {
+      "dcw": 6.9348,
+      "pIC50": 5.213,
+      "defect": -5.213
+    },
+    "run2": {
+      "dcw": 16.2672,
+      "pIC50": 5.5966,
+      "defect": -5.5966
+    },
+    "run3": {
+      "dcw": 12.8988,
+      "pIC50": 5.4015,
+      "defect": -5.4015
+    }
+  },
+  "CC(O)(c1nccs1)/C=C/c1ccc2nccc(c3c[nH]nc3)c2c1": {
+    "code": "NIK049",
+    "exp_pIC50": 5.68,
+    "consensus": 5.9893,
+    "run1": {
+      "dcw": 14.0252,
+      "pIC50": 6.2535,
+      "defect": -6.2535
+    },
+    "run2": {
+      "dcw": 16.5489,
+      "pIC50": 5.6369,
+      "defect": -5.6369
+    },
+    "run3": {
+      "dcw": 17.3296,
+      "pIC50": 6.0776,
+      "defect": -6.0776
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1cccc(n2ccc3cnc(N)nc23)c1": {
+    "code": "NIK050",
+    "exp_pIC50": 6.52,
+    "consensus": 5.99,
+    "run1": {
+      "dcw": 12.7777,
+      "pIC50": 6.0705,
+      "defect": -6.0705
+    },
+    "run2": {
+      "dcw": 18.7905,
+      "pIC50": 5.9573,
+      "defect": -5.9573
+    },
+    "run3": {
+      "dcw": 16.4423,
+      "pIC50": 5.9422,
+      "defect": -5.9422
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1cc(n2ccc3cnc(N)nc23)ccc1F": {
+    "code": "NIK051",
+    "exp_pIC50": 6.69,
+    "consensus": 6.1236,
+    "run1": {
+      "dcw": 13.3431,
+      "pIC50": 6.1534,
+      "defect": -6.1534
+    },
+    "run2": {
+      "dcw": 19.1336,
+      "pIC50": 6.0063,
+      "defect": -6.0063
+    },
+    "run3": {
+      "dcw": 18.204,
+      "pIC50": 6.211,
+      "defect": -6.211
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc(F)c(n2ccc3cnc(N)nc23)c1": {
+    "code": "NIK052",
+    "exp_pIC50": 6.67,
+    "consensus": 6.5342,
+    "run1": {
+      "dcw": 16.3704,
+      "pIC50": 6.5977,
+      "defect": -6.5977
+    },
+    "run2": {
+      "dcw": 22.818,
+      "pIC50": 6.5329,
+      "defect": -6.5329
+    },
+    "run3": {
+      "dcw": 19.9151,
+      "pIC50": 6.4721,
+      "defect": -6.4721
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1cc(n2ccc3cnc(N)nc23)c(F)cc1F": {
+    "code": "NIK053",
+    "exp_pIC50": 6.19,
+    "consensus": 6.6327,
+    "run1": {
+      "dcw": 16.9778,
+      "pIC50": 6.6868,
+      "defect": -6.6868
+    },
+    "run2": {
+      "dcw": 23.1196,
+      "pIC50": 6.576,
+      "defect": -6.576
+    },
+    "run3": {
+      "dcw": 20.9836,
+      "pIC50": 6.6352,
+      "defect": -6.6352
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1cc(n2ccc3cnc(N)nc23)ccc1OC": {
+    "code": "NIK054",
+    "exp_pIC50": 5.76,
+    "consensus": 5.743,
+    "run1": {
+      "dcw": 10.2155,
+      "pIC50": 5.6945,
+      "defect": -5.6945
+    },
+    "run2": {
+      "dcw": 18.3422,
+      "pIC50": 5.8932,
+      "defect": -5.8932
+    },
+    "run3": {
+      "dcw": 14.4703,
+      "pIC50": 5.6413,
+      "defect": -5.6413
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc(OC)c(n2ccc3cnc(N)nc23)c1": {
+    "code": "NIK055",
+    "exp_pIC50": 6.67,
+    "consensus": 6.4124,
+    "run1": {
+      "dcw": 15.4678,
+      "pIC50": 6.4652,
+      "defect": -6.4652
+    },
+    "run2": {
+      "dcw": 22.1648,
+      "pIC50": 6.4395,
+      "defect": -6.4396
+    },
+    "run3": {
+      "dcw": 18.9996,
+      "pIC50": 6.3324,
+      "defect": -6.3324
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1cc(n2ccc3cnc(N)nc23)ccc1C": {
+    "code": "NIK056",
+    "exp_pIC50": 4.93,
+    "consensus": 5.9965,
+    "run1": {
+      "dcw": 12.5967,
+      "pIC50": 6.0439,
+      "defect": -6.0439
+    },
+    "run2": {
+      "dcw": 18.0663,
+      "pIC50": 5.8537,
+      "defect": -5.8537
+    },
+    "run3": {
+      "dcw": 17.4233,
+      "pIC50": 6.0919,
+      "defect": -6.0919
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc(C)c(n2ccc3cnc(N)nc23)c1": {
+    "code": "NIK057",
+    "exp_pIC50": 6.47,
+    "consensus": 6.3181,
+    "run1": {
+      "dcw": 13.5825,
+      "pIC50": 6.1886,
+      "defect": -6.1886
+    },
+    "run2": {
+      "dcw": 22.0794,
+      "pIC50": 6.4273,
+      "defect": -6.4273
+    },
+    "run3": {
+      "dcw": 19.0387,
+      "pIC50": 6.3384,
+      "defect": -6.3384
+    }
+  },
+  "N#Cc1ccc(n2ccc3cnc(N)nc23)cc1C#CC(c1nccs1)(O)C": {
+    "code": "NIK058",
+    "exp_pIC50": 6.66,
+    "consensus": 6.37,
+    "run1": {
+      "dcw": 14.7794,
+      "pIC50": 6.3642,
+      "defect": -6.3642
+    },
+    "run2": {
+      "dcw": 21.426,
+      "pIC50": 6.334,
+      "defect": -6.334
+    },
+    "run3": {
+      "dcw": 19.5201,
+      "pIC50": 6.4119,
+      "defect": -6.4119
+    }
+  },
+  "N#Cc1cc(C#CC(c2nccs2)(O)C)cc(n2ccc3cnc(N)nc23)c1": {
+    "code": "NIK059",
+    "exp_pIC50": 5.69,
+    "consensus": 6.5669,
+    "run1": {
+      "dcw": 16.6821,
+      "pIC50": 6.6434,
+      "defect": -6.6434
+    },
+    "run2": {
+      "dcw": 21.7296,
+      "pIC50": 6.3773,
+      "defect": -6.3773
+    },
+    "run3": {
+      "dcw": 21.2776,
+      "pIC50": 6.68,
+      "defect": -6.6801
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1cc(n2ccc3cnc(N)nc23)ccc1OCCOC": {
+    "code": "NIK060",
+    "exp_pIC50": 4.59,
+    "consensus": 5.7341,
+    "run1": {
+      "dcw": 9.5791,
+      "pIC50": 5.6011,
+      "defect": -5.6011
+    },
+    "run2": {
+      "dcw": 17.8537,
+      "pIC50": 5.8234,
+      "defect": -5.8234
+    },
+    "run3": {
+      "dcw": 15.3646,
+      "pIC50": 5.7778,
+      "defect": -5.7778
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1cccc(n2cc(Cl)c3cnc(N)nc23)c1": {
+    "code": "NIK061",
+    "exp_pIC50": 5.69,
+    "consensus": 6.739,
+    "run1": {
+      "dcw": 16.9966,
+      "pIC50": 6.6896,
+      "defect": -6.6896
+    },
+    "run2": {
+      "dcw": 25.5088,
+      "pIC50": 6.9175,
+      "defect": -6.9175
+    },
+    "run3": {
+      "dcw": 20.8177,
+      "pIC50": 6.6099,
+      "defect": -6.6099
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1cccc(n2ccc3c(OC)nc(N)nc23)c1": {
+    "code": "NIK062",
+    "exp_pIC50": 5.6,
+    "consensus": 6.3426,
+    "run1": {
+      "dcw": 15.5872,
+      "pIC50": 6.4828,
+      "defect": -6.4828
+    },
+    "run2": {
+      "dcw": 20.7068,
+      "pIC50": 6.2312,
+      "defect": -6.2312
+    },
+    "run3": {
+      "dcw": 18.8778,
+      "pIC50": 6.3139,
+      "defect": -6.3139
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc(n2ccc3cnc(N)nc23)cc1": {
+    "code": "NIK063",
+    "exp_pIC50": 6.92,
+    "consensus": 5.935,
+    "run1": {
+      "dcw": 12.2279,
+      "pIC50": 5.9898,
+      "defect": -5.9898
+    },
+    "run2": {
+      "dcw": 17.9255,
+      "pIC50": 5.8336,
+      "defect": -5.8336
+    },
+    "run3": {
+      "dcw": 16.6999,
+      "pIC50": 5.9815,
+      "defect": -5.9815
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1nccc(n2ccc3cnc(N)nc23)c1": {
+    "code": "NIK064",
+    "exp_pIC50": 5.79,
+    "consensus": 6.3962,
+    "run1": {
+      "dcw": 15.0954,
+      "pIC50": 6.4106,
+      "defect": -6.4106
+    },
+    "run2": {
+      "dcw": 21.529,
+      "pIC50": 6.3487,
+      "defect": -6.3487
+    },
+    "run3": {
+      "dcw": 19.634,
+      "pIC50": 6.4292,
+      "defect": -6.4292
+    }
+  },
+  "CC(O)(c1noc(C)c1)C#Cc1nccc(n2ccc3cnc(N)nc23)c1": {
+    "code": "NIK065",
+    "exp_pIC50": 7.58,
+    "consensus": 6.7062,
+    "run1": {
+      "dcw": 16.6996,
+      "pIC50": 6.646,
+      "defect": -6.646
+    },
+    "run2": {
+      "dcw": 23.8269,
+      "pIC50": 6.6771,
+      "defect": -6.6771
+    },
+    "run3": {
+      "dcw": 22.0341,
+      "pIC50": 6.7955,
+      "defect": -6.7955
+    }
+  },
+  "CC(O)(c1nccnc1)C#Cc1nccc(n2ccc3cnc(N)nc23)c1": {
+    "code": "NIK066",
+    "exp_pIC50": 7.59,
+    "consensus": 6.6022,
+    "run1": {
+      "dcw": 15.5359,
+      "pIC50": 6.4752,
+      "defect": -6.4752
+    },
+    "run2": {
+      "dcw": 24.4733,
+      "pIC50": 6.7695,
+      "defect": -6.7695
+    },
+    "run3": {
+      "dcw": 20.5028,
+      "pIC50": 6.5618,
+      "defect": -6.5618
+    }
+  },
+  "O=C1N(C)CCC1(C#Cc1nccc(n2ccc3cnc(N)nc23)c1)O": {
+    "code": "NIK067",
+    "exp_pIC50": 6.13,
+    "consensus": 6.2999,
+    "run1": {
+      "dcw": 15.0815,
+      "pIC50": 6.4086,
+      "defect": -6.4086
+    },
+    "run2": {
+      "dcw": 20.8285,
+      "pIC50": 6.2486,
+      "defect": -6.2485
+    },
+    "run3": {
+      "dcw": 18.4104,
+      "pIC50": 6.2425,
+      "defect": -6.2425
+    }
+  },
+  "O=C1N(C)CCCC1(C#Cc1nccc(n2ccc3cnc(N)nc23)c1)O": {
+    "code": "NIK068",
+    "exp_pIC50": 5.21,
+    "consensus": 6.2249,
+    "run1": {
+      "dcw": 14.9704,
+      "pIC50": 6.3922,
+      "defect": -6.3922
+    },
+    "run2": {
+      "dcw": 20.6623,
+      "pIC50": 6.2248,
+      "defect": -6.2248
+    },
+    "run3": {
+      "dcw": 17.199,
+      "pIC50": 6.0577,
+      "defect": -6.0577
+    }
+  },
+  "OC1(C#Cc2nccc(n3ccc4cnc(N)nc34)c2)CCNCC1": {
+    "code": "NIK069",
+    "exp_pIC50": 5.64,
+    "consensus": 5.9817,
+    "run1": {
+      "dcw": 11.3384,
+      "pIC50": 5.8593,
+      "defect": -5.8593
+    },
+    "run2": {
+      "dcw": 19.4876,
+      "pIC50": 6.0569,
+      "defect": -6.0569
+    },
+    "run3": {
+      "dcw": 17.0099,
+      "pIC50": 6.0288,
+      "defect": -6.0288
+    }
+  },
+  "OC1(C#Cc2nccc(n3ccc4cnc(N)nc34)c2)CCC1": {
+    "code": "NIK070",
+    "exp_pIC50": 6.41,
+    "consensus": 6.17,
+    "run1": {
+      "dcw": 12.8235,
+      "pIC50": 6.0772,
+      "defect": -6.0772
+    },
+    "run2": {
+      "dcw": 19.5725,
+      "pIC50": 6.069,
+      "defect": -6.069
+    },
+    "run3": {
+      "dcw": 19.2043,
+      "pIC50": 6.3637,
+      "defect": -6.3637
+    }
+  },
+  "OC1(C#Cc2nccc(n3ccc4cnc(N)nc34)c2)CCCC1": {
+    "code": "NIK071",
+    "exp_pIC50": 6.63,
+    "consensus": 6.095,
+    "run1": {
+      "dcw": 12.7124,
+      "pIC50": 6.0609,
+      "defect": -6.0609
+    },
+    "run2": {
+      "dcw": 19.4063,
+      "pIC50": 6.0453,
+      "defect": -6.0453
+    },
+    "run3": {
+      "dcw": 17.993,
+      "pIC50": 6.1788,
+      "defect": -6.1788
+    }
+  },
+  "OC1(C#Cc2nccc(n3ccc4cnc(N)nc34)c2)CCCCC1": {
+    "code": "NIK072",
+    "exp_pIC50": 5.8,
+    "consensus": 6.02,
+    "run1": {
+      "dcw": 12.6013,
+      "pIC50": 6.0446,
+      "defect": -6.0446
+    },
+    "run2": {
+      "dcw": 19.2401,
+      "pIC50": 6.0215,
+      "defect": -6.0215
+    },
+    "run3": {
+      "dcw": 16.7816,
+      "pIC50": 5.994,
+      "defect": -5.994
+    }
+  },
+  "OC1(C#Cc2nccc(n3ccc4cnc(N)nc34)c2)CCCCCC1": {
+    "code": "NIK073",
+    "exp_pIC50": 6.13,
+    "consensus": 5.9451,
+    "run1": {
+      "dcw": 12.4902,
+      "pIC50": 6.0283,
+      "defect": -6.0283
+    },
+    "run2": {
+      "dcw": 19.0739,
+      "pIC50": 5.9978,
+      "defect": -5.9978
+    },
+    "run3": {
+      "dcw": 15.5702,
+      "pIC50": 5.8091,
+      "defect": -5.8091
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ncc(F)c(n2ccc3cnc(N)nc23)c1": {
+    "code": "NIK074",
+    "exp_pIC50": 7.06,
+    "consensus": 6.9404,
+    "run1": {
+      "dcw": 18.688,
+      "pIC50": 6.9378,
+      "defect": -6.9378
+    },
+    "run2": {
+      "dcw": 25.5565,
+      "pIC50": 6.9243,
+      "defect": -6.9243
+    },
+    "run3": {
+      "dcw": 23.1068,
+      "pIC50": 6.9592,
+      "defect": -6.9592
+    }
+  },
+  "O=C1N(C)CCC1(C#Cc1nccc(n2ccc3ccc(N)nc23)c1)O": {
+    "code": "NIK075",
+    "exp_pIC50": 5.61,
+    "consensus": 6.2035,
+    "run1": {
+      "dcw": 14.6432,
+      "pIC50": 6.3442,
+      "defect": -6.3442
+    },
+    "run2": {
+      "dcw": 18.678,
+      "pIC50": 5.9412,
+      "defect": -5.9412
+    },
+    "run3": {
+      "dcw": 18.9511,
+      "pIC50": 6.325,
+      "defect": -6.325
+    }
+  },
+  "O=C1N(C)CCC1(C#Cc1nccc(n2ccc3c(C)nc(N)nc23)c1)O": {
+    "code": "NIK076",
+    "exp_pIC50": 7.07,
+    "consensus": 6.5582,
+    "run1": {
+      "dcw": 16.0057,
+      "pIC50": 6.5442,
+      "defect": -6.5442
+    },
+    "run2": {
+      "dcw": 22.6593,
+      "pIC50": 6.5102,
+      "defect": -6.5102
+    },
+    "run3": {
+      "dcw": 20.885,
+      "pIC50": 6.6201,
+      "defect": -6.6201
+    }
+  },
+  "O=C1N(C)CCC1(C#Cc1nccc(n2ccc3c(CC)nc(N)nc23)c1)O": {
+    "code": "NIK077",
+    "exp_pIC50": 6.72,
+    "consensus": 6.6733,
+    "run1": {
+      "dcw": 15.8981,
+      "pIC50": 6.5284,
+      "defect": -6.5284
+    },
+    "run2": {
+      "dcw": 23.9815,
+      "pIC50": 6.6992,
+      "defect": -6.6992
+    },
+    "run3": {
+      "dcw": 22.014,
+      "pIC50": 6.7924,
+      "defect": -6.7924
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1cccc(c2c[nH]c3cnc(N)nc23)c1F": {
+    "code": "NIK078",
+    "exp_pIC50": 6.66,
+    "consensus": 6.3035,
+    "run1": {
+      "dcw": 14.5798,
+      "pIC50": 6.3349,
+      "defect": -6.3349
+    },
+    "run2": {
+      "dcw": 20.4391,
+      "pIC50": 6.1929,
+      "defect": -6.1929
+    },
+    "run3": {
+      "dcw": 19.3285,
+      "pIC50": 6.3826,
+      "defect": -6.3826
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1cc(F)cc(c2c[nH]c3cnc(N)nc23)c1": {
+    "code": "NIK079",
+    "exp_pIC50": 4.96,
+    "consensus": 6.5202,
+    "run1": {
+      "dcw": 15.6589,
+      "pIC50": 6.4933,
+      "defect": -6.4933
+    },
+    "run2": {
+      "dcw": 22.291,
+      "pIC50": 6.4576,
+      "defect": -6.4576
+    },
+    "run3": {
+      "dcw": 20.8164,
+      "pIC50": 6.6097,
+      "defect": -6.6097
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc(F)c(c2c[nH]c3cnc(N)nc23)c1": {
+    "code": "NIK080",
+    "exp_pIC50": 6.5,
+    "consensus": 6.6591,
+    "run1": {
+      "dcw": 17.0572,
+      "pIC50": 6.6985,
+      "defect": -6.6985
+    },
+    "run2": {
+      "dcw": 23.2584,
+      "pIC50": 6.5959,
+      "defect": -6.5959
+    },
+    "run3": {
+      "dcw": 21.2972,
+      "pIC50": 6.683,
+      "defect": -6.683
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1cc(OC)cc(c2c[nH]c3cnc(N)nc23)c1": {
+    "code": "NIK081",
+    "exp_pIC50": 7.07,
+    "consensus": 6.3983,
+    "run1": {
+      "dcw": 14.7564,
+      "pIC50": 6.3608,
+      "defect": -6.3608
+    },
+    "run2": {
+      "dcw": 21.6378,
+      "pIC50": 6.3642,
+      "defect": -6.3642
+    },
+    "run3": {
+      "dcw": 19.901,
+      "pIC50": 6.47,
+      "defect": -6.47
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc(OC)c(c2c[nH]c3cnc(N)nc23)c1": {
+    "code": "NIK082",
+    "exp_pIC50": 6.54,
+    "consensus": 6.5373,
+    "run1": {
+      "dcw": 16.1546,
+      "pIC50": 6.566,
+      "defect": -6.566
+    },
+    "run2": {
+      "dcw": 22.6053,
+      "pIC50": 6.5025,
+      "defect": -6.5025
+    },
+    "run3": {
+      "dcw": 20.3818,
+      "pIC50": 6.5434,
+      "defect": -6.5434
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1cc(Cl)cc(c2c[nH]c3cnc(N)nc23)c1": {
+    "code": "NIK083",
+    "exp_pIC50": 6.92,
+    "consensus": 6.8606,
+    "run1": {
+      "dcw": 17.9147,
+      "pIC50": 6.8243,
+      "defect": -6.8243
+    },
+    "run2": {
+      "dcw": 24.9498,
+      "pIC50": 6.8376,
+      "defect": -6.8376
+    },
+    "run3": {
+      "dcw": 22.8487,
+      "pIC50": 6.9198,
+      "defect": -6.9198
+    }
+  },
+  "CC(O)(c1noc(C)c1)C#Cc1cccc(c2c[nH]c3cnc(N)nc23)c1": {
+    "code": "NIK084",
+    "exp_pIC50": 5.66,
+    "consensus": 6.4249,
+    "run1": {
+      "dcw": 15.0687,
+      "pIC50": 6.4067,
+      "defect": -6.4067
+    },
+    "run2": {
+      "dcw": 21.5288,
+      "pIC50": 6.3486,
+      "defect": -6.3487
+    },
+    "run3": {
+      "dcw": 20.2245,
+      "pIC50": 6.5194,
+      "defect": -6.5194
+    }
+  },
+  "CC(O)(c1nccnc1)C#Cc1cccc(c2c[nH]c3cnc(N)nc23)c1": {
+    "code": "NIK085",
+    "exp_pIC50": 6.54,
+    "consensus": 6.4973,
+    "run1": {
+      "dcw": 15.3327,
+      "pIC50": 6.4454,
+      "defect": -6.4454
+    },
+    "run2": {
+      "dcw": 22.3416,
+      "pIC50": 6.4648,
+      "defect": -6.4648
+    },
+    "run3": {
+      "dcw": 20.6325,
+      "pIC50": 6.5816,
+      "defect": -6.5816
+    }
+  },
+  "CC(O)(c1nc(OC)ccc1)C#Cc1cccc(c2c[nH]c3cnc(N)nc23)c1": {
+    "code": "NIK086",
+    "exp_pIC50": 6.33,
+    "consensus": 6.2207,
+    "run1": {
+      "dcw": 13.4097,
+      "pIC50": 6.1632,
+      "defect": -6.1632
+    },
+    "run2": {
+      "dcw": 21.4421,
+      "pIC50": 6.3363,
+      "defect": -6.3363
+    },
+    "run3": {
+      "dcw": 17.8857,
+      "pIC50": 6.1625,
+      "defect": -6.1625
+    }
+  },
+  "OC(c1nccs1)C#Cc1cccc(c2c[nH]c3cnc(N)nc23)c1": {
+    "code": "NIK087",
+    "exp_pIC50": 5.2,
+    "consensus": 6.1373,
+    "run1": {
+      "dcw": 13.7824,
+      "pIC50": 6.2179,
+      "defect": -6.2179
+    },
+    "run2": {
+      "dcw": 19.1308,
+      "pIC50": 6.0059,
+      "defect": -6.0059
+    },
+    "run3": {
+      "dcw": 18.0541,
+      "pIC50": 6.1882,
+      "defect": -6.1882
+    }
+  },
+  "CC(O)(C1CCCCC1)C#Cc1cccc(c2c[nH]c3cnc(N)nc23)c1": {
+    "code": "NIK088",
+    "exp_pIC50": 5.69,
+    "consensus": 5.4539,
+    "run1": {
+      "dcw": 11.0105,
+      "pIC50": 5.8111,
+      "defect": -5.8111
+    },
+    "run2": {
+      "dcw": 14.4813,
+      "pIC50": 5.3413,
+      "defect": -5.3413
+    },
+    "run3": {
+      "dcw": 11.6397,
+      "pIC50": 5.2094,
+      "defect": -5.2094
+    }
+  },
+  "CC(O)(C)C#Cc1cccc(c2c[nH]c3cnc(N)nc23)c1": {
+    "code": "NIK089",
+    "exp_pIC50": 6.14,
+    "consensus": 5.3928,
+    "run1": {
+      "dcw": 10.2761,
+      "pIC50": 5.7034,
+      "defect": -5.7034
+    },
+    "run2": {
+      "dcw": 13.4617,
+      "pIC50": 5.1956,
+      "defect": -5.1956
+    },
+    "run3": {
+      "dcw": 12.0982,
+      "pIC50": 5.2793,
+      "defect": -5.2793
+    }
+  },
+  "O=C1N(C)CCC1(C#Cc1cccc(c2c[nH]c3cnc(N)nc23)c1)O": {
+    "code": "NIK090",
+    "exp_pIC50": 6.39,
+    "consensus": 6.195,
+    "run1": {
+      "dcw": 14.8783,
+      "pIC50": 6.3787,
+      "defect": -6.3787
+    },
+    "run2": {
+      "dcw": 18.6967,
+      "pIC50": 5.9439,
+      "defect": -5.9439
+    },
+    "run3": {
+      "dcw": 18.5401,
+      "pIC50": 6.2623,
+      "defect": -6.2623
+    }
+  },
+  "OC1(C#Cc2cccc(c3c[nH]c4cnc(N)nc34)c2)CCCC1": {
+    "code": "NIK091",
+    "exp_pIC50": 6.32,
+    "consensus": 5.695,
+    "run1": {
+      "dcw": 10.285,
+      "pIC50": 5.7047,
+      "defect": -5.7047
+    },
+    "run2": {
+      "dcw": 17.9295,
+      "pIC50": 5.8342,
+      "defect": -5.8342
+    },
+    "run3": {
+      "dcw": 13.8459,
+      "pIC50": 5.546,
+      "defect": -5.546
+    }
+  },
+  "O=C1N(C)CCC1(C#Cc1ccc(F)c(c2c[nH]c3cnc(N)nc23)c1)O": {
+    "code": "NIK092",
+    "exp_pIC50": 8.23,
+    "consensus": 7.096,
+    "run1": {
+      "dcw": 21.8873,
+      "pIC50": 7.4073,
+      "defect": -7.4073
+    },
+    "run2": {
+      "dcw": 23.7655,
+      "pIC50": 6.6683,
+      "defect": -6.6683
+    },
+    "run3": {
+      "dcw": 24.7655,
+      "pIC50": 7.2123,
+      "defect": -7.2123
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1cccc(Nc2c3c([nH]cc3)ncn2)c1": {
+    "code": "NIK093",
+    "exp_pIC50": 5.79,
+    "consensus": 6.1873,
+    "run1": {
+      "dcw": 12.7973,
+      "pIC50": 6.0733,
+      "defect": -6.0733
+    },
+    "run2": {
+      "dcw": 20.6475,
+      "pIC50": 6.2227,
+      "defect": -6.2227
+    },
+    "run3": {
+      "dcw": 18.5637,
+      "pIC50": 6.2659,
+      "defect": -6.2659
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc(N(C)C)c(Nc2c3c([nH]cc3)ncn2)c1": {
+    "code": "NIK094",
+    "exp_pIC50": 7.65,
+    "consensus": 7.0191,
+    "run1": {
+      "dcw": 19.6641,
+      "pIC50": 7.0811,
+      "defect": -7.0811
+    },
+    "run2": {
+      "dcw": 25.2188,
+      "pIC50": 6.8761,
+      "defect": -6.8761
+    },
+    "run3": {
+      "dcw": 24.03,
+      "pIC50": 7.1,
+      "defect": -7.1
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc(N(CCOC)C)c(Nc2c3c([nH]cc3)ncn2)c1": {
+    "code": "NIK095",
+    "exp_pIC50": 7.14,
+    "consensus": 7.1196,
+    "run1": {
+      "dcw": 19.605,
+      "pIC50": 7.0724,
+      "defect": -7.0724
+    },
+    "run2": {
+      "dcw": 27.5711,
+      "pIC50": 7.2123,
+      "defect": -7.2123
+    },
+    "run3": {
+      "dcw": 23.8608,
+      "pIC50": 7.0742,
+      "defect": -7.0742
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc(N(CCN(C)C)C)c(Nc2c3c([nH]cc3)ncn2)c1": {
+    "code": "NIK096",
+    "exp_pIC50": 6.32,
+    "consensus": 6.8066,
+    "run1": {
+      "dcw": 18.1114,
+      "pIC50": 6.8532,
+      "defect": -6.8532
+    },
+    "run2": {
+      "dcw": 24.1775,
+      "pIC50": 6.7272,
+      "defect": -6.7272
+    },
+    "run3": {
+      "dcw": 22.3211,
+      "pIC50": 6.8393,
+      "defect": -6.8393
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc(N2CCCC2)c(Nc2c3c([nH]cc3)ncn2)c1": {
+    "code": "NIK097",
+    "exp_pIC50": 6.97,
+    "consensus": 7.1071,
+    "run1": {
+      "dcw": 19.8465,
+      "pIC50": 7.1078,
+      "defect": -7.1078
+    },
+    "run2": {
+      "dcw": 27.3351,
+      "pIC50": 7.1785,
+      "defect": -7.1785
+    },
+    "run3": {
+      "dcw": 23.6041,
+      "pIC50": 7.0351,
+      "defect": -7.035
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc(N2CCNCC2)c(Nc2c3c([nH]cc3)ncn2)c1": {
+    "code": "NIK098",
+    "exp_pIC50": 8.01,
+    "consensus": 7.0558,
+    "run1": {
+      "dcw": 19.4545,
+      "pIC50": 7.0503,
+      "defect": -7.0503
+    },
+    "run2": {
+      "dcw": 26.5547,
+      "pIC50": 7.067,
+      "defect": -7.067
+    },
+    "run3": {
+      "dcw": 23.7036,
+      "pIC50": 7.0502,
+      "defect": -7.0502
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc(N2C[C@@H](C)NCC2)c(Nc2c3c([nH]cc3)ncn2)c1": {
+    "code": "NIK099",
+    "exp_pIC50": 6.68,
+    "consensus": 7.1167,
+    "run1": {
+      "dcw": 19.8433,
+      "pIC50": 7.1074,
+      "defect": -7.1073
+    },
+    "run2": {
+      "dcw": 26.7303,
+      "pIC50": 7.0921,
+      "defect": -7.0921
+    },
+    "run3": {
+      "dcw": 24.3611,
+      "pIC50": 7.1506,
+      "defect": -7.1506
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc(N2C[C@H](C)NCC2)c(Nc2c3c([nH]cc3)ncn2)c1": {
+    "code": "NIK100",
+    "exp_pIC50": 7.16,
+    "consensus": 7.0611,
+    "run1": {
+      "dcw": 19.7216,
+      "pIC50": 7.0895,
+      "defect": -7.0895
+    },
+    "run2": {
+      "dcw": 26.4803,
+      "pIC50": 7.0564,
+      "defect": -7.0564
+    },
+    "run3": {
+      "dcw": 23.619,
+      "pIC50": 7.0373,
+      "defect": -7.0373
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc(N2C3CC(NC3)C2)c(Nc2c3c([nH]cc3)ncn2)c1": {
+    "code": "NIK101",
+    "exp_pIC50": 6.7,
+    "consensus": 7.0248,
+    "run1": {
+      "dcw": 18.0897,
+      "pIC50": 6.85,
+      "defect": -6.85
+    },
+    "run2": {
+      "dcw": 27.2521,
+      "pIC50": 7.1667,
+      "defect": -7.1667
+    },
+    "run3": {
+      "dcw": 23.7529,
+      "pIC50": 7.0578,
+      "defect": -7.0578
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc(N2CCN(CC)CC2)c(Nc2c3c([nH]cc3)ncn2)c1": {
+    "code": "NIK102",
+    "exp_pIC50": 7.46,
+    "consensus": 7.4404,
+    "run1": {
+      "dcw": 21.649,
+      "pIC50": 7.3723,
+      "defect": -7.3723
+    },
+    "run2": {
+      "dcw": 29.0918,
+      "pIC50": 7.4296,
+      "defect": -7.4296
+    },
+    "run3": {
+      "dcw": 26.778,
+      "pIC50": 7.5194,
+      "defect": -7.5194
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc(N2CCC(N3CCOCC3)CC2)c(Nc2c3c([nH]cc3)ncn2)c1": {
+    "code": "NIK103",
+    "exp_pIC50": 7.82,
+    "consensus": 7.5757,
+    "run1": {
+      "dcw": 22.5633,
+      "pIC50": 7.5065,
+      "defect": -7.5065
+    },
+    "run2": {
+      "dcw": 31.8964,
+      "pIC50": 7.8305,
+      "defect": -7.8305
+    },
+    "run3": {
+      "dcw": 25.9314,
+      "pIC50": 7.3902,
+      "defect": -7.3902
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc(N2CCN(C)CCC2)c(Nc2c3c([nH]cc3)ncn2)c1": {
+    "code": "NIK104",
+    "exp_pIC50": 7.22,
+    "consensus": 7.2503,
+    "run1": {
+      "dcw": 21.6454,
+      "pIC50": 7.3718,
+      "defect": -7.3718
+    },
+    "run2": {
+      "dcw": 27.6035,
+      "pIC50": 7.2169,
+      "defect": -7.2169
+    },
+    "run3": {
+      "dcw": 24.4376,
+      "pIC50": 7.1622,
+      "defect": -7.1622
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc(OC2CCOCC2)c(Nc2c3c([nH]cc3)ncn2)c1": {
+    "code": "NIK105",
+    "exp_pIC50": 6.95,
+    "consensus": 7.0618,
+    "run1": {
+      "dcw": 18.9926,
+      "pIC50": 6.9825,
+      "defect": -6.9825
+    },
+    "run2": {
+      "dcw": 27.8086,
+      "pIC50": 7.2462,
+      "defect": -7.2462
+    },
+    "run3": {
+      "dcw": 23.0906,
+      "pIC50": 6.9567,
+      "defect": -6.9567
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc(OC2CCN(C)CC2)c(Nc2c3c([nH]cc3)ncn2)c1": {
+    "code": "NIK106",
+    "exp_pIC50": 6.15,
+    "consensus": 7.0812,
+    "run1": {
+      "dcw": 20.2403,
+      "pIC50": 7.1656,
+      "defect": -7.1656
+    },
+    "run2": {
+      "dcw": 27.5443,
+      "pIC50": 7.2084,
+      "defect": -7.2084
+    },
+    "run3": {
+      "dcw": 22.5194,
+      "pIC50": 6.8695,
+      "defect": -6.8695
+    }
+  },
+  "OC1(C#Cc2ccc(N3CCOCC3)c(Nc3c4c([nH]cc4)ncn3)c2)CCCC1": {
+    "code": "NIK107",
+    "exp_pIC50": 5.57,
+    "consensus": 5.9652,
+    "run1": {
+      "dcw": 11.8075,
+      "pIC50": 5.9281,
+      "defect": -5.9281
+    },
+    "run2": {
+      "dcw": 18.9881,
+      "pIC50": 5.9855,
+      "defect": -5.9855
+    },
+    "run3": {
+      "dcw": 16.7029,
+      "pIC50": 5.982,
+      "defect": -5.982
+    }
+  },
+  "OC1(C#Cc2ccc(N3CCOCC3)c(Nc3c4c([nH]cc4)ncn3)c2)CCCCC1": {
+    "code": "NIK108",
+    "exp_pIC50": 6.19,
+    "consensus": 5.8902,
+    "run1": {
+      "dcw": 11.6964,
+      "pIC50": 5.9118,
+      "defect": -5.9118
+    },
+    "run2": {
+      "dcw": 18.8219,
+      "pIC50": 5.9617,
+      "defect": -5.9617
+    },
+    "run3": {
+      "dcw": 15.4916,
+      "pIC50": 5.7971,
+      "defect": -5.7971
+    }
+  },
+  "CC(O)(C1CCCC1)C#Cc1ccc(N2CCOCC2)c(Nc2c3c([nH]cc3)ncn2)c1": {
+    "code": "NIK109",
+    "exp_pIC50": 5.65,
+    "consensus": 6.7199,
+    "run1": {
+      "dcw": 18.1659,
+      "pIC50": 6.8612,
+      "defect": -6.8612
+    },
+    "run2": {
+      "dcw": 23.4505,
+      "pIC50": 6.6233,
+      "defect": -6.6233
+    },
+    "run3": {
+      "dcw": 21.2468,
+      "pIC50": 6.6753,
+      "defect": -6.6753
+    }
+  },
+  "CC(O)(c1cccs1)C#Cc1ccc(N2CCOCC2)c(Nc2c3c([nH]cc3)ncn2)c1": {
+    "code": "NIK110",
+    "exp_pIC50": 7.3,
+    "consensus": 7.0761,
+    "run1": {
+      "dcw": 19.6188,
+      "pIC50": 7.0744,
+      "defect": -7.0744
+    },
+    "run2": {
+      "dcw": 25.4617,
+      "pIC50": 6.9108,
+      "defect": -6.9108
+    },
+    "run3": {
+      "dcw": 24.9677,
+      "pIC50": 7.2431,
+      "defect": -7.2431
+    }
+  },
+  "CC(=O)N1CCN(c2ccc(C#CC(c3nccs3)(O)C)cc2Nc2c3c([nH]cc3)ncn2)CC1": {
+    "code": "NIK111",
+    "exp_pIC50": 7.75,
+    "consensus": 7.7256,
+    "run1": {
+      "dcw": 24.6348,
+      "pIC50": 7.8105,
+      "defect": -7.8105
+    },
+    "run2": {
+      "dcw": 32.1348,
+      "pIC50": 7.8646,
+      "defect": -7.8646
+    },
+    "run3": {
+      "dcw": 26.6613,
+      "pIC50": 7.5016,
+      "defect": -7.5016
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc(N2CCN(S(=O)(=O)CC)CC2)c(Nc2c3c([nH]cc3)ncn2)c1": {
+    "code": "NIK112",
+    "exp_pIC50": 8.09,
+    "consensus": 7.9656,
+    "run1": {
+      "dcw": 25.2364,
+      "pIC50": 7.8988,
+      "defect": -7.8988
+    },
+    "run2": {
+      "dcw": 34.7227,
+      "pIC50": 8.2345,
+      "defect": -8.2345
+    },
+    "run3": {
+      "dcw": 28.3788,
+      "pIC50": 7.7636,
+      "defect": -7.7636
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc(N2CCN(S(=O)(=O)C3CC3)CC2)c(Nc2c3c([nH]cc3)ncn2)c1": {
+    "code": "NIK113",
+    "exp_pIC50": 7.79,
+    "consensus": 7.6714,
+    "run1": {
+      "dcw": 22.7332,
+      "pIC50": 7.5314,
+      "defect": -7.5314
+    },
+    "run2": {
+      "dcw": 34.0225,
+      "pIC50": 8.1344,
+      "defect": -8.1344
+    },
+    "run3": {
+      "dcw": 25.657,
+      "pIC50": 7.3483,
+      "defect": -7.3483
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc(N2CCOCC2)c(Nc2nc(N)ncc2)c1": {
+    "code": "NIK114",
+    "exp_pIC50": 7.94,
+    "consensus": 7.2546,
+    "run1": {
+      "dcw": 20.9261,
+      "pIC50": 7.2663,
+      "defect": -7.2662
+    },
+    "run2": {
+      "dcw": 27.9842,
+      "pIC50": 7.2713,
+      "defect": -7.2713
+    },
+    "run3": {
+      "dcw": 24.8574,
+      "pIC50": 7.2263,
+      "defect": -7.2263
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccccc1N1C(Nc2c3c([nH]cc3)ncc2)COCC1": {
+    "code": "NIK115",
+    "exp_pIC50": 8.18,
+    "consensus": 7.2995,
+    "run1": {
+      "dcw": 20.9406,
+      "pIC50": 7.2684,
+      "defect": -7.2684
+    },
+    "run2": {
+      "dcw": 28.069,
+      "pIC50": 7.2834,
+      "defect": -7.2834
+    },
+    "run3": {
+      "dcw": 25.6457,
+      "pIC50": 7.3466,
+      "defect": -7.3466
+    }
+  },
+  "CC(O)(c1nccs1)C#Cc1ccc(N2CCOCC2)c(Nc2c3ccsc3ncn2)c1": {
+    "code": "NIK116",
+    "exp_pIC50": 8.06,
+    "consensus": 7.8594,
+    "run1": {
+      "dcw": 27.1242,
+      "pIC50": 8.1758,
+      "defect": -8.1758
+    },
+    "run2": {
+      "dcw": 26.5716,
+      "pIC50": 7.0694,
+      "defect": -7.0694
+    },
+    "run3": {
+      "dcw": 32.1094,
+      "pIC50": 8.3329,
+      "defect": -8.3329
+    }
+  },
+  "C[C@](O)(c1nccs1)C#Cc1ccc(N2CCOCC2)c(Nc2c3c([nH]cc3)ncn2)c1": {
+    "code": "NIK117",
+    "exp_pIC50": 7.92,
+    "consensus": 7.231,
+    "run1": {
+      "dcw": 20.2628,
+      "pIC50": 7.1689,
+      "defect": -7.1689
+    },
+    "run2": {
+      "dcw": 27.2628,
+      "pIC50": 7.1682,
+      "defect": -7.1682
+    },
+    "run3": {
+      "dcw": 25.7072,
+      "pIC50": 7.356,
+      "defect": -7.356
+    }
+  },
+  "C[C@@](O)(c1nccs1)C#Cc1ccc(N2CCOCC2)c(Nc2c3c([nH]cc3)ncn2)c1": {
+    "code": "NIK118",
+    "exp_pIC50": 7.13,
+    "consensus": 7.2277,
+    "run1": {
+      "dcw": 20.0379,
+      "pIC50": 7.1359,
+      "defect": -7.1359
+    },
+    "run2": {
+      "dcw": 27.2628,
+      "pIC50": 7.1682,
+      "defect": -7.1682
+    },
+    "run3": {
+      "dcw": 25.8576,
+      "pIC50": 7.3789,
+      "defect": -7.3789
+    }
+  }
+}

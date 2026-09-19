@@ -1,0 +1,25 @@
+*TEST0001 Nc1nc(N2CCc3c2cc(Br)cc3)c(Cl)cn1    0.000
+*TEST0002 Nc1nc(N2CCc3c2cc(Br)cc3)ccn1    0.000
+*TEST0003 Nc1nc(N2CCc3c2cc(Br)cc3)c(F)cn1    0.000
+*TEST0004 Nc1nc(N2CCc3c2cc(Br)cc3)c(C)cn1    0.000
+*TEST0005 Nc1nc(N2CCc3c2cc(Br)cc3)c(OC)cn1    0.000
+*TEST0007 Nc1nc(N2CCc3c2cc(Br)cc3)c(SC)cn1    0.000
+*TEST0028 O=C(NC1CCOCC1)c1ccc(Nc2ncc(Cl)c(N3CCc4c3cc(C#N)cc4CO)n2)c(OC)c1    0.000
+*TEST0029 Fc1cc(C(=O)NC2CCOCC2)ccc1Nc1ncc(Cl)c(N2CCc3c2cc(C#N)cc3CO)n1    0.000
+*TEST0031 Clc1c(C2CCc3c2cc(C#N)cc3CO)nc(Nc2ccc(C(=O)NC3CCOCC3)cc2)nc1    0.000
+*TEST0032 Clc1c(C2CCc3c2cc(C#N)cc3CO)nc(Nc2ccc(C(=O)NC3CC[C@@H](O)CC3)cc2)nc1    0.000
+*TEST0033 Clc1c(C2CCc3c2cc(C#N)cc3CO)nc(Nc2ccc(C(=O)NC3CC[C@H](O)CC3)cc2)nc1    0.000
+*TEST0034 Clc1c(C2CCc3c2cc(C#N)cc3CO)nc(Nc2ccc(C(=O)NC3CCNCC3)cc2)nc1    0.000
+*TEST0035 Clc1c(C2CCc3c2cc(C#N)cc3CO)nc(Nc2ccc(C(=O)NC3CC[C@@H](N)CC3)cc2)nc1    0.000
+*TEST0036 Clc1c(C2CCc3c2cc(C#N)cc3CO)nc(Nc2ccc(C(=O)NC3CC[C@H](N)CC3)cc2)nc1    0.000
+*TEST0038 Oc1nc2ccc(C#CC(c3nccs3)(O)C)cc2c(c2c[nH]nc2)c1    0.000
+*TEST0049 CC(O)(c1nccs1)/C=C/c1ccc2nccc(c3c[nH]nc3)c2c1    0.000
+*TEST0052 CC(O)(c1nccs1)C#Cc1ccc(F)c(n2ccc3cnc(N)nc23)c1    0.000
+*TEST0053 CC(O)(c1nccs1)C#Cc1cc(n2ccc3cnc(N)nc23)c(F)cc1F    0.000
+*TEST0074 CC(O)(c1nccs1)C#Cc1ncc(F)c(n2ccc3cnc(N)nc23)c1    0.000
+*TEST0079 CC(O)(c1nccs1)C#Cc1cc(F)cc(c2c[nH]c3cnc(N)nc23)c1    0.000
+*TEST0080 CC(O)(c1nccs1)C#Cc1ccc(F)c(c2c[nH]c3cnc(N)nc23)c1    0.000
+*TEST0092 O=C1N(C)CCC1(C#Cc1ccc(F)c(c2c[nH]c3cnc(N)nc23)c1)O    0.000
+*TEST0111 CC(=O)N1CCN(c2ccc(C#CC(c3nccs3)(O)C)cc2Nc2c3c([nH]cc3)ncn2)CC1    0.000
+*TEST0112 CC(O)(c1nccs1)C#Cc1ccc(N2CCN(S(=O)(=O)CC)CC2)c(Nc2c3c([nH]cc3)ncn2)c1    0.000
+*TEST0113 CC(O)(c1nccs1)C#Cc1ccc(N2CCN(S(=O)(=O)C3CC3)CC2)c(Nc2c3c([nH]cc3)ncn2)c1    
