@@ -176,18 +176,21 @@ function renderStructure(smiles) {
     return;
   }
 
-  // Check pre-rendered RDKit SVG
-  if (typeof EXACT_PREDICTIONS !== "undefined" && EXACT_PREDICTIONS[cleanSmiles] && EXACT_PREDICTIONS[cleanSmiles].svg) {
-    if (wrapper) wrapper.innerHTML = EXACT_PREDICTIONS[cleanSmiles].svg;
-    if (emptyMsg) emptyMsg.style.display = "none";
-    if (status) {
-      status.textContent = "2D Chemical Structure Valid";
-      status.className = "status-indicator status-valid";
+  // 1. Check pre-rendered SVG from lookup
+  if (typeof getPredictionForSmiles === "function") {
+    let pred = getPredictionForSmiles(cleanSmiles);
+    if (pred && pred.svg) {
+      if (wrapper) wrapper.innerHTML = pred.svg;
+      if (emptyMsg) emptyMsg.style.display = "none";
+      if (status) {
+        status.textContent = "2D Chemical Structure Valid";
+        status.className = "status-indicator status-valid";
+      }
+      return;
     }
-    return;
   }
 
-  // OpenChemLib fallback if available
+  // 2. OpenChemLib fallback if available
   if (typeof OCL !== "undefined") {
     try {
       const mol = OCL.Molecule.fromSmiles(cleanSmiles);
@@ -206,35 +209,35 @@ function renderStructure(smiles) {
     }
   }
 
-  if (typeof SmilesDrawer === "undefined") {
-    if (status) status.textContent = "Drawer not loaded";
-    return;
+  // 3. SmilesDrawer fallback
+  if (typeof SmilesDrawer !== "undefined") {
+    try {
+      ensureMoleculeSvg();
+      SmilesDrawer.parse(cleanSmiles, (tree) => {
+        ensureMoleculeSvg();
+        if (emptyMsg) emptyMsg.style.display = "none";
+        if (svgDrawerInstance) {
+          svgDrawerInstance.draw(tree, "moleculeSvg", "light", false);
+          if (status) {
+            status.textContent = "2D Chemical Structure Valid";
+            status.className = "status-indicator status-valid";
+          }
+        }
+      }, (err) => {
+        if (status) {
+          status.textContent = "Invalid SMILES";
+          status.className = "status-indicator status-error";
+        }
+      });
+      return;
+    } catch (e) {
+      console.warn("SmilesDrawer error:", e);
+    }
   }
 
-  try {
-    SmilesDrawer.parse(cleanSmiles, (tree) => {
-      const currentSvg = ensureMoleculeSvg();
-      if (currentSvg) currentSvg.innerHTML = "";
-      if (emptyMsg) emptyMsg.style.display = "none";
-
-      if (svgDrawerInstance) {
-        svgDrawerInstance.draw(tree, "moleculeSvg", "light", false);
-        if (status) {
-          status.textContent = "2D Chemical Structure Valid";
-          status.className = "status-indicator status-valid";
-        }
-      }
-    }, (err) => {
-      if (status) {
-        status.textContent = "Invalid SMILES";
-        status.className = "status-indicator status-error";
-      }
-    });
-  } catch (e) {
-    if (status) {
-      status.textContent = "Render Error";
-      status.className = "status-indicator status-error";
-    }
+  if (status) {
+    status.textContent = "Render Error";
+    status.className = "status-indicator status-error";
   }
 }
 
@@ -423,52 +426,6 @@ async function runSinglePrediction() {
     if (spinner) spinner.style.display = "none";
     if (resultsSection) resultsSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }, 250);
-}
-
-  try {
-    const response = await fetch("/api/predict", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        smiles: cleanSmiles,
-        kinase: "nik"
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error("Server response error");
-    }
-
-    const data = await response.json();
-    displaySingleResult(data);
-    if (resultsSection) resultsSection.style.display = "flex";
-    if (batchTableWrap) batchTableWrap.style.display = "none";
-
-    if (resultsSection) resultsSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  } catch (err) {
-    let pred = estimatePrediction(cleanSmiles);
-    displaySingleResult({
-      results: [{
-        smiles: cleanSmiles,
-        consensus_prediction: pred.consensus,
-        physicochemical_properties: {
-          formula: pred.formula,
-          molecular_weight: pred.mw,
-          logp: pred.logp,
-          tpsa: pred.tpsa,
-          h_donors_acceptors: pred.hdonors,
-          rotatable_bonds: pred.rotbonds,
-          svg: pred.svg
-        }
-      }],
-      total_elapsed_seconds: 0.75
-    });
-    if (resultsSection) resultsSection.style.display = "flex";
-    if (batchTableWrap) batchTableWrap.style.display = "none";
-  } finally {
-    if (btn) btn.disabled = false;
-    if (spinner) spinner.style.display = "none";
-  }
 }
 
 function displaySingleResult(data) {
