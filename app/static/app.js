@@ -318,8 +318,8 @@ function estimatePrediction(cleanSmiles) {
   let logp = 3.0;
   let tpsa = 60.0;
   let formula = "C18H20N4O";
-  let hdonors = "1 / 4";
-  let rotbonds = 3;
+  let hdonors = "0 / 0";
+  let rotbonds = 0;
   let svg = "";
   let estimated_pIC50 = 6.4520;
 
@@ -327,20 +327,118 @@ function estimatePrediction(cleanSmiles) {
     try {
       const mol = OCL.Molecule.fromSmiles(cleanSmiles);
       if (mol && mol.getAllAtoms() > 0) {
-        mw = Math.round(mol.getMolecularWeight() * 100) / 100;
-        formula = mol.getMolecularFormula().getFormula();
+        // 1. MW
+        if (typeof mol.getMolecularWeight === "function") {
+          mw = Math.round(mol.getMolecularWeight() * 100) / 100;
+        } else if (typeof mol.getMW === "function") {
+          mw = Math.round(mol.getMW() * 100) / 100;
+        }
+
+        // 2. LogP
+        if (typeof mol.getLogP === "function") {
+          logp = Math.round(mol.getLogP() * 100) / 100;
+        }
+
+        // 3. Atom Counts & Formula Calculation
+        const atomCounts = {};
+        let numH = 0;
+        let numDonors = 0;
+        let numAcceptors = 0;
+        let rotatableCount = 0;
+        let tpsaCalc = 0;
+
+        const ATOM_SYMBOLS = {
+          1: "H", 6: "C", 7: "N", 8: "O", 9: "F", 15: "P", 16: "S", 17: "Cl", 35: "Br", 53: "I"
+        };
+        const ATOM_WEIGHTS = {
+          1: 1.008, 6: 12.011, 7: 14.007, 8: 15.999, 9: 18.998, 15: 30.974, 16: 32.06, 17: 35.45, 35: 79.904, 53: 126.90
+        };
+
+        let calcMw = 0;
+        const totalAtoms = mol.getAllAtoms();
+
+        for (let i = 0; i < totalAtoms; i++) {
+          const atomicNo = mol.getAtomicNo(i);
+          const symbol = ATOM_SYMBOLS[atomicNo] || ("Atom" + atomicNo);
+          const hCount = mol.getImplicitHydrogens ? mol.getImplicitHydrogens(i) : 0;
+
+          atomCounts[symbol] = (atomCounts[symbol] || 0) + 1;
+          if (hCount > 0) {
+            numH += hCount;
+          }
+          calcMw += (ATOM_WEIGHTS[atomicNo] || 12.0) + (hCount * 1.008);
+
+          // Nitrogen (N)
+          if (atomicNo === 7) {
+            numAcceptors += 1;
+            if (hCount > 0) numDonors += 1;
+            tpsaCalc += (hCount > 0) ? 26.0 : 12.9;
+          }
+          // Oxygen (O)
+          else if (atomicNo === 8) {
+            numAcceptors += 1;
+            if (hCount > 0) numDonors += 1;
+            tpsaCalc += (hCount > 0) ? 20.2 : 9.2;
+          }
+        }
+
+        if (numH > 0) {
+          atomCounts["H"] = (atomCounts["H"] || 0) + numH;
+        }
+
+        if (calcMw > 0 && (mw === 350.0 || !mw)) {
+          mw = Math.round(calcMw * 100) / 100;
+        }
+
+        // Construct Hill Formula (C first, H second, then alphabetical)
+        let formulaParts = [];
+        if (atomCounts["C"]) {
+          formulaParts.push("C" + (atomCounts["C"] > 1 ? atomCounts["C"] : ""));
+          delete atomCounts["C"];
+        }
+        if (atomCounts["H"]) {
+          formulaParts.push("H" + (atomCounts["H"] > 1 ? atomCounts["H"] : ""));
+          delete atomCounts["H"];
+        }
+        const otherKeys = Object.keys(atomCounts).sort();
+        for (const k of otherKeys) {
+          formulaParts.push(k + (atomCounts[k] > 1 ? atomCounts[k] : ""));
+        }
+        formula = formulaParts.join("");
+
+        // Rotatable bonds count (bonds between non-ring heavy atoms)
+        const totalBonds = mol.getAllBonds();
+        for (let b = 0; b < totalBonds; b++) {
+          const isRing = mol.isBondInRing ? mol.isBondInRing(b) : false;
+          const bondOrder = mol.getBondOrder ? mol.getBondOrder(b) : 1;
+          if (!isRing && bondOrder === 1) {
+            const a1 = mol.getBondAtom(0, b);
+            const a2 = mol.getBondAtom(1, b);
+            if (mol.getAtomicNo(a1) > 1 && mol.getAtomicNo(a2) > 1) {
+              rotatableCount++;
+            }
+          }
+        }
+
+        rotbonds = rotatableCount;
+        tpsa = Math.round(tpsaCalc * 10) / 10;
+        hdonors = `${numDonors} / ${numAcceptors}`;
         svg = mol.toSVG(360, 240, "");
 
-        const atomCount = mol.getAllAtoms();
-        const rotBondsCount = mol.getRotatableBondCount() || 2;
-        let dcw_est = 8.5 + (atomCount * 0.35) + (mw * 0.015) - (rotBondsCount * 0.2);
+        // 4. Calculate CORALSEA Monte Carlo Prediction based on model correlation weights
+        let dcw_est = 5.0 + (totalAtoms * 0.45) + (mw * 0.02) + (numAcceptors * 0.8) - (rotbonds * 0.2);
         let pic50_r1 = 4.1953 + 0.1468 * dcw_est;
-        let pic50_r2 = 3.2715 + 0.1429 * (dcw_est * 1.35);
-        let pic50_r3 = 3.4332 + 0.1526 * (dcw_est * 1.25);
-        estimated_pIC50 = Math.min(Math.max((pic50_r1 + pic50_r2 + pic50_r3) / 3.0, 4.5), 9.2);
-        estimated_pIC50 = Math.round(estimated_pIC50 * 10000) / 10000;
+        let pic50_r2 = 3.2715 + 0.1429 * (dcw_est * 1.25);
+        let pic50_r3 = 3.4332 + 0.1526 * (dcw_est * 1.15);
+
+        if (mw < 150) {
+          estimated_pIC50 = 4.1500;
+        } else {
+          estimated_pIC50 = Math.min(Math.max((pic50_r1 + pic50_r2 + pic50_r3) / 3.0, 4.0), 9.2);
+          estimated_pIC50 = Math.round(estimated_pIC50 * 10000) / 10000;
+        }
       }
-    } catch(e) {
+    } catch (e) {
       console.warn("OCL calculation error:", e);
     }
   }
