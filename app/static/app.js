@@ -1,24 +1,24 @@
 // Preset curated NIK sample molecules from published dataset
 const NIK_SAMPLES = [
   {
-    name: "Compound 1",
-    smiles: "COc1cnc(nc1N1CCc2c1cc(Br)cc2)N",
-    description: "Aminopyrimidine derivative (Experimental pIC50 = 5.0693)"
-  },
-  {
-    name: "Lead NIK015",
-    smiles: "N#Cc1ccc(cc1)c1cnc(s1)C(=O)Nc1nccc(n1)n1cnc2c1ccc(c2)Cl",
-    description: "Nitrile benzimidazole analog (Experimental pIC50 = 6.2254)"
+    name: "Compound 1 (NIK001)",
+    smiles: "Nc1nc(N2CCc3c2cc(Br)cc3)c(Cl)cn1",
+    description: "Bromo tetrahydroisoquinoline chloropyrimidine (Exp pIC50 = 6.52, Pred pIC50 = 6.7444)"
   },
   {
     name: "Benchmark NIK009",
     smiles: "Nc1nc(N2CCc3c2cc(OC)cc3)c(Cl)cn1",
-    description: "Methoxy chloropyrimidine analog (Experimental pIC50 = 7.0500)"
+    description: "Methoxy chloropyrimidine analog (Exp pIC50 = 7.05, Pred pIC50 = 7.4348)"
+  },
+  {
+    name: "Alkynyl NIK015",
+    smiles: "Nc1nc(N2CCc3c2cc(C#CC)cc3)c(Cl)cn1",
+    description: "Propyne-substituted analog (Exp pIC50 = 8.00, Pred pIC50 = 7.5816)"
   },
   {
     name: "Heteroaryl NIK017",
     smiles: "Nc1nc(N2CCc3c2cc(c2n[nH]cc2)cc3)c(Cl)cn1",
-    description: "Pyrazole-substituted analog (Experimental pIC50 = 8.1900)"
+    description: "Pyrazole-substituted lead analog (Exp pIC50 = 8.19, Pred pIC50 = 8.0818)"
   }
 ];
 
