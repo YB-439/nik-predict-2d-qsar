@@ -42,6 +42,18 @@ function sanitizeSmiles(raw) {
   return spaceParts[0].trim();
 }
 
+function onSmilesInputChange(smiles) {
+  renderStructure(smiles);
+  // Reset prediction banners to '--' until explicit prediction click
+  document.querySelectorAll(".consensus-value").forEach(el => {
+    el.textContent = "--";
+  });
+  const consensusEl = document.getElementById("consensusVal");
+  if (consensusEl) consensusEl.textContent = "--";
+  const batchConsensusEl = document.getElementById("batchConsensusVal");
+  if (batchConsensusEl) batchConsensusEl.textContent = "--";
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   initSvgDrawer();
   const smilesInput = document.getElementById("smilesInput");
@@ -60,26 +72,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     smilesInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter") runSinglePrediction();
-    });
-  }
-  loadSample(0);
-});
-    smilesInput.addEventListener("change", (e) => {
-      runSinglePrediction();
-    });
-    smilesInput.addEventListener("paste", (e) => {
-      setTimeout(() => runSinglePrediction(), 50);
-    });
-    smilesInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") runSinglePrediction();
-    });
-  }
-  loadSample(0);
-});
-    smilesInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        runSinglePrediction();
-      }
     });
   }
 
