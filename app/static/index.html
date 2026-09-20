@@ -140,15 +140,31 @@
                   <button class="btn btn-secondary" onclick="clearInput()">Reset</button>
                 </div>
 
-                <!-- Black Consensus Prediction Box (In Left Column, JUST BELOW PREDICT BUTTON) -->
-                <div class="consensus-banner consensus-banner-simple" id="singleConsensusBanner" style="margin-top: 1.5rem; padding: 1.5rem 1.25rem; display: flex; align-items: center; justify-content: center; border-radius: 12px;">
-                  <div class="consensus-primary">
+                <!-- 3-Run Ensemble Consensus Prediction Box -->
+                <div class="consensus-banner consensus-banner-simple" id="singleConsensusBanner" style="margin-top: 1.5rem; padding: 1.5rem 1.25rem; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 12px; gap: 1rem;">
+                  <div class="consensus-primary" style="text-align: center;">
                     <span class="consensus-label">CONSENSUS PREDICTED pIC<sub>50</sub></span>
                     <div class="consensus-number-wrap">
                       <span class="consensus-value" id="consensusVal">--</span>
                       <span class="consensus-unit">pIC<sub>50</sub></span>
                     </div>
                     <p class="consensus-subtext">Calculated consensus biological inhibitory potency against NIK kinase</p>
+                  </div>
+                  
+                  <!-- 3-Run Ensemble Breakdown Grid -->
+                  <div class="ensemble-breakdown-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; width: 100%; padding-top: 0.75rem; border-top: 1px solid rgba(255, 255, 255, 0.15);">
+                    <div class="run-card" style="background: rgba(255, 255, 255, 0.08); padding: 0.5rem 0.75rem; border-radius: 8px; text-align: center;">
+                      <span style="font-size: 0.75rem; color: #94a3b8; display: block; text-transform: uppercase; font-weight: 600;">CORAL 1</span>
+                      <span id="run1Val" style="font-size: 1.1rem; font-weight: 700; color: #38bdf8;">--</span>
+                    </div>
+                    <div class="run-card" style="background: rgba(255, 255, 255, 0.08); padding: 0.5rem 0.75rem; border-radius: 8px; text-align: center;">
+                      <span style="font-size: 0.75rem; color: #94a3b8; display: block; text-transform: uppercase; font-weight: 600;">CORAL 2</span>
+                      <span id="run2Val" style="font-size: 1.1rem; font-weight: 700; color: #38bdf8;">--</span>
+                    </div>
+                    <div class="run-card" style="background: rgba(255, 255, 255, 0.08); padding: 0.5rem 0.75rem; border-radius: 8px; text-align: center;">
+                      <span style="font-size: 0.75rem; color: #94a3b8; display: block; text-transform: uppercase; font-weight: 600;">CORAL 3</span>
+                      <span id="run3Val" style="font-size: 1.1rem; font-weight: 700; color: #38bdf8;">--</span>
+                    </div>
                   </div>
                 </div>
 <!-- How to Cite Card (JUST BELOW CONSENSUS PREDICTION BOX) -->
@@ -295,6 +311,9 @@
                 <tr>
                   <th>#</th>
                   <th>SMILES</th>
+                  <th>CORAL 1</th>
+                  <th>CORAL 2</th>
+                  <th>CORAL 3</th>
                   <th>Consensus pIC<sub>50</sub></th>
                 </tr>
               </thead>

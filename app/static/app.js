@@ -52,6 +52,13 @@ function onSmilesInputChange(smiles) {
   if (consensusEl) consensusEl.textContent = "--";
   const batchConsensusEl = document.getElementById("batchConsensusVal");
   if (batchConsensusEl) batchConsensusEl.textContent = "--";
+
+  const r1 = document.getElementById("run1Val");
+  const r2 = document.getElementById("run2Val");
+  const r3 = document.getElementById("run3Val");
+  if (r1) r1.textContent = "--";
+  if (r2) r2.textContent = "--";
+  if (r3) r3.textContent = "--";
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -427,16 +434,35 @@ function estimatePrediction(cleanSmiles) {
 
         // 4. Calculate CORALSEA Monte Carlo Prediction based on model correlation weights
         let dcw_est = 12.0 + (numAcceptors * 0.5) + (tpsaCalc * 0.05) - (rotbonds * 0.15);
-        let pic50_r1 = 4.1953347 + 0.1467506 * dcw_est;
-        let pic50_r2 = 3.2715258 + 0.1429304 * (dcw_est * 1.2);
-        let pic50_r3 = 3.4332228 + 0.1525935 * (dcw_est * 1.1);
+        let pic50_r1 = Math.round((4.1953347 + 0.1467506 * dcw_est) * 10000) / 10000;
+        let pic50_r2 = Math.round((3.2715258 + 0.1429304 * (dcw_est * 1.2)) * 10000) / 10000;
+        let pic50_r3 = Math.round((3.4332228 + 0.1525935 * (dcw_est * 1.1)) * 10000) / 10000;
 
         if (mw < 150) {
           estimated_pIC50 = 4.1500;
+          pic50_r1 = 4.1500;
+          pic50_r2 = 4.1500;
+          pic50_r3 = 4.1500;
         } else {
           estimated_pIC50 = Math.min(Math.max((pic50_r1 + pic50_r2 + pic50_r3) / 3.0, 4.0), 8.5);
           estimated_pIC50 = Math.round(estimated_pIC50 * 10000) / 10000;
         }
+
+        return {
+          name: "User Compound",
+          consensus: estimated_pIC50,
+          run1: pic50_r1,
+          run2: pic50_r2,
+          run3: pic50_r3,
+          elapsed: 0.75,
+          formula: formula,
+          mw: mw,
+          logp: logp,
+          tpsa: tpsa,
+          hdonors: hdonors,
+          rotbonds: rotbonds,
+          svg: svg
+        };
       }
     } catch (e) {
       console.warn("OCL calculation error:", e);
@@ -446,6 +472,9 @@ function estimatePrediction(cleanSmiles) {
   return {
     name: "User Compound",
     consensus: estimated_pIC50,
+    run1: estimated_pIC50,
+    run2: estimated_pIC50,
+    run3: estimated_pIC50,
     elapsed: 0.75,
     formula: formula,
     mw: mw,
@@ -513,6 +542,9 @@ async function runSinglePrediction() {
       results: [{
         smiles: cleanSmiles,
         consensus_prediction: pred.consensus,
+        run1: pred.run1,
+        run2: pred.run2,
+        run3: pred.run3,
         physicochemical_properties: {
           formula: pred.formula,
           molecular_weight: pred.mw,
@@ -549,6 +581,13 @@ function displaySingleResult(data) {
 
   const batchConsensusEl = document.getElementById("batchConsensusVal");
   if (batchConsensusEl) batchConsensusEl.textContent = formattedVal;
+
+  const r1El = document.getElementById("run1Val");
+  const r2El = document.getElementById("run2Val");
+  const r3El = document.getElementById("run3Val");
+  if (r1El) r1El.textContent = (res.run1 !== undefined ? res.run1 : res.consensus_prediction).toFixed(4);
+  if (r2El) r2El.textContent = (res.run2 !== undefined ? res.run2 : res.consensus_prediction).toFixed(4);
+  if (r3El) r3El.textContent = (res.run3 !== undefined ? res.run3 : res.consensus_prediction).toFixed(4);
 
   const timingEl = document.getElementById("timingBadge");
   if (timingEl) {
@@ -619,8 +658,15 @@ async function runBatchPrediction() {
   if (typeof EXACT_PREDICTIONS !== "undefined") {
     setTimeout(() => {
       currentBatchResults = smilesList.map((s) => {
-        let pred = EXACT_PREDICTIONS[s] || estimatePrediction(s);
-        return { smiles: s, consensus_prediction: pred.consensus, props: pred };
+        let pred = getPredictionForSmiles(s);
+        return {
+          smiles: s,
+          consensus_prediction: pred.consensus,
+          run1: pred.run1,
+          run2: pred.run2,
+          run3: pred.run3,
+          props: pred
+        };
       });
 
       let firstPred = currentBatchResults[0].props;
@@ -628,6 +674,9 @@ async function runBatchPrediction() {
         results: [{
           smiles: smilesList[0],
           consensus_prediction: currentBatchResults[0].consensus_prediction,
+          run1: currentBatchResults[0].run1,
+          run2: currentBatchResults[0].run2,
+          run3: currentBatchResults[0].run3,
           physicochemical_properties: {
             formula: firstPred.formula,
             molecular_weight: firstPred.mw,
@@ -643,11 +692,18 @@ async function runBatchPrediction() {
 
       tbody.innerHTML = "";
       currentBatchResults.forEach((item, idx) => {
+        const r1 = (item.run1 !== undefined ? item.run1 : item.consensus_prediction).toFixed(4);
+        const r2 = (item.run2 !== undefined ? item.run2 : item.consensus_prediction).toFixed(4);
+        const r3 = (item.run3 !== undefined ? item.run3 : item.consensus_prediction).toFixed(4);
+        const avg = item.consensus_prediction.toFixed(4);
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${idx + 1}</td>
           <td class="smiles-td" title="${item.smiles}">${item.smiles}</td>
-          <td><strong>${item.consensus_prediction.toFixed(4)}</strong></td>
+          <td>${r1}</td>
+          <td>${r2}</td>
+          <td>${r3}</td>
+          <td><strong>${avg}</strong></td>
         `;
         tbody.appendChild(tr);
       });
@@ -683,11 +739,18 @@ async function runBatchPrediction() {
 
     tbody.innerHTML = "";
     currentBatchResults.forEach((item, idx) => {
+      const r1 = (item.run1 !== undefined ? item.run1 : item.consensus_prediction).toFixed(4);
+      const r2 = (item.run2 !== undefined ? item.run2 : item.consensus_prediction).toFixed(4);
+      const r3 = (item.run3 !== undefined ? item.run3 : item.consensus_prediction).toFixed(4);
+      const avg = item.consensus_prediction.toFixed(4);
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td>${idx + 1}</td>
         <td class="smiles-td" title="${item.smiles}">${item.smiles}</td>
-        <td><strong>${item.consensus_prediction.toFixed(4)}</strong></td>
+        <td>${r1}</td>
+        <td>${r2}</td>
+        <td>${r3}</td>
+        <td><strong>${avg}</strong></td>
       `;
       tbody.appendChild(tr);
     });
@@ -698,16 +761,30 @@ async function runBatchPrediction() {
     if (resultsSection) resultsSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
   } catch (err) {
     currentBatchResults = smilesList.map((s) => {
-      let pred = estimatePrediction(s);
-      return { smiles: s, consensus_prediction: pred.consensus, props: pred };
+      let pred = getPredictionForSmiles(s);
+      return {
+        smiles: s,
+        consensus_prediction: pred.consensus,
+        run1: pred.run1,
+        run2: pred.run2,
+        run3: pred.run3,
+        props: pred
+      };
     });
     tbody.innerHTML = "";
     currentBatchResults.forEach((item, idx) => {
+      const r1 = (item.run1 !== undefined ? item.run1 : item.consensus_prediction).toFixed(4);
+      const r2 = (item.run2 !== undefined ? item.run2 : item.consensus_prediction).toFixed(4);
+      const r3 = (item.run3 !== undefined ? item.run3 : item.consensus_prediction).toFixed(4);
+      const avg = item.consensus_prediction.toFixed(4);
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td>${idx + 1}</td>
         <td class="smiles-td" title="${item.smiles}">${item.smiles}</td>
-        <td><strong>${item.consensus_prediction.toFixed(4)}</strong></td>
+        <td>${r1}</td>
+        <td>${r2}</td>
+        <td>${r3}</td>
+        <td><strong>${avg}</strong></td>
       `;
       tbody.appendChild(tr);
     });
@@ -730,15 +807,25 @@ function exportBatchCSV() {
     "Index",
     "Target",
     "SMILES",
+    "CORAL_1",
+    "CORAL_2",
+    "CORAL_3",
     "Consensus_pIC50",
   ];
 
   const rows = currentBatchResults.map((item, idx) => {
+    const r1 = (item.run1 !== undefined ? item.run1 : item.consensus_prediction).toFixed(4);
+    const r2 = (item.run2 !== undefined ? item.run2 : item.consensus_prediction).toFixed(4);
+    const r3 = (item.run3 !== undefined ? item.run3 : item.consensus_prediction).toFixed(4);
+    const avg = item.consensus_prediction.toFixed(4);
     return [
       idx + 1,
       "NIK",
       `"${item.smiles}"`,
-      item.consensus_prediction.toFixed(4),
+      r1,
+      r2,
+      r3,
+      avg,
     ].join(",");
   });
 
