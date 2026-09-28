@@ -59,6 +59,29 @@ function onSmilesInputChange(smiles) {
   if (r1) r1.textContent = "--";
   if (r2) r2.textContent = "--";
   if (r3) r3.textContent = "--";
+
+  // Pre-calculate properties in real-time if client engine (OCL) is available
+  if (typeof OCL !== "undefined") {
+    const clean = sanitizeSmiles(smiles);
+    if (clean) {
+      const pred = estimatePrediction(clean);
+      if (pred) {
+        const propFormula = document.getElementById("propFormula");
+        const propMW = document.getElementById("propMW");
+        const propLogP = document.getElementById("propLogP");
+        const propTPSA = document.getElementById("propTPSA");
+        const propHDonors = document.getElementById("propHDonors");
+        const propRotBonds = document.getElementById("propRotBonds");
+
+        if (propFormula && pred.formula) propFormula.textContent = pred.formula;
+        if (propMW && pred.mw) propMW.textContent = `${pred.mw} g/mol`;
+        if (propLogP && pred.logp !== undefined) propLogP.textContent = pred.logp;
+        if (propTPSA && pred.tpsa !== undefined) propTPSA.textContent = `${pred.tpsa} Å²`;
+        if (propHDonors && pred.hdonors) propHDonors.textContent = pred.hdonors;
+        if (propRotBonds && pred.rotbonds !== undefined) propRotBonds.textContent = pred.rotbonds;
+      }
+    }
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -160,15 +183,29 @@ function ensureMoleculeSvg() {
 }
 
 function clearStructure() {
-  const svgEl = ensureMoleculeSvg();
+  const wrapper = document.getElementById("svgWrapper");
   const emptyMsg = document.getElementById("emptyCanvasMsg");
   const status = document.getElementById("structureStatus");
-  if (svgEl) svgEl.innerHTML = "";
+  if (wrapper) {
+    wrapper.innerHTML = '<svg id="moleculeSvg" width="360" height="240" viewBox="0 0 360 240"></svg>';
+  }
   if (emptyMsg) emptyMsg.style.display = "block";
   if (status) {
     status.textContent = "Awaiting input";
     status.className = "status-indicator";
   }
+  const propFormula = document.getElementById("propFormula");
+  const propMW = document.getElementById("propMW");
+  const propLogP = document.getElementById("propLogP");
+  const propTPSA = document.getElementById("propTPSA");
+  const propHDonors = document.getElementById("propHDonors");
+  const propRotBonds = document.getElementById("propRotBonds");
+  if (propFormula) propFormula.textContent = "--";
+  if (propMW) propMW.textContent = "--";
+  if (propLogP) propLogP.textContent = "--";
+  if (propTPSA) propTPSA.textContent = "--";
+  if (propHDonors) propHDonors.textContent = "--";
+  if (propRotBonds) propRotBonds.textContent = "--";
 }
 
 function renderStructure(smiles) {
@@ -186,8 +223,20 @@ function renderStructure(smiles) {
   // 1. Check pre-rendered SVG from lookup
   if (typeof getPredictionForSmiles === "function") {
     let pred = getPredictionForSmiles(cleanSmiles);
-    if (pred && pred.svg) {
-      if (wrapper) wrapper.innerHTML = pred.svg;
+    if (pred && (pred.svg || pred.svg_structure)) {
+      const svgStr = pred.svg || pred.svg_structure;
+      if (wrapper) {
+        wrapper.innerHTML = svgStr.replace(/<\?xml[^>]*\?>/i, "").trim();
+        const svgTag = wrapper.querySelector("svg");
+        if (svgTag) {
+          svgTag.style.maxWidth = "100%";
+          svgTag.style.maxHeight = "240px";
+          svgTag.style.width = "100%";
+          svgTag.style.height = "auto";
+          svgTag.style.display = "block";
+          svgTag.style.margin = "auto";
+        }
+      }
       if (emptyMsg) emptyMsg.style.display = "none";
       if (status) {
         status.textContent = "2D Chemical Structure Valid";
@@ -197,13 +246,24 @@ function renderStructure(smiles) {
     }
   }
 
-  // 2. OpenChemLib fallback if available
+  // 2. OpenChemLib (fast, high-precision vector SVG)
   if (typeof OCL !== "undefined") {
     try {
       const mol = OCL.Molecule.fromSmiles(cleanSmiles);
       if (mol && mol.getAllAtoms() > 0) {
         const svg = mol.toSVG(360, 240, "");
-        if (wrapper) wrapper.innerHTML = svg;
+        if (wrapper) {
+          wrapper.innerHTML = svg;
+          const svgTag = wrapper.querySelector("svg");
+          if (svgTag) {
+            svgTag.style.maxWidth = "100%";
+            svgTag.style.maxHeight = "240px";
+            svgTag.style.width = "100%";
+            svgTag.style.height = "auto";
+            svgTag.style.display = "block";
+            svgTag.style.margin = "auto";
+          }
+        }
         if (emptyMsg) emptyMsg.style.display = "none";
         if (status) {
           status.textContent = "2D Chemical Structure Valid";
@@ -221,10 +281,11 @@ function renderStructure(smiles) {
     try {
       ensureMoleculeSvg();
       SmilesDrawer.parse(cleanSmiles, (tree) => {
-        ensureMoleculeSvg();
+        const activeSvg = ensureMoleculeSvg();
         if (emptyMsg) emptyMsg.style.display = "none";
         if (svgDrawerInstance) {
-          svgDrawerInstance.draw(tree, "moleculeSvg", "light", false);
+          // 4th argument is weights (null/undefined), do not pass false!
+          svgDrawerInstance.draw(tree, activeSvg || "moleculeSvg", "light");
           if (status) {
             status.textContent = "2D Chemical Structure Valid";
             status.className = "status-indicator status-valid";
@@ -675,16 +736,31 @@ function displaySingleResult(data) {
   }
 
   // Render 2D SVG structure if available
-  if (res.physicochemical_properties && res.physicochemical_properties.svg) {
-    const wrapper = document.getElementById("svgWrapper");
-    const emptyMsg = document.getElementById("emptyCanvasMsg");
-    const status = document.getElementById("structureStatus");
-    if (wrapper) wrapper.innerHTML = res.physicochemical_properties.svg;
+  const svgContent = res.svg_structure || res.svg || (res.physicochemical_properties && (res.physicochemical_properties.svg_structure || res.physicochemical_properties.svg));
+  const wrapper = document.getElementById("svgWrapper");
+  const emptyMsg = document.getElementById("emptyCanvasMsg");
+  const status = document.getElementById("structureStatus");
+
+  if (svgContent) {
+    if (wrapper) {
+      wrapper.innerHTML = svgContent.replace(/<\?xml[^>]*\?>/i, "").trim();
+      const svgTag = wrapper.querySelector("svg");
+      if (svgTag) {
+        svgTag.style.maxWidth = "100%";
+        svgTag.style.maxHeight = "240px";
+        svgTag.style.width = "100%";
+        svgTag.style.height = "auto";
+        svgTag.style.display = "block";
+        svgTag.style.margin = "auto";
+      }
+    }
     if (emptyMsg) emptyMsg.style.display = "none";
     if (status) {
       status.textContent = "2D Chemical Structure Valid";
       status.className = "status-indicator status-valid";
     }
+  } else if (res.smiles) {
+    renderStructure(res.smiles);
   }
 }
 
@@ -756,6 +832,15 @@ async function runBatchPrediction() {
         const r3 = (item.runs && item.runs["Run-3"] ? item.runs["Run-3"].endpoint : (item.run3 !== undefined ? item.run3 : item.consensus_prediction)).toFixed(4);
         const avg = item.consensus_prediction.toFixed(4);
         const tr = document.createElement("tr");
+        tr.style.cursor = "pointer";
+        tr.title = "Click to inspect this compound structure and predictions";
+        tr.onclick = () => {
+          document.querySelectorAll("#batchTableBody tr").forEach(r => r.classList.remove("selected-row"));
+          tr.classList.add("selected-row");
+          const input = document.getElementById("smilesInput");
+          if (input) input.value = item.smiles;
+          displaySingleResult({ results: [item], total_elapsed_seconds: item.elapsed_seconds || 0.1 });
+        };
         tr.innerHTML = `
           <td>${idx + 1}</td>
           <td class="smiles-td" title="${item.smiles}">${item.smiles}</td>
@@ -821,6 +906,25 @@ async function runBatchPrediction() {
       const r3 = (item.run3 !== undefined ? item.run3 : item.consensus_prediction).toFixed(4);
       const avg = item.consensus_prediction.toFixed(4);
       const tr = document.createElement("tr");
+      tr.style.cursor = "pointer";
+      tr.title = "Click to inspect this compound structure and predictions";
+      tr.onclick = () => {
+        document.querySelectorAll("#batchTableBody tr").forEach(r => r.classList.remove("selected-row"));
+        tr.classList.add("selected-row");
+        const input = document.getElementById("smilesInput");
+        if (input) input.value = item.smiles;
+        displaySingleResult({
+          results: [{
+            smiles: item.smiles,
+            consensus_prediction: item.consensus_prediction,
+            run1: item.run1,
+            run2: item.run2,
+            run3: item.run3,
+            physicochemical_properties: item.props
+          }],
+          total_elapsed_seconds: 0.1
+        });
+      };
       tr.innerHTML = `
         <td>${idx + 1}</td>
         <td class="smiles-td" title="${item.smiles}">${item.smiles}</td>

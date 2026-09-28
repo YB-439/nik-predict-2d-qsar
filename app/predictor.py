@@ -389,6 +389,8 @@ class NIKQSARPredictor:
                         "tpsa": props["tpsa"],
                         "h_donors_acceptors": props["h_donors_acceptors"],
                         "rotatable_bonds": props["rotatable_bonds"],
+                        "svg_structure": props["svg_structure"],
+                        "svg": props["svg_structure"],
                     }
                     svg_str = props["svg_structure"]
 
@@ -407,6 +409,7 @@ class NIKQSARPredictor:
                     "elapsed_seconds": total_elapsed,
                     "physicochemical_properties": phys_props,
                     "svg_structure": svg_str,
+                    "svg": svg_str,
                 })
                 continue
 
@@ -462,6 +465,8 @@ class NIKQSARPredictor:
                     "tpsa": props["tpsa"],
                     "h_donors_acceptors": props["h_donors_acceptors"],
                     "rotatable_bonds": props["rotatable_bonds"],
+                    "svg_structure": props["svg_structure"],
+                    "svg": props["svg_structure"],
                 }
                 svg_str = props["svg_structure"]
 
@@ -480,6 +485,7 @@ class NIKQSARPredictor:
                 "elapsed_seconds": total_elapsed,
                 "physicochemical_properties": phys_props,
                 "svg_structure": svg_str,
+                "svg": svg_str,
             })
 
         return {
