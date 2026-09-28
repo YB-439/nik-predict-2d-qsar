@@ -22,9 +22,9 @@ app = FastAPI(
     title="NF-κB Inducing Kinase (NIK) 2D-QSAR Portal",
     description=(
         "Predict the biological inhibitory activity (pIC50) of small molecules against "
-        "NF-κB Inducing Kinase (NIK / MAP3K14) using machine learning and 2D-QSAR modeling. "
-        "Developed at Drug Design Synthesis Lab, Department of Pharmaceutical Sciences and "
-        "Drug Research, Punjabi University, Patiala."
+        "NF-κB Inducing Kinase (NIK / MAP3K14) using a Monte Carlo-based 2D-QSAR model "
+        "implemented in the CORALSEA software. Developed at Drug Design Synthesis Lab, "
+        "Department of Pharmaceutical Sciences and Drug Research, Punjabi University, Patiala."
     ),
     version="1.0.0",
 )
