@@ -21,9 +21,10 @@ from app.predictor import (
 app = FastAPI(
     title="NF-κB Inducing Kinase (NIK) 2D-QSAR Portal",
     description=(
-        "Computational regression portal for predicting NIK inhibitory potency (pIC50) "
-        "using CORALSEA Monte Carlo 3-run consensus modeling. Developed at Drug Design Synthesis Lab, "
-        "Department of Pharmaceutical Sciences and Drug Research, Punjabi University, Patiala."
+        "Predict the biological inhibitory activity (pIC50) of small molecules against "
+        "NF-κB Inducing Kinase (NIK / MAP3K14) using machine learning and 2D-QSAR modeling. "
+        "Developed at Drug Design Synthesis Lab, Department of Pharmaceutical Sciences and "
+        "Drug Research, Punjabi University, Patiala."
     ),
     version="1.0.0",
 )
