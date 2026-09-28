@@ -32,17 +32,13 @@ class CoralRunner
 
     static int Main(string[] args)
     {
-        if (args.Length < 1)
-        {
-            Console.WriteLine("Usage: coral_runner.exe <run_directory> [expected_count] [timeout_seconds]");
-            return 1;
-        }
+        string runDir = (args.Length >= 1 && args[0] != ".") ? Path.GetFullPath(args[0]) : Directory.GetCurrentDirectory();
+        int timeoutSec = args.Length >= 3 ? int.Parse(args[2]) : 25;
 
-        string runDir = Path.GetFullPath(args[0]);
-        int timeoutSec = args.Length >= 3 ? int.Parse(args[2]) : 30;
+        Directory.SetCurrentDirectory(runDir);
 
-        string exePath = Path.Combine(runDir, "CORALSEA.exe");
-        string outPath = Path.Combine(runDir, "ListModel.txt");
+        string exePath = "CORALSEA.exe";
+        string outPath = "ListModel.txt";
 
         if (!File.Exists(exePath))
         {
@@ -70,7 +66,7 @@ class CoralRunner
         {
             IntPtr targetHwnd = IntPtr.Zero;
             Stopwatch sw = Stopwatch.StartNew();
-            while (sw.ElapsedMilliseconds < 10000 && targetHwnd == IntPtr.Zero)
+            while (sw.ElapsedMilliseconds < 8000 && targetHwnd == IntPtr.Zero)
             {
                 EnumWindows((hWnd, lp) =>
                 {
@@ -89,7 +85,7 @@ class CoralRunner
                     return true;
                 }, IntPtr.Zero);
 
-                if (targetHwnd == IntPtr.Zero) Thread.Sleep(200);
+                if (targetHwnd == IntPtr.Zero) Thread.Sleep(150);
             }
 
             if (targetHwnd == IntPtr.Zero)
@@ -100,23 +96,23 @@ class CoralRunner
 
             IntPtr btnLoad = IntPtr.Zero;
             sw.Restart();
-            while (sw.ElapsedMilliseconds < 5000 && btnLoad == IntPtr.Zero)
+            while (sw.ElapsedMilliseconds < 4000 && btnLoad == IntPtr.Zero)
             {
                 btnLoad = FindChild(targetHwnd, "Load method");
-                if (btnLoad == IntPtr.Zero) Thread.Sleep(200);
+                if (btnLoad == IntPtr.Zero) Thread.Sleep(150);
             }
 
             if (btnLoad != IntPtr.Zero)
             {
                 PostMessage(btnLoad, BM_CLICK, IntPtr.Zero, IntPtr.Zero);
-                Thread.Sleep(400);
+                Thread.Sleep(350);
             }
 
             IntPtr btnImport = FindChild(targetHwnd, "Import of current model");
             if (btnImport != IntPtr.Zero)
             {
                 PostMessage(btnImport, BM_CLICK, IntPtr.Zero, IntPtr.Zero);
-                Thread.Sleep(500);
+                Thread.Sleep(400);
             }
 
             IntPtr btnCalc = FindChild(targetHwnd, "Calculation model for a list of SMILES");
@@ -129,11 +125,11 @@ class CoralRunner
             bool success = false;
             while (sw.ElapsedMilliseconds < (timeoutSec * 1000))
             {
-                Thread.Sleep(200);
+                Thread.Sleep(150);
                 if (File.Exists(outPath) && new FileInfo(outPath).Length > 0)
                 {
                     success = true;
-                    Thread.Sleep(200);
+                    Thread.Sleep(150);
                     break;
                 }
             }
