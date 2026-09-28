@@ -406,6 +406,35 @@
     </footer>
   </div>
 
+  <!-- Molecular Weight Error Modal Popup -->
+  <div id="mwModal" class="modal-overlay" style="display: none;" onclick="handleModalOverlayClick(event)">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="mwModalTitle">
+      <div class="modal-header">
+        <div class="modal-icon-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+        </div>
+        <h3 class="modal-title" id="mwModalTitle">Molecular Weight Limitation</h3>
+        <button class="modal-close-btn" onclick="closeMwModal()" title="Close popup">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p id="mwModalMessage" class="modal-msg">
+          The entered molecule has a Molecular Weight of <strong><span id="mwModalVal">--</span> g/mol</strong>, which is less than <strong>150 g/mol</strong>.
+        </p>
+        <div class="modal-info-box">
+          <p style="font-weight: 600; color: #991b1b; margin-bottom: 0.35rem;">&#9888; Applicability Domain Rule:</p>
+          <p style="margin: 0; line-height: 1.45;">The <strong>NIK-Predict 2D-QSAR</strong> model was calibrated strictly on drug-like small-molecule kinase inhibitors with <strong>Molecular Weight &ge; 150 g/mol</strong>. Predictions cannot be generated for low-molecular-weight fragments or non-inhibitor compounds.</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="closeMwModal()" style="min-width: 100px;">Understood</button>
+      </div>
+    </div>
+  </div>
+
   <script src="/static/app.js"></script>
 </body>
 </html>

@@ -12,7 +12,11 @@ from app.models import (
     SampleCompound,
     ModelInfoResponse,
 )
-from app.predictor import nik_predictor_instance, NIK_MODEL_CONFIG
+from app.predictor import (
+    nik_predictor_instance,
+    NIK_MODEL_CONFIG,
+    calculate_physicochemical_properties,
+)
 
 app = FastAPI(
     title="NF-κB Inducing Kinase (NIK) 2D-QSAR Portal",
@@ -150,6 +154,14 @@ async def predict(request: PredictSingleRequest):
     if not smiles:
         raise HTTPException(status_code=400, detail="SMILES string cannot be empty.")
 
+    props = calculate_physicochemical_properties(smiles)
+    if props and props.get("molecular_weight", 0) < 150.0:
+        mw_val = props["molecular_weight"]
+        raise HTTPException(
+            status_code=400,
+            detail=f"Molecular Weight Error: The entered molecule has a Molecular Weight of {mw_val} g/mol (< 150 g/mol). NIK-Predict is calibrated strictly for small-molecule kinase inhibitors with Molecular Weight ≥ 150 g/mol."
+        )
+
     try:
         raw_res = nik_predictor_instance.predict_batch([smiles])
         return PredictResponse(
@@ -171,6 +183,15 @@ async def predict_batch(request: PredictBatchRequest):
     clean_smiles = [s.strip() for s in request.smiles_list if s.strip()]
     if not clean_smiles:
         raise HTTPException(status_code=400, detail="No non-empty SMILES provided.")
+
+    for s in clean_smiles:
+        props = calculate_physicochemical_properties(s)
+        if props and props.get("molecular_weight", 0) < 150.0:
+            mw_val = props["molecular_weight"]
+            raise HTTPException(
+                status_code=400,
+                detail=f"Molecular Weight Error: Compound '{s}' has Molecular Weight of {mw_val} g/mol (< 150 g/mol). All compounds must have Molecular Weight ≥ 150 g/mol."
+            )
 
     try:
         raw_res = nik_predictor_instance.predict_batch(clean_smiles)

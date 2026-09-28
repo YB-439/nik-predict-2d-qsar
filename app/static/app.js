@@ -25,6 +25,59 @@ const NIK_SAMPLES = [
 let svgDrawerInstance = null;
 let currentBatchResults = [];
 
+// Molecular Weight Limitation Modal Helpers
+function showMwModal(mw, smiles) {
+  const modal = document.getElementById("mwModal");
+  const mwValEl = document.getElementById("mwModalVal");
+  const mwMsgEl = document.getElementById("mwModalMessage");
+  const formattedMw = mw ? Number(mw).toFixed(2) : "< 150";
+  if (mwValEl) mwValEl.textContent = formattedMw;
+  if (mwMsgEl && smiles) {
+    const displaySmi = smiles.length > 32 ? smiles.substring(0, 32) + "..." : smiles;
+    mwMsgEl.innerHTML = `The entered compound (<code>${displaySmi}</code>) has a Molecular Weight of <strong>${formattedMw} g/mol</strong>, which is less than <strong>150 g/mol</strong>.`;
+  }
+  if (modal) {
+    modal.style.display = "flex";
+  } else {
+    alert(`Molecular Weight Limitation Warning:\n\nThe entered compound has a Molecular Weight of ${formattedMw} g/mol (< 150 g/mol).\n\nNIK-Predict 2D-QSAR model is calibrated strictly for small-molecule kinase inhibitors with Molecular Weight ≥ 150 g/mol.`);
+  }
+}
+
+function closeMwModal() {
+  const modal = document.getElementById("mwModal");
+  if (modal) modal.style.display = "none";
+}
+
+function handleModalOverlayClick(e) {
+  if (e.target && e.target.id === "mwModal") {
+    closeMwModal();
+  }
+}
+
+window.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeMwModal();
+});
+
+// Helper: Get Molecular Weight reliably
+function getMoleculeWeight(smiles) {
+  const clean = sanitizeSmiles(smiles);
+  if (!clean) return 0;
+  if (typeof OCL !== "undefined") {
+    try {
+      const mol = OCL.Molecule.fromSmiles(clean);
+      if (mol) {
+        if (typeof mol.getMolecularWeight === "function") {
+          return Math.round(mol.getMolecularWeight() * 100) / 100;
+        } else if (typeof mol.getMW === "function") {
+          return Math.round(mol.getMW() * 100) / 100;
+        }
+      }
+    } catch(e) {}
+  }
+  const est = estimatePrediction(clean);
+  return est && est.mw ? est.mw : 0;
+}
+
 // Helper: Sanitize SMILES string
 function sanitizeSmiles(raw) {
   if (!raw) return "";
@@ -594,6 +647,13 @@ async function runSinglePrediction() {
     return;
   }
 
+  // Validate Molecular Weight threshold (< 150 g/mol)
+  const mw = getMoleculeWeight(cleanSmiles);
+  if (mw > 0 && mw < 150) {
+    showMwModal(mw, cleanSmiles);
+    return;
+  }
+
   const btn = document.getElementById("btnPredict");
   const spinner = document.getElementById("predictSpinner");
   const resultsSection = document.getElementById("resultsSection");
@@ -787,6 +847,15 @@ async function runBatchPrediction() {
   if (smilesList.length === 0) {
     alert("No valid SMILES lines found.");
     return;
+  }
+
+  // Check if any compound in batch has MW < 150
+  for (const s of smilesList) {
+    const curMw = getMoleculeWeight(s);
+    if (curMw > 0 && curMw < 150) {
+      showMwModal(curMw, s);
+      return;
+    }
   }
 
   const btn = document.getElementById("btnBatchPredict");
