@@ -8,3 +8,7 @@ __pycache__/
 .env
 .venv/
 venv/
+build/
+dist/
+*.spec
+build_exe.py

@@ -29,7 +29,8 @@ def main():
         pass
 
     # Start FastAPI server
-    uvicorn.run("app.main:app", host=host, port=port, reload=False, log_level="info")
+    from app.main import app
+    uvicorn.run(app, host=host, port=port, reload=False, log_level="info")
 
 if __name__ == "__main__":
     main()
