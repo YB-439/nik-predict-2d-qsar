@@ -144,7 +144,10 @@
                 <!-- 3-Run Ensemble Consensus Prediction Box -->
                 <div class="consensus-banner consensus-banner-simple" id="singleConsensusBanner" style="margin-top: 1.5rem; padding: 1.5rem 1.25rem; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 12px; gap: 1rem;">
                   <div class="consensus-primary" style="text-align: center;">
-                    <span class="consensus-label">CONSENSUS PREDICTED pIC<sub>50</sub></span>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+                      <span class="consensus-label">CONSENSUS PREDICTED pIC<sub>50</sub></span>
+                      <span class="timing-badge" id="singleTimingBadge" style="display: none; font-size: 0.72rem; padding: 0.15rem 0.5rem; background: rgba(255,255,255,0.12); border-radius: 12px; color: #94a3b8; font-weight: 500;"></span>
+                    </div>
                     <div class="consensus-number-wrap">
                       <span class="consensus-value" id="consensusVal">--</span>
                       <span class="consensus-unit">pIC<sub>50</sub></span>
@@ -271,32 +274,16 @@
         </div>
       </section>
 
-      <!-- Results Display Section (Batch Only) -->
+      <!-- Batch Results Display Section -->
       <section class="results-section" id="resultsSection" style="display: none;">
-        <div class="results-header">
-          <div class="results-title-wrap">
-            <h2 class="results-title">Consensus Prediction Results</h2>
-            <span class="kinase-pill-tag">NIK Target</span>
-          </div>
-          <span class="timing-badge" id="timingBadge">Computed in 0.0s</span>
-        </div>
-
-        <!-- Single Clean Consensus Banner (NO DCW, NO DEFECT BOXES) -->
-        <div class="consensus-banner consensus-banner-simple">
-          <div class="consensus-primary">
-            <span class="consensus-label">CONSENSUS PREDICTED pIC<sub>50</sub></span>
-            <div class="consensus-number-wrap">
-              <span class="consensus-value" id="batchConsensusVal">--</span>
-              <span class="consensus-unit">pIC<sub>50</sub></span>
-            </div>
-            <p class="consensus-subtext">Calculated consensus biological inhibitory potency against NIK kinase</p>
-          </div>
-        </div>
-
         <!-- Batch Results Table -->
-        <div class="batch-results-table-wrap" id="batchTableWrap" style="display: none;">
+        <div class="batch-results-table-wrap" id="batchTableWrap" style="width: 100%;">
           <div class="batch-table-header-row">
-            <span class="batch-count-label" id="batchCountLabel">Batch Results</span>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <span class="batch-count-label" id="batchCountLabel">Batch Results</span>
+              <span class="kinase-pill-tag">NIK Target</span>
+              <span class="timing-badge" id="timingBadge">Computed in 0.0s</span>
+            </div>
             <button class="btn btn-secondary btn-sm" id="btnExportCSV" onclick="exportBatchCSV()" title="Download predictions as CSV">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>

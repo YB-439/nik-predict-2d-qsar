@@ -60,6 +60,9 @@ function onSmilesInputChange(smiles) {
   if (r2) r2.textContent = "--";
   if (r3) r3.textContent = "--";
 
+  const singleTimingEl = document.getElementById("singleTimingBadge");
+  if (singleTimingEl) singleTimingEl.style.display = "none";
+
   // Pre-calculate properties in real-time if client engine (OCL) is available
   if (typeof OCL !== "undefined") {
     const clean = sanitizeSmiles(smiles);
@@ -162,6 +165,8 @@ function clearInput() {
   const input = document.getElementById("smilesInput");
   if (input) input.value = "";
   clearStructure();
+  const singleTimingEl = document.getElementById("singleTimingBadge");
+  if (singleTimingEl) singleTimingEl.style.display = "none";
 }
 
 function clearBatchInput() {
@@ -629,11 +634,9 @@ async function runSinglePrediction() {
 
     if (apiData && apiData.results && apiData.results.length > 0) {
       displaySingleResult(apiData);
-      if (resultsSection) resultsSection.style.display = "flex";
-      if (batchTableWrap) batchTableWrap.style.display = "none";
+      if (resultsSection) resultsSection.style.display = "none";
       if (btn) btn.disabled = false;
       if (spinner) spinner.style.display = "none";
-      if (resultsSection) resultsSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
       return;
     }
   } catch (err) {
@@ -663,11 +666,9 @@ async function runSinglePrediction() {
       total_elapsed_seconds: pred.elapsed || 0.75
     });
 
-    if (resultsSection) resultsSection.style.display = "flex";
-    if (batchTableWrap) batchTableWrap.style.display = "none";
+    if (resultsSection) resultsSection.style.display = "none";
     if (btn) btn.disabled = false;
     if (spinner) spinner.style.display = "none";
-    if (resultsSection) resultsSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }, 200);
 }
 
@@ -715,6 +716,11 @@ function displaySingleResult(data) {
   const timingEl = document.getElementById("timingBadge");
   if (timingEl) {
     timingEl.textContent = `Computed in ${data.total_elapsed_seconds || 0.75}s`;
+  }
+  const singleTimingEl = document.getElementById("singleTimingBadge");
+  if (singleTimingEl) {
+    singleTimingEl.style.display = "inline-block";
+    singleTimingEl.textContent = `Computed in ${data.total_elapsed_seconds || 0.75}s`;
   }
 
   // Populate Physicochemical Properties Table
