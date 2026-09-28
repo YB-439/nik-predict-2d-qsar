@@ -536,6 +536,50 @@ async function runSinglePrediction() {
   if (btn) btn.disabled = true;
   if (spinner) spinner.style.display = "inline-block";
 
+  // Try live backend API first (FastAPI / local server / cloud backend)
+  try {
+    const customCloudApi = window.CORAL_CLOUD_API || (typeof localStorage !== "undefined" ? localStorage.getItem("CORAL_CLOUD_API") : null);
+    const apiEndpoints = [];
+    if (customCloudApi) {
+      apiEndpoints.push(`${customCloudApi.replace(/\/+$/, "")}/api/predict`);
+    }
+    apiEndpoints.push("/api/predict", "http://127.0.0.1:8000/api/predict", "http://127.0.0.1:8002/api/predict");
+    let apiData = null;
+
+    for (const url of apiEndpoints) {
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 20000);
+        const resp = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ smiles: cleanSmiles }),
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+        if (resp.ok) {
+          apiData = await resp.json();
+          break;
+        }
+      } catch (netErr) {
+        // try next endpoint
+      }
+    }
+
+    if (apiData && apiData.results && apiData.results.length > 0) {
+      displaySingleResult(apiData);
+      if (resultsSection) resultsSection.style.display = "flex";
+      if (batchTableWrap) batchTableWrap.style.display = "none";
+      if (btn) btn.disabled = false;
+      if (spinner) spinner.style.display = "none";
+      if (resultsSection) resultsSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      return;
+    }
+  } catch (err) {
+    console.warn("Live API error, falling back to local engine:", err);
+  }
+
+  // Fallback to exact predictions lookup or client engine
   setTimeout(() => {
     let pred = getPredictionForSmiles(cleanSmiles);
     displaySingleResult({
@@ -563,7 +607,7 @@ async function runSinglePrediction() {
     if (btn) btn.disabled = false;
     if (spinner) spinner.style.display = "none";
     if (resultsSection) resultsSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  }, 250);
+  }, 200);
 }
 
 function displaySingleResult(data) {
@@ -585,9 +629,27 @@ function displaySingleResult(data) {
   const r1El = document.getElementById("run1Val");
   const r2El = document.getElementById("run2Val");
   const r3El = document.getElementById("run3Val");
-  if (r1El) r1El.textContent = (res.run1 !== undefined ? res.run1 : res.consensus_prediction).toFixed(4);
-  if (r2El) r2El.textContent = (res.run2 !== undefined ? res.run2 : res.consensus_prediction).toFixed(4);
-  if (r3El) r3El.textContent = (res.run3 !== undefined ? res.run3 : res.consensus_prediction).toFixed(4);
+  const r1 = (res.runs && res.runs["Run-1"]) ? res.runs["Run-1"].endpoint : (res.run1 !== undefined ? res.run1 : res.consensus_prediction);
+  const r2 = (res.runs && res.runs["Run-2"]) ? res.runs["Run-2"].endpoint : (res.run2 !== undefined ? res.run2 : res.consensus_prediction);
+  const r3 = (res.runs && res.runs["Run-3"]) ? res.runs["Run-3"].endpoint : (res.run3 !== undefined ? res.run3 : res.consensus_prediction);
+  if (r1El) r1El.textContent = Number(r1).toFixed(4);
+  if (r2El) r2El.textContent = Number(r2).toFixed(4);
+  if (r3El) r3El.textContent = Number(r3).toFixed(4);
+
+  // Populate DefectSMILES and Domain Badge
+  const defEl = document.getElementById("defectVal");
+  const domainEl = document.getElementById("domainBadge");
+  const defVal = (res.defect_smiles !== undefined ? res.defect_smiles : (res.consensus_defect_smiles !== undefined ? res.consensus_defect_smiles : (res.defect !== undefined ? res.defect : null)));
+  if (defEl && defVal !== null) {
+    defEl.textContent = Number(defVal).toFixed(4);
+  }
+  if (domainEl && defVal !== null) {
+    const isDomain = Number(defVal) < 7.97533;
+    domainEl.textContent = isDomain ? "In Domain (Reliable)" : "Out of Domain";
+    domainEl.style.background = isDomain ? "rgba(16, 185, 129, 0.15)" : "rgba(239, 68, 68, 0.15)";
+    domainEl.style.color = isDomain ? "#34d399" : "#f87171";
+    domainEl.style.borderColor = isDomain ? "rgba(16, 185, 129, 0.3)" : "rgba(239, 68, 68, 0.3)";
+  }
 
   const timingEl = document.getElementById("timingBadge");
   if (timingEl) {
@@ -655,46 +717,43 @@ async function runBatchPrediction() {
   if (btn) btn.disabled = true;
   if (spinner) spinner.style.display = "inline-block";
 
-  if (typeof EXACT_PREDICTIONS !== "undefined") {
-    setTimeout(() => {
-      currentBatchResults = smilesList.map((s) => {
-        let pred = getPredictionForSmiles(s);
-        return {
-          smiles: s,
-          consensus_prediction: pred.consensus,
-          run1: pred.run1,
-          run2: pred.run2,
-          run3: pred.run3,
-          props: pred
-        };
-      });
+  // Try live backend API first (FastAPI / local server / cloud backend)
+  try {
+    const customCloudApi = window.CORAL_CLOUD_API || (typeof localStorage !== "undefined" ? localStorage.getItem("CORAL_CLOUD_API") : null);
+    const apiEndpoints = [];
+    if (customCloudApi) {
+      apiEndpoints.push(`${customCloudApi.replace(/\/+$/, "")}/api/predict/batch`);
+    }
+    apiEndpoints.push("/api/predict/batch", "http://127.0.0.1:8000/api/predict/batch", "http://127.0.0.1:8002/api/predict/batch");
+    let apiData = null;
 
-      let firstPred = currentBatchResults[0].props;
-      displaySingleResult({
-        results: [{
-          smiles: smilesList[0],
-          consensus_prediction: currentBatchResults[0].consensus_prediction,
-          run1: currentBatchResults[0].run1,
-          run2: currentBatchResults[0].run2,
-          run3: currentBatchResults[0].run3,
-          physicochemical_properties: {
-            formula: firstPred.formula,
-            molecular_weight: firstPred.mw,
-            logp: firstPred.logp,
-            tpsa: firstPred.tpsa,
-            h_donors_acceptors: firstPred.hdonors,
-            rotatable_bonds: firstPred.rotbonds,
-            svg: firstPred.svg
-          }
-        }],
-        total_elapsed_seconds: 0.85
-      });
+    for (const url of apiEndpoints) {
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 60000);
+        const resp = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ smiles_list: smilesList }),
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+        if (resp.ok) {
+          apiData = await resp.json();
+          break;
+        }
+      } catch (netErr) {}
+    }
+
+    if (apiData && apiData.results && apiData.results.length > 0) {
+      currentBatchResults = apiData.results;
+      displaySingleResult(apiData);
 
       tbody.innerHTML = "";
       currentBatchResults.forEach((item, idx) => {
-        const r1 = (item.run1 !== undefined ? item.run1 : item.consensus_prediction).toFixed(4);
-        const r2 = (item.run2 !== undefined ? item.run2 : item.consensus_prediction).toFixed(4);
-        const r3 = (item.run3 !== undefined ? item.run3 : item.consensus_prediction).toFixed(4);
+        const r1 = (item.runs && item.runs["Run-1"] ? item.runs["Run-1"].endpoint : (item.run1 !== undefined ? item.run1 : item.consensus_prediction)).toFixed(4);
+        const r2 = (item.runs && item.runs["Run-2"] ? item.runs["Run-2"].endpoint : (item.run2 !== undefined ? item.run2 : item.consensus_prediction)).toFixed(4);
+        const r3 = (item.runs && item.runs["Run-3"] ? item.runs["Run-3"].endpoint : (item.run3 !== undefined ? item.run3 : item.consensus_prediction)).toFixed(4);
         const avg = item.consensus_prediction.toFixed(4);
         const tr = document.createElement("tr");
         tr.innerHTML = `
@@ -714,9 +773,72 @@ async function runBatchPrediction() {
       if (btn) btn.disabled = false;
       if (spinner) spinner.style.display = "none";
       if (resultsSection) resultsSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }, 300);
-    return;
+      return;
+    }
+  } catch (err) {
+    console.warn("Live batch API error, falling back to local engine:", err);
   }
+
+  // Fallback to client engine / exact predictions
+  setTimeout(() => {
+    currentBatchResults = smilesList.map((s) => {
+      let pred = getPredictionForSmiles(s);
+      return {
+        smiles: s,
+        consensus_prediction: pred.consensus,
+        run1: pred.run1,
+        run2: pred.run2,
+        run3: pred.run3,
+        props: pred
+      };
+    });
+
+    let firstPred = currentBatchResults[0].props;
+    displaySingleResult({
+      results: [{
+        smiles: smilesList[0],
+        consensus_prediction: currentBatchResults[0].consensus_prediction,
+        run1: currentBatchResults[0].run1,
+        run2: currentBatchResults[0].run2,
+        run3: currentBatchResults[0].run3,
+        physicochemical_properties: {
+          formula: firstPred.formula,
+          molecular_weight: firstPred.mw,
+          logp: firstPred.logp,
+          tpsa: firstPred.tpsa,
+          h_donors_acceptors: firstPred.hdonors,
+          rotatable_bonds: firstPred.rotbonds,
+          svg: firstPred.svg
+        }
+      }],
+      total_elapsed_seconds: 0.85
+    });
+
+    tbody.innerHTML = "";
+    currentBatchResults.forEach((item, idx) => {
+      const r1 = (item.run1 !== undefined ? item.run1 : item.consensus_prediction).toFixed(4);
+      const r2 = (item.run2 !== undefined ? item.run2 : item.consensus_prediction).toFixed(4);
+      const r3 = (item.run3 !== undefined ? item.run3 : item.consensus_prediction).toFixed(4);
+      const avg = item.consensus_prediction.toFixed(4);
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${idx + 1}</td>
+        <td class="smiles-td" title="${item.smiles}">${item.smiles}</td>
+        <td>${r1}</td>
+        <td>${r2}</td>
+        <td>${r3}</td>
+        <td><strong>${avg}</strong></td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    if (batchCountLabel) batchCountLabel.textContent = `Batch Results (${currentBatchResults.length} Compounds Evaluated)`;
+    if (batchTableWrap) batchTableWrap.style.display = "block";
+    if (resultsSection) resultsSection.style.display = "flex";
+    if (btn) btn.disabled = false;
+    if (spinner) spinner.style.display = "none";
+    if (resultsSection) resultsSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }, 300);
 
   try {
     const response = await fetch("/api/predict/batch", {

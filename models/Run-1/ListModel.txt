@@ -1,1 +1,1 @@
-COc1cnc(nc1N1CCc2c1cc(Br)cc2)N  :  5.0693:
+Fc1ccc(CN2C(=O)C(=NN(c3ccc(F)cc3)C2=O)C(=O)NCC4CC4)cc1  :  5.4309:

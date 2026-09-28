@@ -13,6 +13,21 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+# Launch background FastAPI API server on port 8000 for exact live prediction
+import threading
+def _start_bg_api():
+    try:
+        import uvicorn
+        from app.main import app as fastapi_app
+        uvicorn.run(fastapi_app, host="127.0.0.1", port=8000, log_level="warning")
+    except Exception as e:
+        pass
+
+if not getattr(st, "_bg_api_started", False):
+    st._bg_api_started = True
+    threading.Thread(target=_start_bg_api, daemon=True).start()
+
+
 # Custom CSS to force full width and remove all Streamlit margins/paddings
 st.markdown("""
 <style>
@@ -72,9 +87,17 @@ index_html = index_html.replace('/static/nik_workflow.jpeg', f'data:image/jpeg;b
 index_html = index_html.replace('<link rel="stylesheet" href="/static/style.css" />', f'<style>\n{style_css}\n</style>')
 index_html = index_html.replace('<script src="/static/vendor/smiles-drawer.min.js"></script>', f'<script>\n{smiles_drawer_js}\n</script>')
 
+cloud_api_url = os.environ.get("CORAL_CLOUD_API", "")
+try:
+    if not cloud_api_url and hasattr(st, "secrets") and "CORAL_CLOUD_API" in st.secrets:
+        cloud_api_url = st.secrets["CORAL_CLOUD_API"]
+except Exception:
+    pass
+
 embedded_engine_js = f"""
 <script src="https://unpkg.com/openchemlib@8.6.0/dist/openchemlib-full.js"></script>
 <script>
+window.CORAL_CLOUD_API = {json.dumps(cloud_api_url)};
 const EXACT_PREDICTIONS = {exact_predictions_json};
 </script>
 <script>

@@ -27,7 +27,12 @@ class SinglePredictionResult(BaseModel):
     consensus_prediction: float = Field(..., description="Consensus average predicted pIC50 across all 3 runs")
     consensus_smiles_weight: float = Field(..., description="Average SMILES weight (DCW) across all 3 runs")
     consensus_defect_smiles: float = Field(..., description="Average Defect SMILES across all 3 runs")
-    runs: Dict[str, RunPrediction] = Field(..., description="Breakdown of predictions, weights, and defect per individual run")
+    runs: Optional[Dict[str, RunPrediction]] = Field(default_factory=dict, description="Breakdown of predictions, weights, and defect per individual run")
+    run1: Optional[float] = Field(None, description="Run-1 predicted pIC50")
+    run2: Optional[float] = Field(None, description="Run-2 predicted pIC50")
+    run3: Optional[float] = Field(None, description="Run-3 predicted pIC50")
+    defect_smiles: Optional[float] = Field(None, description="Consensus DefectSMILES value")
+    in_domain: Optional[bool] = Field(True, description="Applicability domain reliability status")
     elapsed_seconds: float = Field(..., description="Prediction execution duration in seconds")
     physicochemical_properties: Optional[PhysicochemicalProperties] = None
     svg_structure: Optional[str] = None
