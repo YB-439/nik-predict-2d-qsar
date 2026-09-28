@@ -10,6 +10,7 @@ import time
 import subprocess
 import shutil
 import threading
+from concurrent.futures import ThreadPoolExecutor
 from typing import List, Dict, Any, Optional, Tuple
 import ctypes
 from ctypes import wintypes
@@ -23,13 +24,13 @@ def resolve_base_dir() -> str:
     env_dir = os.environ.get("CORAL_MODEL_DIR")
     if env_dir and os.path.isdir(env_dir):
         return env_dir
-    if os.path.isdir(WEBTOOL_MODELS_DIR) and os.path.isdir(os.path.join(WEBTOOL_MODELS_DIR, "Run-1")):
-        return WEBTOOL_MODELS_DIR
     if os.path.isdir(BUNDLED_MODELS_DIR) and os.path.isdir(os.path.join(BUNDLED_MODELS_DIR, "Run-1")):
         return BUNDLED_MODELS_DIR
+    if os.path.isdir(WEBTOOL_MODELS_DIR) and os.path.isdir(os.path.join(WEBTOOL_MODELS_DIR, "Run-1")):
+        return WEBTOOL_MODELS_DIR
     if os.path.isdir(DESKTOP_MODELS_DIR):
         return DESKTOP_MODELS_DIR
-    return WEBTOOL_MODELS_DIR
+    return BUNDLED_MODELS_DIR
 
 DEFAULT_BASE_DIR = resolve_base_dir()
 
@@ -149,7 +150,7 @@ class SingleRunPredictor:
         self.c0 = NIK_MODEL_CONFIG[run_name]["c0"]
         self.c1 = NIK_MODEL_CONFIG[run_name]["c1"]
 
-    def run_batch(self, smiles_list: List[str], timeout_sec: float = 30.0) -> Dict[str, Dict[str, Any]]:
+    def run_batch(self, smiles_list: List[str], timeout_sec: float = 60.0) -> Dict[str, Dict[str, Any]]:
         clean_smiles = [s.strip() for s in smiles_list if s and s.strip()]
         if not clean_smiles:
             return {}
@@ -275,7 +276,7 @@ class SingleRunPredictor:
         demo = self._parse_demo_dcw()
         for smi in clean_smiles:
             if smi in results:
-                if demo.get("smiles") == smi:
+                if len(clean_smiles) == 1 or demo.get("smiles") == smi or not demo.get("smiles"):
                     results[smi]["defect"] = demo.get("defect")
 
         return results

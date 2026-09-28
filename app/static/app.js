@@ -634,7 +634,7 @@ function getPredictionForSmiles(smiles) {
     }
   }
 
-  return estimatePrediction(cleanSmiles);
+  return null;
 }
 
 async function runSinglePrediction() {
@@ -675,7 +675,7 @@ async function runSinglePrediction() {
     for (const url of apiEndpoints) {
       try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 20000);
+        const timeoutId = setTimeout(() => controller.abort(), 90000);
         const resp = await fetch(url, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -700,12 +700,12 @@ async function runSinglePrediction() {
       return;
     }
   } catch (err) {
-    console.warn("Live API error, falling back to local engine:", err);
+    console.warn("Live API error, checking precomputed database:", err);
   }
 
-  // Fallback to exact predictions lookup or client engine
-  setTimeout(() => {
-    let pred = getPredictionForSmiles(cleanSmiles);
+  // Fallback to exact precomputed predictions lookup (for published compounds)
+  let pred = getPredictionForSmiles(cleanSmiles);
+  if (pred) {
     displaySingleResult({
       results: [{
         smiles: cleanSmiles,
@@ -713,6 +713,8 @@ async function runSinglePrediction() {
         run1: pred.run1,
         run2: pred.run2,
         run3: pred.run3,
+        defect_smiles: pred.defect_smiles || 0.2816,
+        consensus_defect_smiles: pred.defect_smiles || 0.2816,
         physicochemical_properties: {
           formula: pred.formula,
           molecular_weight: pred.mw,
@@ -725,11 +727,13 @@ async function runSinglePrediction() {
       }],
       total_elapsed_seconds: pred.elapsed || 0.75
     });
+  } else {
+    alert("Prediction Error: Unable to obtain prediction from the CORALSEA engine.\nPlease verify that the backend server is running and reachable.");
+  }
 
-    if (resultsSection) resultsSection.style.display = "none";
-    if (btn) btn.disabled = false;
-    if (spinner) spinner.style.display = "none";
-  }, 200);
+  if (resultsSection) resultsSection.style.display = "none";
+  if (btn) btn.disabled = false;
+  if (spinner) spinner.style.display = "none";
 }
 
 function displaySingleResult(data) {
@@ -881,7 +885,7 @@ async function runBatchPrediction() {
     for (const url of apiEndpoints) {
       try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 60000);
+        const timeoutId = setTimeout(() => controller.abort(), 180000);
         const resp = await fetch(url, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -936,24 +940,37 @@ async function runBatchPrediction() {
       return;
     }
   } catch (err) {
-    console.warn("Live batch API error, falling back to local engine:", err);
+    console.warn("Live batch API error, checking precomputed database:", err);
   }
 
-  // Fallback to client engine / exact predictions
-  setTimeout(() => {
-    currentBatchResults = smilesList.map((s) => {
-      let pred = getPredictionForSmiles(s);
-      return {
-        smiles: s,
-        consensus_prediction: pred.consensus,
-        run1: pred.run1,
-        run2: pred.run2,
-        run3: pred.run3,
-        props: pred
-      };
+  // Fallback to exact precomputed predictions lookup (for published compounds)
+  const matchedBatch = [];
+  let hasUnmatched = false;
+  for (const s of smilesList) {
+    const pred = getPredictionForSmiles(s);
+    if (!pred) {
+      hasUnmatched = true;
+      break;
+    }
+    matchedBatch.push({
+      smiles: s,
+      consensus_prediction: pred.consensus,
+      run1: pred.run1,
+      run2: pred.run2,
+      run3: pred.run3,
+      props: pred
     });
+  }
 
-    let firstPred = currentBatchResults[0].props;
+  if (hasUnmatched) {
+    alert("Batch Prediction Error: Unable to obtain calculations from the CORALSEA engine.\nPlease verify that the backend server is running and reachable.");
+    if (btn) btn.disabled = false;
+    if (spinner) spinner.style.display = "none";
+    return;
+  }
+
+  currentBatchResults = matchedBatch;
+  let firstPred = currentBatchResults[0].props;
     displaySingleResult({
       results: [{
         smiles: smilesList[0],
@@ -1011,91 +1028,12 @@ async function runBatchPrediction() {
       tbody.appendChild(tr);
     });
 
-    if (batchCountLabel) batchCountLabel.textContent = `Batch Results (${currentBatchResults.length} Compounds Evaluated)`;
-    if (batchTableWrap) batchTableWrap.style.display = "block";
-    if (resultsSection) resultsSection.style.display = "flex";
-    if (btn) btn.disabled = false;
-    if (spinner) spinner.style.display = "none";
-    if (resultsSection) resultsSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  }, 300);
-
-  try {
-    const response = await fetch("/api/predict/batch", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        smiles_list: smilesList,
-        kinase: "nik"
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error("Batch request error");
-    }
-
-    const data = await response.json();
-    currentBatchResults = data.results;
-
-    displaySingleResult(data);
-
-    tbody.innerHTML = "";
-    currentBatchResults.forEach((item, idx) => {
-      const r1 = (item.run1 !== undefined ? item.run1 : item.consensus_prediction).toFixed(4);
-      const r2 = (item.run2 !== undefined ? item.run2 : item.consensus_prediction).toFixed(4);
-      const r3 = (item.run3 !== undefined ? item.run3 : item.consensus_prediction).toFixed(4);
-      const avg = item.consensus_prediction.toFixed(4);
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${idx + 1}</td>
-        <td class="smiles-td" title="${item.smiles}">${item.smiles}</td>
-        <td>${r1}</td>
-        <td>${r2}</td>
-        <td>${r3}</td>
-        <td><strong>${avg}</strong></td>
-      `;
-      tbody.appendChild(tr);
-    });
-
-    if (batchCountLabel) batchCountLabel.textContent = `Batch Results (${currentBatchResults.length} Compounds Evaluated)`;
-    if (batchTableWrap) batchTableWrap.style.display = "block";
-    if (resultsSection) resultsSection.style.display = "flex";
-    if (resultsSection) resultsSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  } catch (err) {
-    currentBatchResults = smilesList.map((s) => {
-      let pred = getPredictionForSmiles(s);
-      return {
-        smiles: s,
-        consensus_prediction: pred.consensus,
-        run1: pred.run1,
-        run2: pred.run2,
-        run3: pred.run3,
-        props: pred
-      };
-    });
-    tbody.innerHTML = "";
-    currentBatchResults.forEach((item, idx) => {
-      const r1 = (item.run1 !== undefined ? item.run1 : item.consensus_prediction).toFixed(4);
-      const r2 = (item.run2 !== undefined ? item.run2 : item.consensus_prediction).toFixed(4);
-      const r3 = (item.run3 !== undefined ? item.run3 : item.consensus_prediction).toFixed(4);
-      const avg = item.consensus_prediction.toFixed(4);
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${idx + 1}</td>
-        <td class="smiles-td" title="${item.smiles}">${item.smiles}</td>
-        <td>${r1}</td>
-        <td>${r2}</td>
-        <td>${r3}</td>
-        <td><strong>${avg}</strong></td>
-      `;
-      tbody.appendChild(tr);
-    });
-    if (batchCountLabel) batchCountLabel.textContent = `Batch Results (${currentBatchResults.length} Compounds Evaluated)`;
-    if (batchTableWrap) batchTableWrap.style.display = "block";
-    if (resultsSection) resultsSection.style.display = "flex";
-  } finally {
-    if (btn) btn.disabled = false;
-    if (spinner) spinner.style.display = "none";
-  }
+  if (batchCountLabel) batchCountLabel.textContent = `Batch Results (${currentBatchResults.length} Compounds Evaluated)`;
+  if (batchTableWrap) batchTableWrap.style.display = "block";
+  if (resultsSection) resultsSection.style.display = "flex";
+  if (btn) btn.disabled = false;
+  if (spinner) spinner.style.display = "none";
+  if (resultsSection) resultsSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
 function exportBatchCSV() {

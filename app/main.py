@@ -52,31 +52,31 @@ if os.path.isdir(STATIC_DIR):
 NIK_SAMPLES = [
     {
         "id": "NIK001",
-        "name": "Compound 1",
-        "smiles": "COc1cnc(nc1N1CCc2c1cc(Br)cc2)N",
-        "experimental_pIC50": 5.0693,
-        "description": "Potent aminopyrimidine NIK inhibitor derivative"
-    },
-    {
-        "id": "NIK015",
-        "name": "Lead Compound NIK015",
-        "smiles": "N#Cc1ccc(cc1)c1cnc(s1)C(=O)Nc1nccc(n1)n1cnc2c1ccc(c2)Cl",
-        "experimental_pIC50": 6.2254,
-        "description": "High affinity nitrile-substituted benzimidazole derivative"
+        "name": "Compound 1 (NIK001)",
+        "smiles": "Nc1nc(N2CCc3c2cc(Br)cc3)c(Cl)cn1",
+        "experimental_pIC50": 6.52,
+        "description": "Bromo tetrahydroisoquinoline chloropyrimidine (Exp pIC50 = 6.52, Pred pIC50 = 6.7444)"
     },
     {
         "id": "NIK009",
         "name": "Benchmark Compound NIK009",
         "smiles": "Nc1nc(N2CCc3c2cc(OC)cc3)c(Cl)cn1",
-        "experimental_pIC50": 7.0500,
-        "description": "Methoxy-substituted chloropyrimidine analog"
+        "experimental_pIC50": 7.05,
+        "description": "Methoxy chloropyrimidine analog (Exp pIC50 = 7.05, Pred pIC50 = 7.4348)"
+    },
+    {
+        "id": "NIK015",
+        "name": "Alkynyl NIK015",
+        "smiles": "Nc1nc(N2CCc3c2cc(C#CC)cc3)c(Cl)cn1",
+        "experimental_pIC50": 8.00,
+        "description": "Propyne-substituted analog (Exp pIC50 = 8.00, Pred pIC50 = 7.5816)"
     },
     {
         "id": "NIK017",
         "name": "Heteroaryl Analog NIK017",
         "smiles": "Nc1nc(N2CCc3c2cc(c2n[nH]cc2)cc3)c(Cl)cn1",
-        "experimental_pIC50": 8.1900,
-        "description": "Pyrazole-substituted high-potency analog"
+        "experimental_pIC50": 8.19,
+        "description": "Pyrazole-substituted high-potency analog (Exp pIC50 = 8.19, Pred pIC50 = 8.0818)"
     }
 ]
 
@@ -146,7 +146,7 @@ async def get_sample_compounds():
     return NIK_SAMPLES
 
 @app.post("/api/predict", response_model=PredictResponse)
-async def predict(request: PredictSingleRequest):
+def predict(request: PredictSingleRequest):
     """
     Main prediction endpoint for a single candidate SMILES string.
     Evaluates across all 3 Monte Carlo runs and returns consensus pIC50, DCW, and Defect(SMILES).
@@ -173,7 +173,7 @@ async def predict(request: PredictSingleRequest):
         raise HTTPException(status_code=500, detail=f"Prediction error: {str(e)}")
 
 @app.post("/api/predict/batch", response_model=PredictResponse)
-async def predict_batch(request: PredictBatchRequest):
+def predict_batch(request: PredictBatchRequest):
     """
     Batch prediction endpoint for multiple SMILES strings.
     Evaluates all SMILES in parallel across Run-1, Run-2, and Run-3.
