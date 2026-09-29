@@ -664,12 +664,21 @@ async function runSinglePrediction() {
 
   // Try live backend API first (FastAPI / local server / cloud backend)
   try {
-    const customCloudApi = window.CORAL_CLOUD_API || (typeof localStorage !== "undefined" ? localStorage.getItem("CORAL_CLOUD_API") : null);
-    const apiEndpoints = [];
-    if (customCloudApi) {
-      apiEndpoints.push(`${customCloudApi.replace(/\/+$/, "")}/api/predict`);
+    const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.protocol === "file:";
+    if (isLocal && typeof localStorage !== "undefined") {
+      try { localStorage.removeItem("CORAL_CLOUD_API"); } catch (e) {}
     }
-    apiEndpoints.push("/api/predict", "http://127.0.0.1:8000/api/predict", "http://127.0.0.1:8002/api/predict");
+    const apiEndpoints = [];
+    if (isLocal) {
+      apiEndpoints.push("/api/predict", "http://127.0.0.1:8000/api/predict", "http://localhost:8000/api/predict");
+    } else {
+      apiEndpoints.push("/api/predict");
+      const customCloudApi = window.CORAL_CLOUD_API || (typeof localStorage !== "undefined" ? localStorage.getItem("CORAL_CLOUD_API") : null);
+      if (customCloudApi && !customCloudApi.includes(window.location.host)) {
+        apiEndpoints.push(`${customCloudApi.replace(/\/+$/, "")}/api/predict`);
+      }
+      apiEndpoints.push("http://127.0.0.1:8000/api/predict");
+    }
     let apiData = null;
 
     for (const url of apiEndpoints) {
@@ -874,12 +883,18 @@ async function runBatchPrediction() {
 
   // Try live backend API first (FastAPI / local server / cloud backend)
   try {
-    const customCloudApi = window.CORAL_CLOUD_API || (typeof localStorage !== "undefined" ? localStorage.getItem("CORAL_CLOUD_API") : null);
+    const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.protocol === "file:";
     const apiEndpoints = [];
-    if (customCloudApi) {
-      apiEndpoints.push(`${customCloudApi.replace(/\/+$/, "")}/api/predict/batch`);
+    if (isLocal) {
+      apiEndpoints.push("/api/predict/batch", "http://127.0.0.1:8000/api/predict/batch", "http://localhost:8000/api/predict/batch");
+    } else {
+      apiEndpoints.push("/api/predict/batch");
+      const customCloudApi = window.CORAL_CLOUD_API || (typeof localStorage !== "undefined" ? localStorage.getItem("CORAL_CLOUD_API") : null);
+      if (customCloudApi && !customCloudApi.includes(window.location.host)) {
+        apiEndpoints.push(`${customCloudApi.replace(/\/+$/, "")}/api/predict/batch`);
+      }
+      apiEndpoints.push("http://127.0.0.1:8000/api/predict/batch");
     }
-    apiEndpoints.push("/api/predict/batch", "http://127.0.0.1:8000/api/predict/batch", "http://127.0.0.1:8002/api/predict/batch");
     let apiData = null;
 
     for (const url of apiEndpoints) {
