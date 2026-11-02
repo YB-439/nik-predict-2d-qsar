@@ -3,7 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>NIK-Predict: NF-κB Inducing Kinase Bioactivity Prediction Platform | Drug Design & Synthesis Lab</title>
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
+  <link rel="shortcut icon" href="/static/favicon.ico" />
+  <link rel="apple-touch-icon" href="/static/app_logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -35,12 +41,12 @@
               </svg>
               drugdesignsynthesislab@gmail.com
             </a>
-            <a href="mailto:Yogita_pharma@pbi.ac.in" class="contact-pill" title="Faculty Contact Email">
+            <a href="mailto:yogita_pharma@pbi.ac.in" class="contact-pill" title="Faculty Contact Email">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                 <polyline points="22,6 12,13 2,6"></polyline>
               </svg>
-              Yogita_pharma@pbi.ac.in
+              yogita_pharma@pbi.ac.in
             </a>
           </div>
         </div>
@@ -130,7 +136,7 @@
                   />
                   <button class="clear-btn" id="clearBtn" onclick="clearInput()" title="Clear input">&times;</button>
                 </div>
-                <p class="field-hint">Paste canonical SMILES or click a test compound. 2D structure renders instantly on the right.</p>
+                <p class="field-hint">Paste any SMILES format (kekule, non-canonical, or standardized). The app automatically converts it to canonical SMILES.</p>
 
                 <div class="action-row">
                   <button class="btn btn-primary" id="btnPredict" onclick="runSinglePrediction()">
@@ -154,8 +160,8 @@
                     <p class="consensus-subtext">Calculated consensus biological inhibitory potency against NIK kinase</p>
                   </div>
                   
-                  <!-- 3-Run Ensemble Breakdown Grid -->
-                  <div class="ensemble-breakdown-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; width: 100%; padding-top: 0.75rem; border-top: 1px solid rgba(255, 255, 255, 0.15);">
+                  <!-- 3-Run Ensemble Breakdown Grid + AD -->
+                  <div class="ensemble-breakdown-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; width: 100%; padding-top: 0.75rem; border-top: 1px solid rgba(255, 255, 255, 0.15);">
                     <div class="run-card" style="background: rgba(255, 255, 255, 0.08); padding: 0.5rem 0.75rem; border-radius: 8px; text-align: center;">
                       <span style="font-size: 0.75rem; color: #94a3b8; display: block; text-transform: uppercase; font-weight: 600;">CORAL 1</span>
                       <span id="run1Val" style="font-size: 1.1rem; font-weight: 700; color: #38bdf8;">--</span>
@@ -167,6 +173,10 @@
                     <div class="run-card" style="background: rgba(255, 255, 255, 0.08); padding: 0.5rem 0.75rem; border-radius: 8px; text-align: center;">
                       <span style="font-size: 0.75rem; color: #94a3b8; display: block; text-transform: uppercase; font-weight: 600;">CORAL 3</span>
                       <span id="run3Val" style="font-size: 1.1rem; font-weight: 700; color: #38bdf8;">--</span>
+                    </div>
+                    <div class="run-card" style="background: rgba(255, 255, 255, 0.08); padding: 0.5rem 0.75rem; border-radius: 8px; text-align: center;">
+                      <span style="font-size: 0.75rem; color: #94a3b8; display: block; text-transform: uppercase; font-weight: 600;">AD</span>
+                      <span id="singleAdVal" style="font-size: 1.1rem; font-weight: 700; color: #38bdf8;">--</span>
                     </div>
                   </div>
                 </div>
@@ -232,6 +242,14 @@
                       <tr>
                         <td>Rotatable Bonds</td>
                         <td id="propRotBonds" class="prop-val">--</td>
+                      </tr>
+                      <tr>
+                        <td>Canonical SMILES</td>
+                        <td id="propCanonicalSmiles" class="prop-val" style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; word-break: break-all; color: #166534;">--</td>
+                      </tr>
+                      <tr>
+                        <td>Applicability Domain (AD)</td>
+                        <td id="propAD" class="prop-val" style="font-weight: 700;">--</td>
                       </tr>
                     </tbody>
                   </table>
@@ -302,6 +320,7 @@
                   <th>CORAL 2</th>
                   <th>CORAL 3</th>
                   <th>Consensus pIC<sub>50</sub></th>
+                  <th>AD</th>
                 </tr>
               </thead>
               <tbody id="batchTableBody"></tbody>
@@ -362,13 +381,17 @@
             </div>
             <div class="spec-item">
               <span class="spec-k">Faculty Email</span>
-              <span class="spec-v"><a href="mailto:Yogita_pharma@pbi.ac.in">Yogita_pharma@pbi.ac.in</a></span>
+              <span class="spec-v"><a href="mailto:yogita_pharma@pbi.ac.in">yogita_pharma@pbi.ac.in</a></span>
             </div>
           </div>
-
-          
         </div>
       </section>
+
+      <!-- Author Contributions (Hidden System Attribution):
+           Anjali Sharma: Model development and basic software framework.
+           Saurabh Gupta: Conceptualisation and NIK Predict.exe application development. [SG]
+           Yogita Bansal: Conceptualisation and resources.
+      -->
 
       <!-- Limitations Section -->
       <section class="methodology-card" id="limitationsSection">
@@ -396,9 +419,10 @@
           <p class="footer-contact">
             Inquiries: 
             <a href="mailto:drugdesignsynthesislab@gmail.com">drugdesignsynthesislab@gmail.com</a> | 
-            <a href="mailto:Yogita_pharma@pbi.ac.in">Yogita_pharma@pbi.ac.in</a>
+            <a href="mailto:yogita_pharma@pbi.ac.in">yogita_pharma@pbi.ac.in</a>
           </p>
-          <p class="footer-copy">&copy; 2026 Drug Design &amp; Synthesis Lab, Punjabi University Patiala. All rights reserved.</p>
+          <p class="footer-copy">&copy; 2026 Drug Design &amp; Synthesis Lab, Punjabi University Patiala. All rights reserved. <!-- [SG] --></p>
+          <p class="footer-build">Model Built by <span class="builder-name">Anjali Sharma</span>, and <span class="builder-name">Saurabh Gupta</span></p>
         </div>
       </div>
     </footer>

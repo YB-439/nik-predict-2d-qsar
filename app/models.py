@@ -66,3 +66,4 @@ class ModelInfoResponse(BaseModel):
     limitations: List[str]
     runs: Dict[str, Dict[str, Any]]
     samples: List[SampleCompound]
+

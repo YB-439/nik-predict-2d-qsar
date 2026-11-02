@@ -951,6 +951,19 @@ body {
   margin-top: 0.35rem;
 }
 
+.footer-build {
+  font-size: 0.80rem;
+  color: var(--slate-500);
+  margin-top: 0.35rem;
+  font-weight: 500;
+  letter-spacing: 0.015em;
+}
+
+.footer-build .builder-name {
+  color: var(--slate-700);
+  font-weight: 600;
+}
+
 
 /* Additional Styles for NIK-Predict Enhancements */
 
@@ -1363,4 +1376,28 @@ html {
 @keyframes modalSlideUp {
   from { transform: translateY(16px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
+}
+
+/* Applicability Domain (AD) Badges */
+.ad-badge {
+  display: inline-block;
+  padding: 0.2rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-align: center;
+  min-width: 42px;
+  letter-spacing: 0.02em;
+}
+
+.ad-yes {
+  background: rgba(16, 185, 129, 0.15);
+  color: #15803d;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.ad-no {
+  background: rgba(239, 68, 68, 0.15);
+  color: #b91c1c;
+  border: 1px solid rgba(239, 68, 68, 0.35);
 }

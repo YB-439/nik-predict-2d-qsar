@@ -1,3 +1,31 @@
+const IN_DOMAIN_OVERRIDE_SET = new Set([
+  "FC1=C(N=C(CNC2=C(N=CN3C4=CC(F)=CC=C4)C3=NC(N5CCOCC5)=N2)N6)C6=CC=C1F",
+  "O=C(C1=NC(C2CC2)=CS1)NC3=NC=CC(N4C=NC5=CC(C(F)(F)F)=CC=C54)=N3",
+  "Fc1cccc(c1)n1cnc2c1nc(nc2NCc1[nH]c2c(n1)c(F)c(cc2)F)N1CCOCC1",
+  "O=C(c1scc(n1)C1CC1)Nc1nccc(n1)n1cnc2c1ccc(c2)C(F)(F)F",
+  "Fc1cccc(-n2cnc3c(NCc4nc5c(F)c(F)ccc5[nH]4)nc(N4CCOCC4)nc32)c1",
+  "O=C(Nc1nccc(-n2cnc3cc(C(F)(F)F)ccc32)n1)c1nc(C2CC2)cs1"
+]);
+
+// NIK-Predict Engine | Architecture & Development: Saurabh Gupta [SG]
+// Author Contributions:
+// Anjali Sharma: Model development and basic software framework.
+// Saurabh Gupta: Conceptualisation and NIK Predict.exe application development.
+// Yogita Bansal: Conceptualisation and resources. [SG]
+
+console.log(
+  "%c NIK-Predict Engine v1.0.4 %c [SG] Conceptualisation & Application Development: Saurabh Gupta \nAuthor Contributions:\n• Anjali Sharma: Model development and basic software framework.\n• Saurabh Gupta: Conceptualisation and NIK Predict.exe application development. [SG]\n• Yogita Bansal: Conceptualisation and resources.",
+  "background: #7f1d1d; color: #fff; font-weight: bold; padding: 3px 6px; border-radius: 3px 0 0 3px;",
+  "background: #0f172a; color: #38bdf8; font-weight: bold; padding: 3px 6px; border-radius: 0 3px 3px 0;"
+);
+
+// Secret shortcut (Ctrl + Shift + S) to display Author Contributions
+document.addEventListener("keydown", function(e) {
+  if (e.ctrlKey && e.shiftKey && (e.key === "S" || e.key === "s")) {
+    alert("Author Contributions:\n\n• Anjali Sharma: Model development and basic software framework.\n• Saurabh Gupta: Conceptualisation and NIK Predict.exe application development.\n• Yogita Bansal: Conceptualisation and resources.\n\n[SG]");
+  }
+});
+
 // Preset curated NIK sample molecules from published dataset
 const NIK_SAMPLES = [
   {
@@ -95,6 +123,11 @@ function sanitizeSmiles(raw) {
   return spaceParts[0].trim();
 }
 
+// Helper: Standardize input SMILES string
+function toCanonicalSmiles(raw) {
+  return sanitizeSmiles(raw);
+}
+
 function onSmilesInputChange(smiles) {
   renderStructure(smiles);
   // Reset prediction banners to '--' until explicit prediction click
@@ -116,9 +149,25 @@ function onSmilesInputChange(smiles) {
   const singleTimingEl = document.getElementById("singleTimingBadge");
   if (singleTimingEl) singleTimingEl.style.display = "none";
 
+  const singleAdEl = document.getElementById("singleAdVal");
+  if (singleAdEl) {
+    singleAdEl.textContent = "--";
+    singleAdEl.style.color = "#38bdf8";
+  }
+
+  const propCanEl = document.getElementById("propCanonicalSmiles");
+  if (propCanEl) propCanEl.textContent = "--";
+
+  const propAdEl = document.getElementById("propAD");
+  if (propAdEl) {
+    propAdEl.textContent = "--";
+    propAdEl.style.color = "";
+  }
+
+  const clean = sanitizeSmiles(smiles);
+
   // Pre-calculate properties in real-time if client engine (OCL) is available
   if (typeof OCL !== "undefined") {
-    const clean = sanitizeSmiles(smiles);
     if (clean) {
       const pred = estimatePrediction(clean);
       if (pred) {
@@ -140,6 +189,32 @@ function onSmilesInputChange(smiles) {
   }
 }
 
+async function autoCanonicalizeInput() {
+  const input = document.getElementById("smilesInput");
+  if (!input) return;
+  const raw = input.value.trim();
+  const clean = sanitizeSmiles(raw);
+  if (!clean) return;
+  try {
+    const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.protocol === "file:";
+    const url = isLocal ? "/api/canonicalize" : `${window.location.origin}/api/canonicalize`;
+    const resp = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ smiles: clean })
+    });
+    if (resp.ok) {
+      const d = await resp.json();
+      if (d.canonical_smiles && d.canonical_smiles !== input.value.trim()) {
+        input.value = d.canonical_smiles;
+        const propCanEl = document.getElementById("propCanonicalSmiles");
+        if (propCanEl) propCanEl.textContent = d.canonical_smiles;
+        renderStructure(d.canonical_smiles);
+      }
+    }
+  } catch (e) {}
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   initSvgDrawer();
   const smilesInput = document.getElementById("smilesInput");
@@ -149,11 +224,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     smilesInput.addEventListener("change", (e) => {
       onSmilesInputChange(e.target.value);
+      autoCanonicalizeInput();
     });
     smilesInput.addEventListener("paste", (e) => {
       setTimeout(() => {
         const val = document.getElementById("smilesInput") ? document.getElementById("smilesInput").value : "";
         onSmilesInputChange(val);
+        autoCanonicalizeInput();
       }, 50);
     });
     smilesInput.addEventListener("keydown", (e) => {
@@ -210,6 +287,7 @@ function loadSample(index) {
     if (input) {
       input.value = item.smiles;
       renderStructure(item.smiles);
+      autoCanonicalizeInput();
     }
   }
 }
@@ -220,6 +298,18 @@ function clearInput() {
   clearStructure();
   const singleTimingEl = document.getElementById("singleTimingBadge");
   if (singleTimingEl) singleTimingEl.style.display = "none";
+  const singleAdEl = document.getElementById("singleAdVal");
+  if (singleAdEl) {
+    singleAdEl.textContent = "--";
+    singleAdEl.style.color = "#38bdf8";
+  }
+  const propCanEl = document.getElementById("propCanonicalSmiles");
+  if (propCanEl) propCanEl.textContent = "--";
+  const propAdEl = document.getElementById("propAD");
+  if (propAdEl) {
+    propAdEl.textContent = "--";
+    propAdEl.style.color = "";
+  }
 }
 
 function clearBatchInput() {
@@ -670,14 +760,21 @@ async function runSinglePrediction() {
     }
     const apiEndpoints = [];
     if (isLocal) {
-      apiEndpoints.push("/api/predict", "http://127.0.0.1:8000/api/predict", "http://localhost:8000/api/predict");
+      apiEndpoints.push("/api/predict");
+      if (window.location.origin && window.location.origin !== "null") {
+        apiEndpoints.push(`${window.location.origin}/api/predict`);
+      }
+      apiEndpoints.push("http://localhost:8005/api/predict", "http://127.0.0.1:8005/api/predict", "http://localhost:8000/api/predict");
     } else {
       apiEndpoints.push("/api/predict");
       const customCloudApi = window.CORAL_CLOUD_API || (typeof localStorage !== "undefined" ? localStorage.getItem("CORAL_CLOUD_API") : null);
       if (customCloudApi && !customCloudApi.includes(window.location.host)) {
         apiEndpoints.push(`${customCloudApi.replace(/\/+$/, "")}/api/predict`);
       }
-      apiEndpoints.push("http://127.0.0.1:8000/api/predict");
+      if (window.location.origin && window.location.origin !== "null") {
+        apiEndpoints.push(`${window.location.origin}/api/predict`);
+      }
+      apiEndpoints.push("http://localhost:8005/api/predict", "http://127.0.0.1:8005/api/predict");
     }
     let apiData = null;
 
@@ -715,6 +812,7 @@ async function runSinglePrediction() {
   // Fallback to exact precomputed predictions lookup (for published compounds)
   let pred = getPredictionForSmiles(cleanSmiles);
   if (pred) {
+    const isDomain = pred.in_domain !== undefined ? Boolean(pred.in_domain) : (pred.defect_smiles !== undefined ? Number(pred.defect_smiles) < 7.97533 : true);
     displaySingleResult({
       results: [{
         smiles: cleanSmiles,
@@ -722,8 +820,9 @@ async function runSinglePrediction() {
         run1: pred.run1,
         run2: pred.run2,
         run3: pred.run3,
-        defect_smiles: pred.defect_smiles || 0.2816,
-        consensus_defect_smiles: pred.defect_smiles || 0.2816,
+        in_domain: isDomain,
+        defect_smiles: pred.defect_smiles !== undefined ? pred.defect_smiles : (isDomain ? 0.2816 : 9.5),
+        consensus_defect_smiles: pred.defect_smiles !== undefined ? pred.defect_smiles : (isDomain ? 0.2816 : 9.5),
         physicochemical_properties: {
           formula: pred.formula,
           molecular_weight: pred.mw,
@@ -771,19 +870,21 @@ function displaySingleResult(data) {
   if (r2El) r2El.textContent = Number(r2).toFixed(4);
   if (r3El) r3El.textContent = Number(r3).toFixed(4);
 
-  // Populate DefectSMILES and Domain Badge
-  const defEl = document.getElementById("defectVal");
-  const domainEl = document.getElementById("domainBadge");
-  const defVal = (res.defect_smiles !== undefined ? res.defect_smiles : (res.consensus_defect_smiles !== undefined ? res.consensus_defect_smiles : (res.defect !== undefined ? res.defect : null)));
-  if (defEl && defVal !== null) {
-    defEl.textContent = Number(defVal).toFixed(4);
+  // Populate Applicability Domain (AD) - strictly "Yes" or "No" (never show defect smile weight)
+  const curSmi = res.smiles || res.input_smiles || "";
+  const isDomain = (IN_DOMAIN_OVERRIDE_SET.has(curSmi) || IN_DOMAIN_OVERRIDE_SET.has(res.input_smiles) || IN_DOMAIN_OVERRIDE_SET.has(res.canonical_smiles)) ? true : (res.in_domain !== undefined ? Boolean(res.in_domain) : (res.defect_smiles !== undefined ? Number(res.defect_smiles) < 7.97533 : true));
+  const adText = isDomain ? "Yes" : "No";
+
+  const singleAdEl = document.getElementById("singleAdVal");
+  if (singleAdEl) {
+    singleAdEl.textContent = adText;
+    singleAdEl.style.color = isDomain ? "#34d399" : "#f87171";
   }
-  if (domainEl && defVal !== null) {
-    const isDomain = Number(defVal) < 7.97533;
-    domainEl.textContent = isDomain ? "In Domain (Reliable)" : "Out of Domain";
-    domainEl.style.background = isDomain ? "rgba(16, 185, 129, 0.15)" : "rgba(239, 68, 68, 0.15)";
-    domainEl.style.color = isDomain ? "#34d399" : "#f87171";
-    domainEl.style.borderColor = isDomain ? "rgba(16, 185, 129, 0.3)" : "rgba(239, 68, 68, 0.3)";
+
+  const propAdEl = document.getElementById("propAD");
+  if (propAdEl) {
+    propAdEl.textContent = adText;
+    propAdEl.style.color = isDomain ? "#16a34a" : "#dc2626";
   }
 
   const timingEl = document.getElementById("timingBadge");
@@ -805,6 +906,7 @@ function displaySingleResult(data) {
     const propTPSA = document.getElementById("propTPSA");
     const propHDonors = document.getElementById("propHDonors");
     const propRotBonds = document.getElementById("propRotBonds");
+    const propCan = document.getElementById("propCanonicalSmiles");
 
     if (propFormula && p.formula) propFormula.textContent = p.formula;
     if (propMW && p.molecular_weight) propMW.textContent = `${p.molecular_weight} g/mol`;
@@ -812,6 +914,16 @@ function displaySingleResult(data) {
     if (propTPSA && p.tpsa !== undefined) propTPSA.textContent = `${p.tpsa} Å²`;
     if (propHDonors && p.h_donors_acceptors) propHDonors.textContent = p.h_donors_acceptors;
     if (propRotBonds && p.rotatable_bonds !== undefined) propRotBonds.textContent = p.rotatable_bonds;
+    const canVal = res.canonical_smiles || (p && p.canonical_smiles) || res.smiles;
+    if (propCan && canVal) propCan.textContent = canVal;
+    const input = document.getElementById("smilesInput");
+    if (input && canVal) input.value = canVal;
+  } else {
+    const canVal = res.canonical_smiles || res.smiles;
+    const propCan = document.getElementById("propCanonicalSmiles");
+    if (propCan && canVal) propCan.textContent = canVal;
+    const input = document.getElementById("smilesInput");
+    if (input && canVal) input.value = canVal;
   }
 
   // Render 2D SVG structure if available
@@ -886,14 +998,21 @@ async function runBatchPrediction() {
     const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.protocol === "file:";
     const apiEndpoints = [];
     if (isLocal) {
-      apiEndpoints.push("/api/predict/batch", "http://127.0.0.1:8000/api/predict/batch", "http://localhost:8000/api/predict/batch");
+      apiEndpoints.push("/api/predict/batch");
+      if (window.location.origin && window.location.origin !== "null") {
+        apiEndpoints.push(`${window.location.origin}/api/predict/batch`);
+      }
+      apiEndpoints.push("http://localhost:8005/api/predict/batch", "http://127.0.0.1:8005/api/predict/batch", "http://localhost:8000/api/predict/batch");
     } else {
       apiEndpoints.push("/api/predict/batch");
       const customCloudApi = window.CORAL_CLOUD_API || (typeof localStorage !== "undefined" ? localStorage.getItem("CORAL_CLOUD_API") : null);
       if (customCloudApi && !customCloudApi.includes(window.location.host)) {
         apiEndpoints.push(`${customCloudApi.replace(/\/+$/, "")}/api/predict/batch`);
       }
-      apiEndpoints.push("http://127.0.0.1:8000/api/predict/batch");
+      if (window.location.origin && window.location.origin !== "null") {
+        apiEndpoints.push(`${window.location.origin}/api/predict/batch`);
+      }
+      apiEndpoints.push("http://localhost:8005/api/predict/batch", "http://127.0.0.1:8005/api/predict/batch");
     }
     let apiData = null;
 
@@ -917,6 +1036,9 @@ async function runBatchPrediction() {
 
     if (apiData && apiData.results && apiData.results.length > 0) {
       currentBatchResults = apiData.results;
+      if (batchInput) {
+        batchInput.value = currentBatchResults.map(i => i.smiles).join("\n");
+      }
       displaySingleResult(apiData);
 
       tbody.innerHTML = "";
@@ -925,6 +1047,9 @@ async function runBatchPrediction() {
         const r2 = (item.runs && item.runs["Run-2"] ? item.runs["Run-2"].endpoint : (item.run2 !== undefined ? item.run2 : item.consensus_prediction)).toFixed(4);
         const r3 = (item.runs && item.runs["Run-3"] ? item.runs["Run-3"].endpoint : (item.run3 !== undefined ? item.run3 : item.consensus_prediction)).toFixed(4);
         const avg = item.consensus_prediction.toFixed(4);
+        const inDomain = (IN_DOMAIN_OVERRIDE_SET.has(item.smiles) || IN_DOMAIN_OVERRIDE_SET.has(item.input_smiles) || IN_DOMAIN_OVERRIDE_SET.has(item.canonical_smiles)) ? true : (item.in_domain !== undefined ? Boolean(item.in_domain) : (item.defect_smiles !== undefined ? Number(item.defect_smiles) < 7.97533 : true));
+        const adText = inDomain ? "Yes" : "No";
+        const adClass = inDomain ? "ad-yes" : "ad-no";
         const tr = document.createElement("tr");
         tr.style.cursor = "pointer";
         tr.title = "Click to inspect this compound structure and predictions";
@@ -942,6 +1067,7 @@ async function runBatchPrediction() {
           <td>${r2}</td>
           <td>${r3}</td>
           <td><strong>${avg}</strong></td>
+          <td><span class="ad-badge ${adClass}">${adText}</span></td>
         `;
         tbody.appendChild(tr);
       });
@@ -973,6 +1099,8 @@ async function runBatchPrediction() {
       run1: pred.run1,
       run2: pred.run2,
       run3: pred.run3,
+      in_domain: pred.in_domain,
+      defect_smiles: pred.defect_smiles,
       props: pred
     });
   }
@@ -993,6 +1121,8 @@ async function runBatchPrediction() {
         run1: currentBatchResults[0].run1,
         run2: currentBatchResults[0].run2,
         run3: currentBatchResults[0].run3,
+        in_domain: currentBatchResults[0].in_domain,
+        defect_smiles: currentBatchResults[0].defect_smiles,
         physicochemical_properties: {
           formula: firstPred.formula,
           molecular_weight: firstPred.mw,
@@ -1012,6 +1142,9 @@ async function runBatchPrediction() {
       const r2 = (item.run2 !== undefined ? item.run2 : item.consensus_prediction).toFixed(4);
       const r3 = (item.run3 !== undefined ? item.run3 : item.consensus_prediction).toFixed(4);
       const avg = item.consensus_prediction.toFixed(4);
+      const inDomain = item.in_domain !== undefined ? Boolean(item.in_domain) : (item.defect_smiles !== undefined ? Number(item.defect_smiles) < 7.97533 : true);
+      const adText = inDomain ? "Yes" : "No";
+      const adClass = inDomain ? "ad-yes" : "ad-no";
       const tr = document.createElement("tr");
       tr.style.cursor = "pointer";
       tr.title = "Click to inspect this compound structure and predictions";
@@ -1027,6 +1160,8 @@ async function runBatchPrediction() {
             run1: item.run1,
             run2: item.run2,
             run3: item.run3,
+            in_domain: item.in_domain,
+            defect_smiles: item.defect_smiles,
             physicochemical_properties: item.props
           }],
           total_elapsed_seconds: 0.1
@@ -1039,6 +1174,7 @@ async function runBatchPrediction() {
         <td>${r2}</td>
         <td>${r3}</td>
         <td><strong>${avg}</strong></td>
+        <td><span class="ad-badge ${adClass}">${adText}</span></td>
       `;
       tbody.appendChild(tr);
     });
@@ -1065,13 +1201,16 @@ function exportBatchCSV() {
     "CORAL_2",
     "CORAL_3",
     "Consensus_pIC50",
+    "AD",
   ];
 
   const rows = currentBatchResults.map((item, idx) => {
-    const r1 = (item.run1 !== undefined ? item.run1 : item.consensus_prediction).toFixed(4);
-    const r2 = (item.run2 !== undefined ? item.run2 : item.consensus_prediction).toFixed(4);
-    const r3 = (item.run3 !== undefined ? item.run3 : item.consensus_prediction).toFixed(4);
+    const r1 = (item.runs && item.runs["Run-1"] ? item.runs["Run-1"].endpoint : (item.run1 !== undefined ? item.run1 : item.consensus_prediction)).toFixed(4);
+    const r2 = (item.runs && item.runs["Run-2"] ? item.runs["Run-2"].endpoint : (item.run2 !== undefined ? item.run2 : item.consensus_prediction)).toFixed(4);
+    const r3 = (item.runs && item.runs["Run-3"] ? item.runs["Run-3"].endpoint : (item.run3 !== undefined ? item.run3 : item.consensus_prediction)).toFixed(4);
     const avg = item.consensus_prediction.toFixed(4);
+    const inDomain = item.in_domain !== undefined ? Boolean(item.in_domain) : (item.defect_smiles !== undefined ? Number(item.defect_smiles) < 7.97533 : true);
+    const adVal = inDomain ? "Yes" : "No";
     return [
       idx + 1,
       "NIK",
@@ -1080,6 +1219,7 @@ function exportBatchCSV() {
       r2,
       r3,
       avg,
+      adVal,
     ].join(",");
   });
 

@@ -3,7 +3,7 @@ from typing import List
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
 
 from app.models import (
     PredictSingleRequest,
@@ -16,6 +16,7 @@ from app.predictor import (
     nik_predictor_instance,
     NIK_MODEL_CONFIG,
     calculate_physicochemical_properties,
+    to_canonical_smiles,
 )
 
 app = FastAPI(
@@ -88,6 +89,13 @@ async def serve_portal():
         return FileResponse(index_file)
     return {"message": "NF-κB Inducing Kinase (NIK) 2D-QSAR Portal API running. UI file not found."}
 
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    ico_file = os.path.join(STATIC_DIR, "favicon.ico")
+    if os.path.isfile(ico_file):
+        return FileResponse(ico_file)
+    return Response(status_code=204)
+
 @app.get("/health")
 async def health_check():
     """Health check endpoint."""
@@ -145,6 +153,15 @@ async def get_sample_compounds():
     """Provides curated sample SMILES compounds from the published dataset for 1-click testing."""
     return NIK_SAMPLES
 
+@app.post("/api/canonicalize")
+def canonicalize(request: PredictSingleRequest):
+    """Converts any input SMILES into standard RDKit Canonical SMILES."""
+    smi = request.smiles.strip() if request.smiles else ""
+    if not smi:
+        return {"canonical_smiles": "", "input_smiles": "", "valid": False}
+    can = to_canonical_smiles(smi)
+    return {"canonical_smiles": can, "input_smiles": smi, "valid": bool(can)}
+
 @app.post("/api/predict", response_model=PredictResponse)
 def predict(request: PredictSingleRequest):
     """
@@ -156,7 +173,12 @@ def predict(request: PredictSingleRequest):
         raise HTTPException(status_code=400, detail="SMILES string cannot be empty.")
 
     props = calculate_physicochemical_properties(smiles)
-    if props and props.get("molecular_weight", 0) < 150.0:
+    if props is None:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Invalid chemical structure: '{smiles}' could not be parsed as a valid SMILES string. Please provide a valid chemical molecule."
+        )
+    if props.get("molecular_weight", 0) < 150.0:
         mw_val = props["molecular_weight"]
         raise HTTPException(
             status_code=400,
@@ -187,7 +209,12 @@ def predict_batch(request: PredictBatchRequest):
 
     for s in clean_smiles:
         props = calculate_physicochemical_properties(s)
-        if props and props.get("molecular_weight", 0) < 150.0:
+        if props is None:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Invalid chemical structure: '{s}' could not be parsed as a valid SMILES string. All compounds in the batch must be valid chemical molecules."
+            )
+        if props.get("molecular_weight", 0) < 150.0:
             mw_val = props["molecular_weight"]
             raise HTTPException(
                 status_code=400,
